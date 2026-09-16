@@ -4,7 +4,7 @@
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Archivo: main.py
-Versión: v3.21.23
+Versión: v3.21.24
 
 Descripción
 -----------
@@ -54,7 +54,7 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
-VERSION = "3.21.23"
+VERSION = "3.21.24"
 DEFAULT_PROJECT_ROOT = Path("/home/humath/Escritorio")
 
 SECTION_ALIASES = {
@@ -79,6 +79,15 @@ SECTION_ALIASES = {
     "cst": "cst_tronco",
     "cst_tronco": "cst_tronco",
     "tractografia": "cst_tronco",
+    "tractografia_rgb": "cst_tronco",
+    "tractografia_cst": "cst_tronco",
+    "tractografia_cst_rgb": "cst_tronco",
+    "cst_rgb": "cst_tronco",
+    "rgb_cst": "cst_tronco",
+    "via_corticoespinal": "cst_tronco",
+    "via_corticoespinal_rgb": "cst_tronco",
+    "via_cortico_espinal": "cst_tronco",
+    "via_cortico_espinal_rgb": "cst_tronco",
     "zonas": "zonas_correlacion",
     "19_zonas": "zonas_correlacion",
     "regiones": "zonas_correlacion",
@@ -195,10 +204,10 @@ SECTION_CATALOG = {
         "alias": "fs_mni_motor, freesurfer",
     },
     "cst_tronco": {
-        "titulo": "Tractografía CST y tronco encefálico",
-        "descripcion": "Reconstruye vía corticoespinal, mesencéfalo, puente, bulbo y salidas para Slicer/ITK-SNAP.",
-        "modelo": "DWI, tensor/CSD según disponibilidad, streamlines, waypoints anatómicos, densidad de fibras y color RGB por orientación local.",
-        "alias": "cst_tronco, cst, tractografia",
+        "titulo": "Tractografía CST, vía corticoespinal RGB y tronco encefálico",
+        "descripcion": "Reconstruye la vía corticoespinal bilateral, delimita mesencéfalo/puente/bulbo y genera TRK, VTK, NIfTI RGB, máscara y densidad.",
+        "modelo": "DWI con reconstrucción por streamlines, filtrado anatómico por waypoints corticales y tronco encefálico, densidad voxelizada y color RGB por orientación local de la fibra.",
+        "alias": "cst_tronco, cst, tractografia, tractografia_rgb, tractografia_cst_rgb, cst_rgb, via_corticoespinal_rgb",
     },
     "zonas_correlacion": {
         "titulo": "19 zonas anatómicas, correlación local y Excel",
@@ -247,7 +256,8 @@ def print_section_catalog() -> None:
         print(f"    Modelo:  {info['modelo']}")
         print(f"    Salida:  {info['descripcion']}")
         print("-" * 100)
-    print("Ejemplo: python main.py run --project-root /home/humath/Escritorio --patients 3 --stages Antes --sections cst_tronco")
+    print("Ejemplo CST RGB: python main.py run --project-root /home/humath/Escritorio --patients 3 --stages Antes --sections tractografia_cst_rgb")
+    print("Nota: tractografia_cst_rgb, cst_rgb y via_corticoespinal_rgb ejecutan internamente cst_tronco.")
     print("=" * 100 + "\n")
 
 
@@ -266,14 +276,16 @@ def print_terminal_examples() -> None:
     print("python main.py doctor --project-root /home/humath/Escritorio")
     print("python main.py --list-sections")
     print("python main.py")
-    print("\nEjecución recomendada paciente 3 Antes CST:")
+    print("\nEjecución recomendada paciente 3 Antes: tractografía CST + vía corticoespinal RGB:")
+    print(f"python main.py run --project-root {root} --patients 3 --stages Antes --sections tractografia_cst_rgb --registro-com-corregir --registro-com-ejes z --no-suspend")
+    print("\nComando equivalente con nombre técnico interno:")
     print(f"python main.py run --project-root {root} --patients 3 --stages Antes --sections cst_tronco --registro-com-corregir --registro-com-ejes z --no-suspend")
     print("\n19 zonas + correlación Antes/Después para paciente 3:")
     print(f"python main.py run --project-root {root} --patients 3 --stages Antes Despues --sections zonas_correlacion --no-suspend")
-    print("\nCST + 19 zonas + correlación para paciente 3:")
-    print(f"python main.py run --project-root {root} --patients 3 --stages Antes Despues --sections cst_tronco zonas_correlacion --registro-com-corregir --registro-com-ejes z --no-suspend")
-    print("\nEjecución completa de todos los pacientes:")
-    print(f"python main.py run --project-root {root} --all-patients --stages Antes Despues --sections cst_tronco zonas_correlacion --registro-com-corregir --registro-com-ejes z --no-suspend")
+    print("\nCST RGB + 19 zonas + correlación para paciente 3:")
+    print(f"python main.py run --project-root {root} --patients 3 --stages Antes Despues --sections tractografia_cst_rgb zonas_correlacion --registro-com-corregir --registro-com-ejes z --no-suspend")
+    print("\nEjecución completa de todos los pacientes con CST RGB + 19 zonas:")
+    print(f"python main.py run --project-root {root} --all-patients --stages Antes Despues --sections tractografia_cst_rgb zonas_correlacion --registro-com-corregir --registro-com-ejes z --no-suspend")
     print("=" * 100 + "\n")
 
 
@@ -372,7 +384,7 @@ def build_config(args):
         print_section_catalog()
         patients = normalize_patients(prompt_list("Pacientes a correr, ejemplo 3,6,7,9", "3"))
         stages = tuple(x.strip() for x in re.split(r"[,;\s]+", prompt_list("Etapas", "Antes")) if x.strip())
-        sections = normalize_sections(prompt_list("Secciones, ejemplo cst_tronco, zonas_correlacion, tomografia, fs_mni_motor o todo", "cst_tronco"))
+        sections = normalize_sections(prompt_list("Secciones, ejemplo tractografia_cst_rgb, zonas_correlacion, cst_tronco, tomografia, fs_mni_motor o todo", "tractografia_cst_rgb"))
     elif getattr(args, "all_patients", False):
         patients = discover_patients(data_root or (project_root / "datos"))
         stages = tuple(args.stages)
@@ -639,7 +651,7 @@ def run_setup(args) -> int:
     subprocess.check_call([str(py), "-m", "pip", "install", "--upgrade", "pip", "setuptools", "wheel"])
     subprocess.check_call([str(py), "-m", "pip", "install", "-r", str(req)])
     print("\nSetup finalizado. Para ejecutar usa:")
-    print(f"{py} {Path(__file__).resolve()} run --patients 3 --stages Antes --sections cst_tronco --force")
+    print(f"{py} {Path(__file__).resolve()} run --patients 3 --stages Antes --sections tractografia_cst_rgb --force")
     return 0
 
 
@@ -669,7 +681,7 @@ def add_run_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--patients", nargs="*", default=["3"], help="Pacientes: --patients 3 6 7 9")
     parser.add_argument("--all-patients", action="store_true", help="Detecta y corre todos los pacientes encontrados en datos/")
     parser.add_argument("--stages", nargs="*", default=["Antes"], help="Etapas: --stages Antes Despues")
-    parser.add_argument("--sections", "--only", nargs="*", default=list(DEFAULT_SECTIONS), help="Secciones: cst_tronco, tomografia, resonancias, todo, etc.")
+    parser.add_argument("--sections", "--only", nargs="*", default=list(DEFAULT_SECTIONS), help="Secciones: tractografia_cst_rgb, cst_tronco, zonas_correlacion, tomografia, resonancias, todo, etc.")
     parser.add_argument("--interactive", action="store_true", help="Pregunta pacientes, etapas y secciones en consola.")
     parser.add_argument("--control", default="sano", help="Nombre de carpeta del control sano.")
     parser.add_argument("--force", action="store_true", help="Reprocesa aunque existan salidas/checkpoints.")

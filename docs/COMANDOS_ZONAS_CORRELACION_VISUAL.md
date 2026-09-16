@@ -285,3 +285,27 @@ Segmentation: baja_correlacion_zonas_labelmap_T1.nii.gz
 Label descriptions: baja_correlacion_zonas_labels_itksnap.txt
 Overlay continuo: baja_correlacion_score_T1.nii.gz
 ```
+
+---
+
+## Actualización adicional: comando explícito para tractografía CST RGB
+
+La vía corticoespinal RGB se ejecuta con:
+
+```bash
+python main.py run --project-root /home/humath/Escritorio --patients 3 --stages Antes --sections tractografia_cst_rgb --registro-com-corregir --registro-com-ejes z --no-suspend
+```
+
+Alias equivalentes:
+
+```bash
+cst_tronco
+cst
+tractografia
+tractografia_rgb
+cst_rgb
+via_corticoespinal_rgb
+via_cortico_espinal_rgb
+```
+
+Todos estos alias ejecutan el módulo `cst_tronco`, que genera `.trk`, `.vtk`, NIfTI RGB, máscara y densidad.

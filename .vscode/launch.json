@@ -20,7 +20,119 @@
       "request": "launch",
       "program": "${workspaceFolder}/main.py",
       "console": "integratedTerminal",
-      "args": ["--list-sections"],
+      "args": [
+        "--list-sections"
+      ],
+      "env": {
+        "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
+        "FS_LICENSE": "/home/humath/Escritorio/license.txt",
+        "VCE_FREESURFER_SUBJECTS_DIR": "/home/humath/freesurfer_subjects"
+      }
+    },
+    {
+      "name": "VCE | Tractografía CST RGB + 19 zonas todos",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "run",
+        "--project-root",
+        "/home/humath/Escritorio",
+        "--all-patients",
+        "--stages",
+        "Antes",
+        "Despues",
+        "--sections",
+        "tractografia_cst_rgb",
+        "zonas_correlacion",
+        "--registro-com-corregir",
+        "--registro-com-ejes",
+        "z",
+        "--no-suspend"
+      ],
+      "env": {
+        "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
+        "FS_LICENSE": "/home/humath/Escritorio/license.txt",
+        "VCE_FREESURFER_SUBJECTS_DIR": "/home/humath/freesurfer_subjects"
+      }
+    },
+    {
+      "name": "VCE | Tractografía CST RGB todos",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "run",
+        "--project-root",
+        "/home/humath/Escritorio",
+        "--all-patients",
+        "--stages",
+        "Antes",
+        "Despues",
+        "--sections",
+        "tractografia_cst_rgb",
+        "--registro-com-corregir",
+        "--registro-com-ejes",
+        "z",
+        "--no-suspend"
+      ],
+      "env": {
+        "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
+        "FS_LICENSE": "/home/humath/Escritorio/license.txt",
+        "VCE_FREESURFER_SUBJECTS_DIR": "/home/humath/freesurfer_subjects"
+      }
+    },
+    {
+      "name": "VCE | Tractografía CST RGB paciente 3 Antes FORCE",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "run",
+        "--project-root",
+        "/home/humath/Escritorio",
+        "--patients",
+        "3",
+        "--stages",
+        "Antes",
+        "--sections",
+        "tractografia_cst_rgb",
+        "--force",
+        "--registro-com-corregir",
+        "--registro-com-ejes",
+        "z",
+        "--no-suspend"
+      ],
+      "env": {
+        "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
+        "FS_LICENSE": "/home/humath/Escritorio/license.txt",
+        "VCE_FREESURFER_SUBJECTS_DIR": "/home/humath/freesurfer_subjects"
+      }
+    },
+    {
+      "name": "VCE | Tractografía CST RGB paciente 3 Antes",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "run",
+        "--project-root",
+        "/home/humath/Escritorio",
+        "--patients",
+        "3",
+        "--stages",
+        "Antes",
+        "--sections",
+        "tractografia_cst_rgb",
+        "--registro-com-corregir",
+        "--registro-com-ejes",
+        "z",
+        "--no-suspend"
+      ],
       "env": {
         "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
         "FS_LICENSE": "/home/humath/Escritorio/license.txt",
@@ -35,12 +147,17 @@
       "console": "integratedTerminal",
       "args": [
         "run",
-        "--project-root", "/home/humath/Escritorio",
-        "--patients", "3",
-        "--stages", "Antes",
-        "--sections", "cst_tronco",
+        "--project-root",
+        "/home/humath/Escritorio",
+        "--patients",
+        "3",
+        "--stages",
+        "Antes",
+        "--sections",
+        "cst_tronco",
         "--registro-com-corregir",
-        "--registro-com-ejes", "z",
+        "--registro-com-ejes",
+        "z",
         "--no-suspend"
       ],
       "env": {
@@ -57,10 +174,15 @@
       "console": "integratedTerminal",
       "args": [
         "run",
-        "--project-root", "/home/humath/Escritorio",
-        "--patients", "3",
-        "--stages", "Antes", "Despues",
-        "--sections", "zonas_correlacion",
+        "--project-root",
+        "/home/humath/Escritorio",
+        "--patients",
+        "3",
+        "--stages",
+        "Antes",
+        "Despues",
+        "--sections",
+        "zonas_correlacion",
         "--no-suspend"
       ],
       "env": {
@@ -77,12 +199,19 @@
       "console": "integratedTerminal",
       "args": [
         "run",
-        "--project-root", "/home/humath/Escritorio",
-        "--patients", "3",
-        "--stages", "Antes", "Despues",
-        "--sections", "cst_tronco", "zonas_correlacion",
+        "--project-root",
+        "/home/humath/Escritorio",
+        "--patients",
+        "3",
+        "--stages",
+        "Antes",
+        "Despues",
+        "--sections",
+        "cst_tronco",
+        "zonas_correlacion",
         "--registro-com-corregir",
-        "--registro-com-ejes", "z",
+        "--registro-com-ejes",
+        "z",
         "--no-suspend"
       ],
       "env": {
@@ -99,10 +228,14 @@
       "console": "integratedTerminal",
       "args": [
         "run",
-        "--project-root", "/home/humath/Escritorio",
+        "--project-root",
+        "/home/humath/Escritorio",
         "--all-patients",
-        "--stages", "Antes", "Despues",
-        "--sections", "zonas_correlacion",
+        "--stages",
+        "Antes",
+        "Despues",
+        "--sections",
+        "zonas_correlacion",
         "--no-suspend"
       ],
       "env": {
