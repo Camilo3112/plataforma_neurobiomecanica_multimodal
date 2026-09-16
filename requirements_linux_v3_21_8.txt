@@ -1,0 +1,16 @@
+numpy
+pandas
+scipy
+matplotlib
+openpyxl
+pydicom
+nibabel
+scikit-image
+opencv-python
+pillow
+tqdm
+dipy
+statsmodels
+scikit-learn
+SimpleITK
+seaborn
