@@ -1,0 +1,34 @@
+cd /d "D:\EAFIT\01-2026\proyecto\suite_integrada_vce_v3_21_5_windows_qc_dos_femures"
+
+python -m venv D:\vce_env
+D:\vce_env\Scripts\python.exe -m pip install --upgrade pip setuptools wheel
+D:\vce_env\Scripts\python.exe -m pip install pandas numpy scipy matplotlib openpyxl nibabel pydicom scikit-image opencv-python pillow tqdm
+
+set VCE_TAC_MIN_TWO_FEMUR_SLICES=8
+set VCE_TAC_MIN_FEMUR_PAIR_SEPARATION_PX=35
+set VCE_TAC_MIDPOINT_TWO_FEMUR_WINDOW=90
+
+powercfg /change monitor-timeout-ac 0
+powercfg /change standby-timeout-ac 0
+powercfg /change hibernate-timeout-ac 0
+powercfg /change disk-timeout-ac 0
+
+D:\vce_env\Scripts\python.exe main.py ^
+  --project-root "D:\EAFIT\01-2026\proyecto" ^
+  --data-root "D:\EAFIT\01-2026\proyecto\datos" ^
+  --patients 3 6 ^
+  --only tomografia_avanzada ^
+  --gpu off ^
+  --force ^
+  --no-resume ^
+  --skip-stuck
+
+D:\vce_env\Scripts\python.exe main.py ^
+  --project-root "D:\EAFIT\01-2026\proyecto" ^
+  --data-root "D:\EAFIT\01-2026\proyecto\datos" ^
+  --patients 3 6 ^
+  --only consolidado ^
+  --gpu off ^
+  --force ^
+  --no-resume ^
+  --skip-stuck

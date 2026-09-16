@@ -1,0 +1,31 @@
+# Instalar/descomprimir
+cd /home/humath/Escritorio
+unzip -o suite_integrada_vce_v3_21_19_linux_slicer_trk_vtk_interactivo.zip
+cd /home/humath/Escritorio/suite_integrada_vce_v3_21_19_linux_slicer_trk_vtk_interactivo
+chmod +x *.sh
+./00_instalar_todo_linux.sh
+
+# Probar solo paciente 3 Antes con corrección Z
+export VCE_REGISTRO_COM_CORREGIR=1
+export VCE_REGISTRO_COM_EJES=z
+./12_run_paciente_3_antes_corrige_registro_cst_sin_suspension_linux.sh
+
+# Si el registro sigue desplazado, probar XYZ
+export VCE_REGISTRO_COM_CORREGIR=1
+export VCE_REGISTRO_COM_EJES=xyz
+./12_run_paciente_3_antes_corrige_registro_cst_sin_suspension_linux.sh
+
+# Crear archivos Slicer desde un resultado ya generado
+./13_convertir_paciente_3_antes_cst_para_slicer.sh
+
+# Verificar salidas finales
+OUT="/home/humath/Escritorio/resultados/paciente 3/Antes/tractografia_propia"
+ls -lh "$OUT"/via_cortico_espinal_completa* "$OUT"/b0_en_T1*.nii.gz
+find "$OUT/brainstem_substructures_validated" -type f | sort
+find "$OUT/cst_visualizacion_ventral_medial" -type f | sort
+
+# Correr interactivo para todos los pacientes, opcionalmente limpiando resultados previos
+./09_run_interactivo_cst_completa_fusionada_sin_suspension_linux.sh
+
+# Correr automático con todos los pacientes detectados, limpiando antes
+CLEAN_TRACTOGRAFIA_PREVIA=1 ./10_run_todos_pacientes_cst_completa_fusionada_sin_suspension_linux.sh

@@ -1,0 +1,11 @@
+[project]
+name = "suite-integrada-vce"
+version = "3.21.20"
+description = "Suite multimodal para EMG, dinamometría, TAC, neuroimagen y tractografía corticoespinal."
+requires-python = ">=3.10"
+
+[tool.setuptools]
+py-modules = []
+
+[tool.ruff]
+line-length = 110

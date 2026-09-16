@@ -1,0 +1,16 @@
+cd /home/humath/Escritorio
+unzip -o suite_integrada_vce_v3_21_12_linux_cst_fix_target_mask_dwi_series.zip
+cd /home/humath/Escritorio/suite_integrada_vce_v3_21_12_linux_cst_fix_target_mask_dwi_series
+chmod +x *.sh
+./00_instalar_todo_linux.sh
+./01c_run_tractografia_selectiva_sin_suspension_linux.sh
+
+# Respuestas sugeridas:
+# Project root: ENTER
+# Data root: ENTER
+# Pacientes: 3 6 9
+# Etapas: Antes Despues
+
+# Revisión:
+cat /home/humath/Escritorio/resultados/resumen_modulo_cst_tronco.csv
+find /home/humath/Escritorio/resultados -path "*tractografia_propia*" -name "resumen_tractografia.json" -print

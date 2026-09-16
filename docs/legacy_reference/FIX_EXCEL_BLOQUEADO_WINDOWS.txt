@@ -1,0 +1,8 @@
+FIX aplicado:
+
+Si reporte_global_integrado.xlsx esta abierto en Excel o bloqueado por Windows/OneDrive, la suite no se detiene.
+En vez de fallar, guarda una copia con timestamp, por ejemplo:
+
+reporte_global_integrado_20260723_154500.xlsx
+
+Para evitarlo manualmente, cierra el Excel antes de correr el consolidado.

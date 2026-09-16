@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Datos clínicos / biomédicos reales
+/datos/
+/resultados/
+/derivatives/
+/derivados/
+/freesurfer_subjects/
+/freesurfer_stage/
+license.txt
+
+# Archivos pesados de imagen médica
+*.dcm
+*.DCM
+*.nii
+*.nii.gz
+*.mgz
+*.trk
+*.tck
+*.vtk
+*.mif
+
+# Salidas y temporales
+outputs/
+*.log
+*.tmp
+*.bak
+*_BACKUP_*/
+.DS_Store
+.ipynb_checkpoints/

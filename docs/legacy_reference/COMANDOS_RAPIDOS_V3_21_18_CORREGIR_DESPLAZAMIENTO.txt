@@ -1,0 +1,24 @@
+cd /home/humath/Escritorio
+unzip -o suite_integrada_vce_v3_21_19_linux_slicer_trk_vtk_interactivo.zip
+cd /home/humath/Escritorio/suite_integrada_vce_v3_21_19_linux_slicer_trk_vtk_interactivo
+chmod +x *.sh
+./00_instalar_todo_linux.sh
+
+# Probar paciente 3 Antes con corrección superior/inferior
+export VCE_REGISTRO_COM_CORREGIR=1
+export VCE_REGISTRO_COM_EJES=z
+./12_run_paciente_3_antes_corrige_registro_cst_sin_suspension_linux.sh
+
+# Si todavía queda corrido en X/Y/Z, repetir usando eje xyz
+export VCE_REGISTRO_COM_EJES=xyz
+./12_run_paciente_3_antes_corrige_registro_cst_sin_suspension_linux.sh
+
+# Ver QC de registro
+OUT="/home/humath/Escritorio/resultados/paciente 3/Antes/tractografia_propia"
+cat "$OUT/registro_b0_T1_qc.json"
+ls -lh "$OUT"/b0_en_T1*.nii.gz "$OUT"/via_cortico_espinal_completa.*
+
+# ITK-SNAP
+# 1. Abrir Main Image: rAnatomico.nii
+# 2. Segmentation > Open Segmentation: via_cortico_espinal_completa_colores_itksnap_T1.nii.gz
+# 3. Segmentation > Import/Load Label Descriptions: via_cortico_espinal_completa_labels_itksnap.txt

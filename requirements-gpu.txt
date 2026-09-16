@@ -1,0 +1,4 @@
+# Instalar después de requirements.txt SOLO si tienes GPU NVIDIA compatible con CUDA.
+# Esta variante incluye los componentes CUDA Toolkit necesarios desde PyPI.
+# En Windows/CUDA 12.x evita el error: Failed to find CUDA headers.
+cupy-cuda12x[ctk]

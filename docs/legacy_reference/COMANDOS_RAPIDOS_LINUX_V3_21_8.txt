@@ -1,0 +1,22 @@
+# 1) Descomprimir en Escritorio
+cd /home/humath/Escritorio
+unzip -o suite_integrada_vce_v3_21_8_linux_completa_tractografia_cst_qc.zip
+cd /home/humath/Escritorio/suite_integrada_vce_v3_21_8_linux_completa_tractografia_cst_qc
+
+# 2) Instalar todo
+chmod +x *.sh
+./00_instalar_todo_linux.sh
+
+# 3) Verificar suite
+./03_verificar_suite_linux.sh
+
+# 4) Correr SOLO tractografia/CST interactivo sin suspension ni apagado de pantalla
+./01_run_interactivo_tractografia_sin_suspension_linux.sh
+# Pacientes sugerido: 3 6
+# Etapas sugerido: Antes Despues
+
+# 5) Ver resumen
+cat /home/humath/Escritorio/resultados/resumen_modulo_cst_tronco.csv
+
+# 6) Ver archivos generados por paciente ejemplo
+find "/home/humath/Escritorio/resultados/paciente 6/Antes/tractografia_propia" -maxdepth 3 -type f | sort

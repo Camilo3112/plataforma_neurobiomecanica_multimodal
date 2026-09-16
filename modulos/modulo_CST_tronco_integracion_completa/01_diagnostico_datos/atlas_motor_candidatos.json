@@ -1,0 +1,3243 @@
+[
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\avanzada_tejido_adiposo_landmarks\\Composicion_Corporal_CorteMedio.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\avanzada_tejido_adiposo_landmarks\\Grasa_Intramuscular_Muscular.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\avanzada_tejido_adiposo_landmarks\\Landmarks_Linea_CorteMedio.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\avanzada_tejido_adiposo_landmarks\\Muslos_Cuatro_Tracer_AutoZ.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\avanzada_tejido_adiposo_landmarks\\TAC_Composicion_Corporal_CorteMedio.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\avanzada_tejido_adiposo_landmarks\\TAC_Grasa_Intramuscular_Muscular.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\avanzada_tejido_adiposo_landmarks\\TAC_Landmarks_Linea_CorteMedio.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\estructura_funcion\\cortical_shell_externa_freesurfer_resampled_to_t1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\masks_musculos_labelmap.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\mask_todos_vastos.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\mask_vastos_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\mask_vastos_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\mask_Vasto_Lateral_Der.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\mask_Vasto_Lateral_Izq.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\mask_Vasto_Medial_Der.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\mask_Vasto_Medial_Izq.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\tac_hu_original.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\tac_tracer_musculos.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\b0_en_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\brain_mask_dwi.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\ColorFA_dwi.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\ColorFA_en_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\FA_dwi.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\FA_en_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\mean_b0_dwi.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\wholebrain_density_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\wholebrain_mask_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\wholebrain_rgb_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\AAHScout_1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\AAHScout_2.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\AAHScout_2_Eq_1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\AAHScout_3.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\AAHScout_3_Eq_1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\AAHScout_4.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\AAHScout_4_Eq_1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_170_RESTING_29.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_170_RESTING_MoCo_30.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_12.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_15.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_19.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_8.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_MoCo_10.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_MoCo_11.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_MoCo_13.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_MoCo_14.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_MoCo_16.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_MoCo_17.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_MoCo_18.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_MoCo_20.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_MoCo_21.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_DERECHA_MoCo_9.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_IZQUIERDA_22.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_IZQUIERDA_26.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_IZQUIERDA_MoCo_23.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_IZQUIERDA_MoCo_24.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_IZQUIERDA_MoCo_25.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_IZQUIERDA_MoCo_27.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\ep2d_pace_MOTOR_IZQUIERDA_MoCo_28.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\gre_field_mapping_7_e2_ph.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\gre_field_mapping_7_e2_pha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\POSTPROCESO-BIOMEDICA_777.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t1_spc_vol_sag_100.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t1_spc_vol_sag_100a.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t1_spc_vol_sag_101.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t1_spc_vol_sag_1013.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t1_spc_vol_sag_101a.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t1_spc_vol_sag_1976.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t1_spc_vol_sag_6.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t2_difusion_axial_30dir_31.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t2_difusion_axial_30dir_32.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t2_difusion_axial_30dir_33.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t2_difusion_axial_30dir_34.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t2_difusion_axial_30dir_35.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t2_difusion_axial_30dir_36.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t2_difusion_axial_30dir_36_Eq_1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\01_nifti_convertidos\\t2_tse_axial_5.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\atlas_motor_rois\\atlas_motor_labelmap_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\atlas_motor_rois\\brainstem_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\atlas_motor_rois\\brain_mask_T1_atlas.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\atlas_motor_rois\\m1_left_T1.nii.gz",
+    "score_m1_left": 0,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\atlas_motor_rois\\m1_right_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 0,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\atlas_motor_rois\\m2_left_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 0,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\atlas_motor_rois\\m2_right_T1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 0
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\avanzada_tejido_adiposo_landmarks\\Grasa_Subcutanea_Volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tomografia\\avanzada_tejido_adiposo_landmarks\\Tejido_Adiposo_Total_Volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\vce_explicita\\vce_explicita_tracto_corticoespinal_TRACTO_CORTICOESPINAL_000264\\vce_explicita_tracto_corticoespinal_TRACTO_CORTICOESPINAL_000264_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\vce_explicita\\vce_explicita_tracto_corticoespinal_TRACTO_CORTICOESPINAL_000264\\vce_explicita_tracto_corticoespinal_TRACTO_CORTICOESPINAL_000264_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\vce_explicita\\vce_explicita_tracto_corticoespinal_TRACTO_CORTICOESPINAL_000264\\vce_explicita_tracto_corticoespinal_TRACTO_CORTICOESPINAL_000264_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\vce_explicita\\vce_explicita_tracto_corticoespinal_TRACTO_CORTICOESPINAL_000264\\vce_explicita_tracto_corticoespinal_TRACTO_CORTICOESPINAL_000264_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\vce_explicita\\vce_explicita_tracto_corticoespinal_TRACTO_CORTICOESPINAL_000264\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\vce_explicita\\vce_explicita_tracto_corticoespinal_TRACTO_CORTICOESPINAL_000264\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\tractografia\\tractografia_tractografia_TRACTOGRAFÍA_000134\\tractografia_tractografia_TRACTOGRAFÍA_000134_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\tractografia\\tractografia_tractografia_TRACTOGRAFÍA_000134\\tractografia_tractografia_TRACTOGRAFÍA_000134_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\tractografia\\tractografia_tractografia_TRACTOGRAFÍA_000134\\tractografia_tractografia_TRACTOGRAFÍA_000134_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\tractografia\\tractografia_tractografia_TRACTOGRAFÍA_000134\\tractografia_tractografia_TRACTOGRAFÍA_000134_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\tractografia\\tractografia_tractografia_TRACTOGRAFÍA_000134\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\via_corticoespinal\\tractografia\\tractografia_tractografia_TRACTOGRAFÍA_000134\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\scout\\scout\\scout_scout_AAHScout_0_0_0\\scout_scout_AAHScout_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\scout\\scout\\scout_scout_AAHScout_0_0_0\\scout_scout_AAHScout_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\scout\\scout\\scout_scout_AAHScout_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\scout\\scout\\scout_scout_AAHScout_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\resting_state\\resting\\resting_state_resting_ep2d_pace_170_RESTING_0_0_0\\resting_state_resting_ep2d_pace_170_RESTING_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\resting_state\\resting\\resting_state_resting_ep2d_pace_170_RESTING_0_0_0\\resting_state_resting_ep2d_pace_170_RESTING_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\resting_state\\resting\\resting_state_resting_ep2d_pace_170_RESTING_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\resting_state\\resting\\resting_state_resting_ep2d_pace_170_RESTING_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\resting_state\\resting\\resting_state_resting_MoCoSeries_0_0_0\\resting_state_resting_MoCoSeries_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\resting_state\\resting\\resting_state_resting_MoCoSeries_0_0_0\\resting_state_resting_MoCoSeries_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\resting_state\\resting\\resting_state_resting_MoCoSeries_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\resting_state\\resting\\resting_state_resting_MoCoSeries_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\postproceso\\postproceso\\postproceso_postproceso_POSTPROCESO_458962\\postproceso_postproceso_POSTPROCESO_458962_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\postproceso\\postproceso\\postproceso_postproceso_POSTPROCESO_458962\\postproceso_postproceso_POSTPROCESO_458962_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\postproceso\\postproceso\\postproceso_postproceso_POSTPROCESO_458962\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\postproceso\\postproceso\\postproceso_postproceso_POSTPROCESO_458962\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\fmri_motor_startfmri_StartFMRI_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\fmri_motor_startfmri_StartFMRI_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\fmri_motor_startfmri_StartFMRI_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\fmri_motor_startfmri_StartFMRI_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\fmri_motor_moco_MoCoSeries_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\fmri_motor_moco_MoCoSeries_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\fmri_motor_moco_MoCoSeries_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\fmri_motor_moco_MoCoSeries_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\design\\fmri_motor_design_Design_0_0_0\\fmri_motor_design_Design_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\design\\fmri_motor_design_Design_0_0_0\\fmri_motor_design_Design_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\design\\fmri_motor_design_Design_0_0_0\\fmri_motor_design_Design_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\design\\fmri_motor_design_Design_0_0_0\\fmri_motor_design_Design_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\design\\fmri_motor_design_Design_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\design\\fmri_motor_design_Design_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_IZQUIERDA_0_0_0\\fmri_motor_bold_raw_ep2d_pace_MOTOR_IZQUIERDA_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_IZQUIERDA_0_0_0\\fmri_motor_bold_raw_ep2d_pace_MOTOR_IZQUIERDA_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_IZQUIERDA_0_0_0\\fmri_motor_bold_raw_ep2d_pace_MOTOR_IZQUIERDA_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_IZQUIERDA_0_0_0\\fmri_motor_bold_raw_ep2d_pace_MOTOR_IZQUIERDA_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_IZQUIERDA_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\izquierda\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_IZQUIERDA_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\fmri_motor_startfmri_StartFMRI_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\fmri_motor_startfmri_StartFMRI_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\fmri_motor_startfmri_StartFMRI_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\fmri_motor_startfmri_StartFMRI_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\startfmri\\fmri_motor_startfmri_StartFMRI_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\fmri_motor_moco_MoCoSeries_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\fmri_motor_moco_MoCoSeries_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\fmri_motor_moco_MoCoSeries_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\fmri_motor_moco_MoCoSeries_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\moco\\fmri_motor_moco_MoCoSeries_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_EvaSeries_GLM_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_intermediate_t-Map_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\mapa_activacion\\fmri_motor_mapa_activacion_Mean__t-Maps_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\design\\fmri_motor_design_Design_0_0_0\\fmri_motor_design_Design_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\design\\fmri_motor_design_Design_0_0_0\\fmri_motor_design_Design_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\design\\fmri_motor_design_Design_0_0_0\\fmri_motor_design_Design_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\design\\fmri_motor_design_Design_0_0_0\\fmri_motor_design_Design_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\design\\fmri_motor_design_Design_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\design\\fmri_motor_design_Design_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_DERECHA_0_0_0\\fmri_motor_bold_raw_ep2d_pace_MOTOR_DERECHA_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_DERECHA_0_0_0\\fmri_motor_bold_raw_ep2d_pace_MOTOR_DERECHA_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_DERECHA_0_0_0\\fmri_motor_bold_raw_ep2d_pace_MOTOR_DERECHA_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_DERECHA_0_0_0\\fmri_motor_bold_raw_ep2d_pace_MOTOR_DERECHA_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_DERECHA_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fmri_motor\\derecha\\bold_raw\\fmri_motor_bold_raw_ep2d_pace_MOTOR_DERECHA_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fieldmap\\fieldmap\\fieldmap_fieldmap_gre_field_mapping_-_PR_000002\\fieldmap_fieldmap_gre_field_mapping_-_PR_000002_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fieldmap\\fieldmap\\fieldmap_fieldmap_gre_field_mapping_-_PR_000002\\fieldmap_fieldmap_gre_field_mapping_-_PR_000002_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fieldmap\\fieldmap\\fieldmap_fieldmap_gre_field_mapping_-_PR_000002\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fieldmap\\fieldmap\\fieldmap_fieldmap_gre_field_mapping_-_PR_000002\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fieldmap\\fieldmap\\fieldmap_fieldmap_gre_field_mapping_0_0_0\\fieldmap_fieldmap_gre_field_mapping_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fieldmap\\fieldmap\\fieldmap_fieldmap_gre_field_mapping_0_0_0\\fieldmap_fieldmap_gre_field_mapping_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fieldmap\\fieldmap\\fieldmap_fieldmap_gre_field_mapping_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\fieldmap\\fieldmap\\fieldmap_fieldmap_gre_field_mapping_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\trace_b0\\dti_difusion_trace_b0_t2_difusion_axial_30dir_TRACEW_0_0_0\\dti_difusion_trace_b0_t2_difusion_axial_30dir_TRACEW_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\trace_b0\\dti_difusion_trace_b0_t2_difusion_axial_30dir_TRACEW_0_0_0\\dti_difusion_trace_b0_t2_difusion_axial_30dir_TRACEW_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\trace_b0\\dti_difusion_trace_b0_t2_difusion_axial_30dir_TRACEW_0_0_0\\dti_difusion_trace_b0_t2_difusion_axial_30dir_TRACEW_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\trace_b0\\dti_difusion_trace_b0_t2_difusion_axial_30dir_TRACEW_0_0_0\\dti_difusion_trace_b0_t2_difusion_axial_30dir_TRACEW_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\trace_b0\\dti_difusion_trace_b0_t2_difusion_axial_30dir_TRACEW_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\trace_b0\\dti_difusion_trace_b0_t2_difusion_axial_30dir_TRACEW_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\tensor\\dti_difusion_tensor_t2_difusion_axial_30dir_TENSOR_0_0_0\\dti_difusion_tensor_t2_difusion_axial_30dir_TENSOR_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\tensor\\dti_difusion_tensor_t2_difusion_axial_30dir_TENSOR_0_0_0\\dti_difusion_tensor_t2_difusion_axial_30dir_TENSOR_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\tensor\\dti_difusion_tensor_t2_difusion_axial_30dir_TENSOR_0_0_0\\dti_difusion_tensor_t2_difusion_axial_30dir_TENSOR_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\tensor\\dti_difusion_tensor_t2_difusion_axial_30dir_TENSOR_0_0_0\\dti_difusion_tensor_t2_difusion_axial_30dir_TENSOR_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\tensor\\dti_difusion_tensor_t2_difusion_axial_30dir_TENSOR_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\tensor\\dti_difusion_tensor_t2_difusion_axial_30dir_TENSOR_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\fa\\dti_difusion_fa_t2_difusion_axial_30dir_FA_0_0_0\\dti_difusion_fa_t2_difusion_axial_30dir_FA_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\fa\\dti_difusion_fa_t2_difusion_axial_30dir_FA_0_0_0\\dti_difusion_fa_t2_difusion_axial_30dir_FA_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\fa\\dti_difusion_fa_t2_difusion_axial_30dir_FA_0_0_0\\dti_difusion_fa_t2_difusion_axial_30dir_FA_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\fa\\dti_difusion_fa_t2_difusion_axial_30dir_FA_0_0_0\\dti_difusion_fa_t2_difusion_axial_30dir_FA_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\fa\\dti_difusion_fa_t2_difusion_axial_30dir_FA_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\fa\\dti_difusion_fa_t2_difusion_axial_30dir_FA_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\dwi\\dti_difusion_dwi_t2_difusion_axial_30dir_0_0_0\\dti_difusion_dwi_t2_difusion_axial_30dir_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\dwi\\dti_difusion_dwi_t2_difusion_axial_30dir_0_0_0\\dti_difusion_dwi_t2_difusion_axial_30dir_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\dwi\\dti_difusion_dwi_t2_difusion_axial_30dir_0_0_0\\dti_difusion_dwi_t2_difusion_axial_30dir_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\dwi\\dti_difusion_dwi_t2_difusion_axial_30dir_0_0_0\\dti_difusion_dwi_t2_difusion_axial_30dir_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\dwi\\dti_difusion_dwi_t2_difusion_axial_30dir_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\dwi\\dti_difusion_dwi_t2_difusion_axial_30dir_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\colfa\\dti_difusion_colfa_t2_difusion_axial_30dir_ColFA_0_0_0\\dti_difusion_colfa_t2_difusion_axial_30dir_ColFA_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\colfa\\dti_difusion_colfa_t2_difusion_axial_30dir_ColFA_0_0_0\\dti_difusion_colfa_t2_difusion_axial_30dir_ColFA_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\colfa\\dti_difusion_colfa_t2_difusion_axial_30dir_ColFA_0_0_0\\dti_difusion_colfa_t2_difusion_axial_30dir_ColFA_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\colfa\\dti_difusion_colfa_t2_difusion_axial_30dir_ColFA_0_0_0\\dti_difusion_colfa_t2_difusion_axial_30dir_ColFA_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\colfa\\dti_difusion_colfa_t2_difusion_axial_30dir_ColFA_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\colfa\\dti_difusion_colfa_t2_difusion_axial_30dir_ColFA_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\adc\\dti_difusion_adc_t2_difusion_axial_30dir_ADC_0_0_0\\dti_difusion_adc_t2_difusion_axial_30dir_ADC_0_0_0_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\adc\\dti_difusion_adc_t2_difusion_axial_30dir_ADC_0_0_0\\dti_difusion_adc_t2_difusion_axial_30dir_ADC_0_0_0_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\adc\\dti_difusion_adc_t2_difusion_axial_30dir_ADC_0_0_0\\dti_difusion_adc_t2_difusion_axial_30dir_ADC_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\adc\\dti_difusion_adc_t2_difusion_axial_30dir_ADC_0_0_0\\dti_difusion_adc_t2_difusion_axial_30dir_ADC_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\adc\\dti_difusion_adc_t2_difusion_axial_30dir_ADC_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\dti_difusion\\adc\\dti_difusion_adc_t2_difusion_axial_30dir_ADC_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t2_tse\\anatomica_t2_tse_t2_tse_axial_0_0_0\\anatomica_t2_tse_t2_tse_axial_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t2_tse\\anatomica_t2_tse_t2_tse_axial_0_0_0\\anatomica_t2_tse_t2_tse_axial_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t2_tse\\anatomica_t2_tse_t2_tse_axial_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t2_tse\\anatomica_t2_tse_t2_tse_axial_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_cor_0_0_0\\anatomica_t1_AAHScout_MPR_cor_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_cor_0_0_0\\anatomica_t1_AAHScout_MPR_cor_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_cor_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_cor_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_sag_0_0_0\\anatomica_t1_AAHScout_MPR_sag_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_sag_0_0_0\\anatomica_t1_AAHScout_MPR_sag_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_sag_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_sag_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_tra_0_0_0\\anatomica_t1_AAHScout_MPR_tra_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_tra_0_0_0\\anatomica_t1_AAHScout_MPR_tra_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_tra_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_AAHScout_MPR_tra_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_MPR_Rango_000494\\anatomica_t1_MPR_Rango_000494_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_MPR_Rango_000494\\anatomica_t1_MPR_Rango_000494_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_MPR_Rango_000494\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_MPR_Rango_000494\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_MPR_Rango_1_001382\\anatomica_t1_MPR_Rango_1_001382_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_MPR_Rango_1_001382\\anatomica_t1_MPR_Rango_1_001382_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_MPR_Rango_1_001382\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_MPR_Rango_1_001382\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_t1_spc_vol_sag_0_0_0\\anatomica_t1_t1_spc_vol_sag_0_0_0_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_t1_spc_vol_sag_0_0_0\\anatomica_t1_t1_spc_vol_sag_0_0_0_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_t1_spc_vol_sag_0_0_0\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\resonancias\\anatomica\\t1\\anatomica_t1_t1_spc_vol_sag_0_0_0\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\brain_mask_interna.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\cortex_gray_internal_shell_mask.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\energia_ad_o_referencia_en_espacio_interno.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_labelmap.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_primaria_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 0,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_primaria_derecha_atlas_prior.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -25,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_primaria_derecha_roi_shell.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -35,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_primaria_derecha_wavelet_region.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 0,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_primaria_izquierda.nii.gz",
+    "score_m1_left": 0,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_primaria_izquierda_atlas_prior.nii.gz",
+    "score_m1_left": -25,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_primaria_izquierda_roi_shell.nii.gz",
+    "score_m1_left": -35,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_primaria_izquierda_wavelet_region.nii.gz",
+    "score_m1_left": 0,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_secundaria_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 0
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_secundaria_derecha_atlas_prior.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -25
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_secundaria_derecha_roi_shell.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -35
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_secundaria_derecha_wavelet_region.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 0
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_secundaria_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 0,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_secundaria_izquierda_atlas_prior.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -25,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_secundaria_izquierda_roi_shell.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -35,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\internal_corteza_motora_secundaria_izquierda_wavelet_region.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 0,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\referencia_morfometria_interna.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_labelmap_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_labelmap_corregida_auto_atlas_prior_m1_izquierda.nii.gz",
+    "score_m1_left": -25,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_labelmap_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_labelmap_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_labelmap_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_atlas_prior_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -25,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_atlas_prior_corregida_auto_atlas_prior_m1_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -25,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_atlas_prior_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 90,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_atlas_prior_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -60,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_atlas_prior_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -60,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 0,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_corregida_auto_atlas_prior_m1_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -25,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 90,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -35,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -35,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_roi_shell_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -35,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_roi_shell_corregida_auto_atlas_prior_m1_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -60,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_roi_shell_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 55,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_roi_shell_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -35,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_roi_shell_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -35,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_wavelet_region_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 0,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_wavelet_region_corregida_auto_atlas_prior_m1_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -25,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_wavelet_region_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 90,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_wavelet_region_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -35,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_derecha_wavelet_region_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -35,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_atlas_prior_corregida_auto.nii.gz",
+    "score_m1_left": -25,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_atlas_prior_corregida_auto_atlas_prior_m1_izquierda.nii.gz",
+    "score_m1_left": -25,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_atlas_prior_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": 90,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_atlas_prior_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -60,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_atlas_prior_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -60,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_corregida_auto.nii.gz",
+    "score_m1_left": 0,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_corregida_auto_atlas_prior_m1_izquierda.nii.gz",
+    "score_m1_left": -25,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": 90,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -35,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -35,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_roi_shell_corregida_auto.nii.gz",
+    "score_m1_left": -35,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_roi_shell_corregida_auto_atlas_prior_m1_izquierda.nii.gz",
+    "score_m1_left": -60,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_roi_shell_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": 55,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_roi_shell_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -35,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_roi_shell_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -35,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_wavelet_region_corregida_auto.nii.gz",
+    "score_m1_left": 0,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_wavelet_region_corregida_auto_atlas_prior_m1_izquierda.nii.gz",
+    "score_m1_left": -25,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_wavelet_region_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": 90,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_wavelet_region_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -35,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_primaria_izquierda_wavelet_region_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -35,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_atlas_prior_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -25
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_atlas_prior_corregida_auto_atlas_prior_m2_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -25
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_atlas_prior_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 90
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_atlas_prior_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -60
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_atlas_prior_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -60
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 0
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_corregida_auto_atlas_prior_m2_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -25
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 90
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -35
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -35
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_roi_shell_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -35
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_roi_shell_corregida_auto_atlas_prior_m2_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -60
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_roi_shell_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 55
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_roi_shell_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -35
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_roi_shell_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -35
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_wavelet_region_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 0
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_wavelet_region_corregida_auto_atlas_prior_m2_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -25
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_wavelet_region_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 90
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_wavelet_region_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -35
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_derecha_wavelet_region_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -35
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_atlas_prior_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -25,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_atlas_prior_corregida_auto_atlas_prior_m2_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -25,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_atlas_prior_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 90,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_atlas_prior_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -60,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_atlas_prior_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -60,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 0,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_corregida_auto_atlas_prior_m2_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -25,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 90,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -35,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -35,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_roi_shell_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -35,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_roi_shell_corregida_auto_atlas_prior_m2_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -60,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_roi_shell_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 55,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_roi_shell_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -35,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_roi_shell_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -35,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_wavelet_region_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 0,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_wavelet_region_corregida_auto_atlas_prior_m2_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -25,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_wavelet_region_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 90,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_wavelet_region_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -35,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\internal_corteza_motora_secundaria_izquierda_wavelet_region_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -35,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 30,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto_atlas_prior_m1_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 5,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 120,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -5,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -5,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto.nii.gz",
+    "score_m1_left": 30,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto_atlas_prior_m1_izquierda.nii.gz",
+    "score_m1_left": 5,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": 120,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -5,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -5,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 30
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto_atlas_prior_m2_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 5
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 120
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -5
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -5
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 30,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto_atlas_prior_m2_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 5,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto_atlas_refinada.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 120,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto_atlas_target_same_volume.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -5,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto_cortical_shell_objetivo.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -5,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\derecha\\rMOTOR_DERECHA_FWE001_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\derecha\\rMOTOR_DERECHA_FWE001_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\derecha\\rMOTOR_DERECHA_FWE001_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\derecha\\rMOTOR_DERECHA_FWE001_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\derecha\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\derecha\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\izquierda\\rMOTOR_IZQDA_FWE001_mask_p95.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\izquierda\\rMOTOR_IZQDA_FWE001_mask_p99.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\izquierda\\rMOTOR_IZQDA_FWE001_volumen.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\izquierda\\rMOTOR_IZQDA_FWE001_wavelet_energy.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\izquierda\\vce_heuristica_derecha.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\mapas\\izquierda\\vce_heuristica_izquierda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\estructura_funcion\\corteza_activa_guiada_por_mapas\\derecha\\rMOTOR_DERECHA_FWE001_mask_p95_en_shell_t1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\estructura_funcion\\corteza_activa_guiada_por_mapas\\derecha\\rMOTOR_DERECHA_FWE001_mask_p99_en_shell_t1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\estructura_funcion\\corteza_activa_guiada_por_mapas\\izquierda\\rMOTOR_IZQDA_FWE001_mask_p95_en_shell_t1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\estructura_funcion\\corteza_activa_guiada_por_mapas\\izquierda\\rMOTOR_IZQDA_FWE001_mask_p99_en_shell_t1.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\estructura_funcion\\acoplamiento_mapa_funcional_morfometria_externa\\derecha\\overlap_m1_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": 30,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\estructura_funcion\\acoplamiento_mapa_funcional_morfometria_externa\\derecha\\overlap_m2_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": 30
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\estructura_funcion\\acoplamiento_mapa_funcional_morfometria_externa\\izquierda\\overlap_m1_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari.nii.gz",
+    "score_m1_left": 30,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\estructura_funcion\\acoplamiento_mapa_funcional_morfometria_externa\\izquierda\\overlap_m2_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": 30,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\tomografia\\imagen_por_imagen\\deficit_tac_hu_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\tomografia\\imagen_por_imagen\\diferencia_absoluta_tac_hu_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\tomografia\\mascaras\\comparacion_mascara_mask_todos_vastos_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\tomografia\\mascaras\\comparacion_mascara_mask_vastos_derecha_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\tomografia\\mascaras\\comparacion_mascara_mask_vastos_izquierda_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\tomografia\\mascaras\\comparacion_mascara_mask_Vasto_Lateral_Der_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\tomografia\\mascaras\\comparacion_mascara_mask_Vasto_Lateral_Izq_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\tomografia\\mascaras\\comparacion_mascara_mask_Vasto_Medial_Der_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\tomografia\\mascaras\\comparacion_mascara_mask_Vasto_Medial_Izq_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\vce_explicita\\tracto_corticoespinal\\desconocido\\deficit_resonancia_vce_explicita_tracto_corticoespinal_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\vce_explicita\\tracto_corticoespinal\\desconocido\\diferencia_absoluta_resonancia_vce_explicita_tracto_corticoespinal_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\tractografia\\tractografia\\desconocido\\deficit_resonancia_tractografia_tractografia_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\tractografia\\tractografia\\desconocido\\diferencia_absoluta_resonancia_tractografia_tractografia_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\mapa_activacion\\derecha\\deficit_resonancia_fmri_motor_mapa_activacion_derecha_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\mapa_activacion\\derecha\\diferencia_absoluta_resonancia_fmri_motor_mapa_activacion_derecha_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\mapa_activacion\\desconocido\\deficit_resonancia_fmri_motor_mapa_activacion_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\mapa_activacion\\desconocido\\diferencia_absoluta_resonancia_fmri_motor_mapa_activacion_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\mapa_activacion\\izquierda\\deficit_resonancia_fmri_motor_mapa_activacion_izquierda_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\mapa_activacion\\izquierda\\diferencia_absoluta_resonancia_fmri_motor_mapa_activacion_izquierda_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\bold_raw\\derecha\\deficit_resonancia_fmri_motor_bold_raw_derecha_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\bold_raw\\derecha\\diferencia_absoluta_resonancia_fmri_motor_bold_raw_derecha_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\bold_raw\\desconocido\\deficit_resonancia_fmri_motor_bold_raw_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\bold_raw\\desconocido\\diferencia_absoluta_resonancia_fmri_motor_bold_raw_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\bold_raw\\izquierda\\deficit_resonancia_fmri_motor_bold_raw_izquierda_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\fmri_motor\\bold_raw\\izquierda\\diferencia_absoluta_resonancia_fmri_motor_bold_raw_izquierda_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\dti_difusion\\trace_b0\\desconocido\\deficit_resonancia_dti_difusion_trace_b0_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\dti_difusion\\trace_b0\\desconocido\\diferencia_absoluta_resonancia_dti_difusion_trace_b0_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\dti_difusion\\fa\\desconocido\\deficit_resonancia_dti_difusion_fa_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\dti_difusion\\fa\\desconocido\\diferencia_absoluta_resonancia_dti_difusion_fa_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\dti_difusion\\adc\\desconocido\\deficit_resonancia_dti_difusion_adc_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\dti_difusion\\adc\\desconocido\\diferencia_absoluta_resonancia_dti_difusion_adc_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\dti_difusion\\ad\\desconocido\\deficit_resonancia_dti_difusion_ad_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\dti_difusion\\ad\\desconocido\\diferencia_absoluta_resonancia_dti_difusion_ad_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\anatomica\\t1\\desconocido\\deficit_resonancia_anatomica_t1_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\resonancias\\anatomica\\t1\\desconocido\\diferencia_absoluta_resonancia_anatomica_t1_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\mapas\\derecha\\deficit_mapas_derecha_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\mapas\\derecha\\diferencia_absoluta_mapas_derecha_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\mapas\\desconocido\\deficit_mapas_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\mapas\\desconocido\\diferencia_absoluta_mapas_desconocido_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\mapas\\izquierda\\deficit_mapas_izquierda_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\correlaciones\\mapas\\izquierda\\diferencia_absoluta_mapas_izquierda_vs_sano.nii.gz",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\datos\\paciente 6\\Antes\\Resultados funcional\\REFORMATEO\\Brain00mm.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\datos\\paciente 6\\Antes\\Resultados funcional\\REFORMATEO\\Brain01.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\datos\\paciente 6\\Antes\\Resultados funcional\\REFORMATEO\\Brain02.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\datos\\paciente 6\\Antes\\Resultados funcional\\REFORMATEO\\Brain03.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\datos\\paciente 6\\Antes\\Resultados funcional\\REFORMATEO\\rT1.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\datos\\paciente 6\\Antes\\Resultados funcional\\MAPAS\\MAPAS\\rMOTOR_DERECHA_FWE001.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  },
+  {
+    "path": "D:\\EAFIT\\01-2026\\proyecto\\datos\\paciente 6\\Antes\\Resultados funcional\\MAPAS\\MAPAS\\rMOTOR_IZQDA_FWE001.nii",
+    "score_m1_left": -10000,
+    "score_m1_right": -10000,
+    "score_m2_left": -10000,
+    "score_m2_right": -10000
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "project_root": "D:\\EAFIT\\01-2026\\proyecto",
+  "patient": "paciente 6",
+  "timepoint": "Antes",
+  "inputs": {
+    "t1": "{project_root}\\datos\\{patient}\\{timepoint}\\Resultados funcional\\REFORMATEO\\rT1.nii",
+    "wholebrain_tractogram": "{project_root}\\resultados\\{patient}\\{timepoint}\\tractografia_propia\\wholebrain_T1.trk",
+    "motor_masks_dir": "{project_root}\\resultados\\{patient}\\{timepoint}\\morfometria\\interna\\corregidas_corticales",
+    "brainstem_dir": "{project_root}\\resultados\\{patient}\\{timepoint}\\tractografia_propia\\brainstem_substructures_validated",
+    "freesurfer_license": "{project_root}\\license.txt"
+  },
+  "outputs": {
+    "brainstem": "{project_root}\\resultados\\{patient}\\{timepoint}\\tractografia_propia\\brainstem_substructures_validated",
+    "cst": "{project_root}\\resultados\\{patient}\\{timepoint}\\tractografia_propia\\cst_visualizacion_ventral_medial"
+  },
+  "colors": {
+    "left_cst": [
+      255,
+      55,
+      55
+    ],
+    "right_cst": [
+      45,
+      125,
+      255
+    ],
+    "overlap": [
+      220,
+      55,
+      220
+    ]
+  },
+  "integration_note": "El código actual final está configurado para paciente 6 / Antes. Para producción multi-paciente, convertir estas rutas en argumentos CLI o parámetros de función en lugar de reemplazar cadenas manualmente."
+}

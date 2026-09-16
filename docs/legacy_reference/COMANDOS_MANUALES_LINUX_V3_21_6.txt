@@ -1,0 +1,38 @@
+COMANDOS MANUALES LINUX — SUITE VCE v3.21.6
+
+1) Ir a la carpeta:
+cd /home/humath/Escritorio/suite_integrada_vce_v3_21_6_linux_qc_rescate_cst_integrado
+
+2) Permisos:
+chmod +x *.sh
+find modulos/modulo_CST_tronco_integracion_completa -name "*.sh" -exec chmod +x {} \;
+
+3) Instalar dependencias base:
+./setup_linux_v3_21_6.sh
+
+4) Reprocesar TAC paciente 3 y 6 con rescate de dos fémures:
+./run_reprocesar_tomografia_qc_dos_femures_pacientes_3_6_linux.sh
+
+5) Consolidar resultados paciente 3 y 6:
+./run_consolidar_pacientes_3_6_linux.sh
+
+6) Para CST/tronco, guardar licencia FreeSurfer:
+/home/humath/Escritorio/license.txt
+
+7) Instalar/cargar FreeSurfer:
+./instalar_freesurfer_nativo_linux.sh
+source /usr/local/freesurfer/SetUpFreeSurfer.sh
+export FS_LICENSE=/home/humath/Escritorio/license.txt
+
+8) Ejecutar CST/tronco paciente 6 Antes:
+./run_cst_tronco_paciente6_antes_linux.sh
+
+Manual sin script:
+export VCE_TAC_MIN_TWO_FEMUR_SLICES=8
+export VCE_TAC_MIN_FEMUR_PAIR_SEPARATION_PX=35
+export VCE_TAC_MIDPOINT_TWO_FEMUR_WINDOW=90
+export VCE_TAC_RESCATE_GLOBAL_DOS_FEMURES=1
+export VCE_TAC_PERMITIR_POCOS_CORTES_DOS_FEMURES=1
+source .venv/bin/activate
+python3 main.py --project-root "/home/humath/Escritorio" --data-root "/home/humath/Escritorio/datos" --patients 3 6 --only tomografia_avanzada --gpu auto --force --no-resume --skip-stuck
+python3 main.py --project-root "/home/humath/Escritorio" --data-root "/home/humath/Escritorio/datos" --patients 3 6 --only consolidado --gpu auto --force --no-resume --skip-stuck

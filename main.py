@@ -1,0 +1,562 @@
+"""
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                     ORQUESTADOR GENERAL DE LA SUITE VCE                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Archivo: main.py
+Versión: v3.21.21
+
+Descripción
+-----------
+Punto de entrada único para ejecutar secciones por paciente, etapa o corrida
+completa.
+
+Fundamento físico-matemático implementado
+-----------------------------------------
+Integra módulos heterogéneos bajo un flujo reproducible por paciente y etapa.
+La lógica de ejecución conserva la relación entre espacios de imagen mediante
+transformaciones afines homogéneas 4x4, selección de secciones y propagación
+ordenada de productos: señal -> imagen -> morfometría -> tractografía ->
+reporte.
+El modelo computacional se formula como un grafo acíclico de dependencias:
+D_i = f_i(D_{i-1}, parámetros), donde cada sección consume datos validados y
+escribe resultados trazables sin modificar los datos crudos.
+
+Trazabilidad de resultados
+--------------------------
+Los datos crudos permanecen separados de los derivados. Las salidas se escriben
+con nombre de paciente, etapa, módulo y espacio de referencia para facilitar
+revisión, comparación longitudinal y reproducción de la corrida.
+"""
+
+###############################################################################################################################
+###############################################################################################################################
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  0. IMPORTACIONES, CONFIGURACIÓN Y FUNCIONES DEL MÓDULO
+# ══════════════════════════════════════════════════════════════════════════════
+
+from __future__ import annotations
+
+###############################################################################################################################
+###############################################################################################################################
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  1. IMPORTACIONES BÁSICAS Y DEFINICIONES DE SECCIONES
+# ══════════════════════════════════════════════════════════════════════════════
+
+import argparse
+import os
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from typing import Iterable
+
+VERSION = "3.21.20"
+DEFAULT_PROJECT_ROOT = Path("/home/humath/Escritorio")
+
+SECTION_ALIASES = {
+    "todo": "todo",
+    "biomecanica": "biomecanica",
+    "emg": "biomecanica",
+    "dinamometria": "biomecanica",
+    "tomografia": "tomografia",
+    "tac": "tomografia",
+    "tomografia_avanzada": "tomografia_avanzada",
+    "mapas": "mapas",
+    "resonancias": "resonancias",
+    "mri": "resonancias",
+    "diagnostico": "diagnostico",
+    "derivados": "derivados",
+    "preparar_derivados": "preparar_derivados",
+    "preparar_derivados_reales": "preparar_derivados_reales",
+    "morfometria_interna": "morfometria_interna",
+    "corteza_fix": "corteza_fix",
+    "fs_mni_motor": "fs_mni_motor",
+    "freesurfer": "fs_mni_motor",
+    "cst": "cst_tronco",
+    "cst_tronco": "cst_tronco",
+    "tractografia": "cst_tronco",
+    "estructura_funcion": "estructura_funcion",
+    "correlaciones": "correlaciones",
+    "comparacion": "comparacion",
+    "consolidado": "consolidado",
+}
+
+DEFAULT_SECTIONS = ("todo",)
+
+
+###############################################################################################################################
+###############################################################################################################################
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  2. NORMALIZACIÓN DE PACIENTES, ETAPAS Y SECCIONES
+# ══════════════════════════════════════════════════════════════════════════════
+
+
+def normalize_patient_token(token: str) -> str:
+    """Convierte entradas como '3', 'paciente3' o 'paciente 7' a carpeta estándar."""
+    t = str(token or "").strip().strip(",;")
+    if not t:
+        return ""
+    low = t.lower().replace("_", " ")
+    if low in {"y", "e", "and", "or", "o"}:
+        return ""
+    if low == "sano":
+        return "sano"
+    m = re.search(r"(?:paciente\s*)?(\d+)", low)
+    if m:
+        return f"paciente {int(m.group(1))}"
+    if not low.startswith("paciente"):
+        return f"paciente {t}"
+    return " ".join(t.split())
+
+
+def normalize_patients(values: Iterable[str] | str | None) -> tuple[str, ...]:
+    """Normaliza listas separadas por espacios, comas o punto y coma."""
+    raw = " ".join(str(v) for v in values) if isinstance(values, (list, tuple)) else str(values or "")
+    raw = re.sub(r"paciente\s*(\d+)", r"\1", raw, flags=re.IGNORECASE)
+    tokens = [x for x in re.split(r"[,;\s]+", raw) if x.strip()]
+    out: list[str] = []
+    for tok in tokens:
+        patient = normalize_patient_token(tok)
+        if patient and patient != "sano" and patient not in out:
+            out.append(patient)
+    return tuple(out)
+
+
+def normalize_sections(values: Iterable[str] | str | None) -> tuple[str, ...]:
+    """Convierte nombres cortos de sección a los nombres internos del pipeline."""
+    raw = " ".join(str(v) for v in values) if isinstance(values, (list, tuple)) else str(values or "")
+    tokens = [x.strip().lower() for x in re.split(r"[,;\s]+", raw) if x.strip()]
+    if not tokens:
+        return DEFAULT_SECTIONS
+    out: list[str] = []
+    for token in tokens:
+        if token not in SECTION_ALIASES:
+            raise SystemExit(f"Sección no reconocida: {token}. Usa --list-sections para ver opciones.")
+        section = SECTION_ALIASES[token]
+        if section not in out:
+            out.append(section)
+    return tuple(out)
+
+
+def prompt_list(prompt: str, default: str) -> str:
+    """Lectura interactiva segura para terminal o ejecución redireccionada."""
+    try:
+        value = input(f"{prompt} [{default}]: ").strip()
+    except EOFError:
+        value = ""
+    return value or default
+
+
+def discover_patients(data_root: Path) -> tuple[str, ...]:
+    """Detecta carpetas paciente N dentro del directorio de datos."""
+    if not data_root.exists():
+        return ()
+    found = []
+    for p in sorted(data_root.iterdir()):
+        if p.is_dir() and re.match(r"paciente\s*\d+", p.name, flags=re.IGNORECASE):
+            found.append(normalize_patient_token(p.name))
+    return tuple(dict.fromkeys(found))
+
+
+###############################################################################################################################
+###############################################################################################################################
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  3. CONFIGURACIÓN DEL PIPELINE Y CONTROL DE ENERGÍA
+# ══════════════════════════════════════════════════════════════════════════════
+
+
+def build_config(args):
+    """Crea PipelineConfig con importación diferida para que `setup` no requiera paquetes instalados."""
+    from src.config import PipelineConfig
+
+    project_root = Path(args.project_root).expanduser().resolve()
+    data_root = Path(args.data_root).expanduser().resolve() if args.data_root else None
+    results_root = Path(args.results_root).expanduser().resolve() if args.results_root else None
+
+    if getattr(args, "interactive", False):
+        patients = normalize_patients(prompt_list("Pacientes a correr, ejemplo 3,6,7,9", "3"))
+        stages = tuple(x.strip() for x in re.split(r"[,;\s]+", prompt_list("Etapas", "Antes")) if x.strip())
+        sections = normalize_sections(prompt_list("Secciones, ejemplo cst_tronco o todo", "cst_tronco"))
+    elif getattr(args, "all_patients", False):
+        patients = discover_patients(data_root or (project_root / "datos"))
+        stages = tuple(args.stages)
+        sections = normalize_sections(args.sections)
+    else:
+        patients = normalize_patients(args.patients)
+        stages = tuple(args.stages)
+        sections = normalize_sections(args.sections)
+
+    if not patients:
+        raise SystemExit("No se detectaron pacientes. Usa --patients 3 6 7 o revisa la carpeta de datos.")
+
+    # Variables FreeSurfer y CST que antes estaban en scripts .sh. Ahora quedan explícitas aquí.
+    if args.fs_home:
+        os.environ["FREESURFER_HOME"] = str(Path(args.fs_home).expanduser())
+    if args.fs_license:
+        os.environ["FS_LICENSE"] = str(Path(args.fs_license).expanduser())
+    if args.fs_subjects_dir:
+        os.environ["VCE_FREESURFER_SUBJECTS_DIR"] = str(Path(args.fs_subjects_dir).expanduser())
+    os.environ["VCE_FS_THREADS"] = str(args.fs_threads)
+
+    if args.registro_com_corregir:
+        os.environ["VCE_REGISTRO_COM_CORREGIR"] = "1"
+        os.environ["VCE_REGISTRO_COM_EJES"] = args.registro_com_ejes
+
+    os.environ.setdefault("VCE_REQUIRE_APARC_ASEG_BEFORE_MIDBRAIN", "1")
+    os.environ.setdefault("VCE_CST_RESCATE_MESENCEFALO_ENABLE", "1")
+    os.environ.setdefault("VCE_CST_DILATACION_CORTEZA_MM", "8.0")
+    os.environ.setdefault("VCE_CST_DILATACION_TRONCO_MM", "4.0")
+    os.environ.setdefault("VCE_CST_FRACCION_IPSILATERAL_MINIMA", "0.60")
+
+    cfg = PipelineConfig(
+        project_root=project_root,
+        data_root_override=data_root,
+        results_root_override=results_root,
+        patients=patients,
+        control_name=args.control,
+        stages=stages,
+        resume=not args.no_resume,
+        force=args.force,
+        skip_stuck=args.skip_stuck,
+        gpu=args.gpu,
+        gpu_device=args.gpu_device,
+        gpu_min_elements=args.gpu_min_elements,
+    )
+    return cfg, sections
+
+
+def maybe_reexec_with_systemd_inhibit(argv: list[str]) -> None:
+    """Evita suspensión durante corridas largas sin depender de `.sh`."""
+    if os.environ.get("VCE_SYSTEMD_INHIBITED") == "1":
+        return
+    exe = shutil.which("systemd-inhibit")
+    if not exe:
+        print("[ENERGÍA] systemd-inhibit no está disponible. Continúo sin bloqueo de suspensión.", flush=True)
+        return
+    env = os.environ.copy()
+    env["VCE_SYSTEMD_INHIBITED"] = "1"
+    cmd = [
+        exe,
+        "--what=sleep:shutdown:idle",
+        "--who=VCE Suite",
+        "--why=Procesamiento biomédico largo FreeSurfer/tractografía",
+        sys.executable,
+        str(Path(__file__).resolve()),
+        *[x for x in argv if x != "--no-suspend"],
+    ]
+    print("[ENERGÍA] Reejecutando con systemd-inhibit para evitar suspensión.", flush=True)
+    os.execvpe(exe, cmd, env)
+
+
+###############################################################################################################################
+###############################################################################################################################
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  4. LIMPIEZA CONTROLADA DE RESULTADOS
+# ══════════════════════════════════════════════════════════════════════════════
+
+
+def find_tractography_dirs(results_root: Path) -> list[Path]:
+    """Encuentra variantes de carpetas de tractografía propia para limpiar."""
+    patterns = [
+        "tractografia_propia",
+        "tractografias_propias",
+        "tractografia propia",
+        "tractografias propias",
+    ]
+    out: list[Path] = []
+    if not results_root.exists():
+        return out
+    for p in results_root.rglob("*"):
+        if not p.is_dir():
+            continue
+        name = p.name.lower()
+        if name in patterns or name.startswith("tractografia_propia_backup"):
+            out.append(p)
+    return sorted(out, key=lambda x: len(str(x)), reverse=True)
+
+
+def clean_tractography(results_root: Path, *, yes: bool) -> int:
+    """Borra carpetas viejas de tractografía solo si el usuario confirma con --yes."""
+    targets = find_tractography_dirs(results_root)
+    print("=" * 90)
+    print("LIMPIEZA DE TRACTOGRAFÍAS PROPIAS")
+    print(f"Raíz resultados: {results_root}")
+    print(f"Carpetas encontradas: {len(targets)}")
+    print("=" * 90)
+    for path in targets:
+        print(path)
+    if not yes:
+        print("\nModo vista previa: no se borró nada. Para borrar usa: python main.py clean --target tractografia --yes")
+        return 0
+    for path in targets:
+        try:
+            if path.is_symlink():
+                path.unlink()
+            else:
+                shutil.rmtree(path)
+            print(f"BORRADO: {path}")
+        except Exception as exc:
+            print(f"NO SE PUDO BORRAR {path}: {exc}")
+    return 0
+
+
+###############################################################################################################################
+###############################################################################################################################
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  5. EJECUCIÓN DE SECCIONES DEL PIPELINE
+# ══════════════════════════════════════════════════════════════════════════════
+
+
+def print_run_header(cfg, sections: tuple[str, ...], gpu_status: dict) -> None:
+    """Muestra una cabecera profesional y trazable de la corrida."""
+    print("=" * 100)
+    print(f"SUITE INTEGRADA VCE v{VERSION}")
+    print(f"Proyecto:   {cfg.project_root}")
+    print(f"Datos:      {cfg.data_root()}")
+    print(f"Resultados: {cfg.results_root()}")
+    print(f"Pacientes:  {', '.join(cfg.patients)}")
+    print(f"Etapas:     {', '.join(cfg.stages)}")
+    print(f"Secciones:  {', '.join(sections)}")
+    print(f"Resume:     {'sí' if cfg.resume else 'no'} | Force: {'sí' if cfg.force else 'no'} | Skip stuck: {'sí' if cfg.skip_stuck else 'no'}")
+    if gpu_status.get("enabled"):
+        print(f"GPU:        activa · {gpu_status.get('device_name')} · backend={gpu_status.get('backend')}")
+    else:
+        print(f"GPU:        no activa · {gpu_status.get('reason', 'CPU')}")
+    print("=" * 100)
+
+
+def run_pipeline_sections(cfg, sections: tuple[str, ...]) -> int:
+    """Ejecuta únicamente las secciones solicitadas, conservando el flujo validado."""
+    from src.paths import ensure_result_tree
+    from src.biomechanics import run_biomechanics
+    from src.tomography import run_tomography
+    from src.neuroimage import run_maps, run_resonances, run_volume_correlations, run_resonance_diagnostic
+    from src.structure_function import run_structure_function_coupling
+    from src.external_morphometry import run_external_morphometry_integration, prepare_derivatives_workspace
+    from src.internal_morphometry import run_internal_morphometry_integration
+    from src.real_derivatives import run_real_derivatives_preparation
+    from src.longitudinal import run_before_after_comparisons
+    from src.reports import build_global_report, write_readme_results
+    from src.gpu import configure_gpu
+    from src.consolidation import run_patient_consolidation
+    from src.tomography_advanced_runner import run_advanced_tomography
+    from src.cortical_roi_runner import run_cortical_roi_corrections
+    from src.freesurfer_mni_motor import run_freesurfer_mni_motor
+    from src.cst_tronco_runner import run_cst_tronco_module
+
+    gpu_status = configure_gpu(cfg)
+    cfg.results_root().mkdir(parents=True, exist_ok=True)
+    for patient in list(cfg.patients) + [cfg.control_name]:
+        ensure_result_tree(cfg.results_root(), patient, cfg.stages, cfg.tests)
+
+    requested = set(sections)
+    run_all = "todo" in requested
+    print_run_header(cfg, sections, gpu_status)
+
+    if "preparar_derivados" in requested:
+        workspace = prepare_derivatives_workspace(cfg)
+        print(f"Plantilla de derivados externos creada en: {workspace}")
+        if not run_all and requested == {"preparar_derivados"}:
+            return 0
+
+    if "preparar_derivados_reales" in requested:
+        workspace = run_real_derivatives_preparation(cfg)
+        print(f"Workspace para generar derivados reales creado en: {workspace}")
+        if not run_all and requested == {"preparar_derivados_reales"}:
+            return 0
+
+    if "diagnostico" in requested:
+        run_resonance_diagnostic(cfg)
+        if not run_all and requested == {"diagnostico"}:
+            print(f"Diagnóstico guardado en: {cfg.results_root() / '_diagnostico_resonancias_v2'}")
+            return 0
+
+    if run_all or "biomecanica" in requested:
+        run_biomechanics(cfg)
+    if run_all or "tomografia" in requested:
+        run_tomography(cfg)
+        run_advanced_tomography(cfg)
+    if "tomografia_avanzada" in requested:
+        run_advanced_tomography(cfg)
+    if run_all or "mapas" in requested:
+        run_maps(cfg)
+    if run_all or "resonancias" in requested:
+        run_resonances(cfg)
+    if run_all or "morfometria_interna" in requested:
+        run_internal_morphometry_integration(cfg)
+    if run_all or "corteza_fix" in requested:
+        run_cortical_roi_corrections(cfg)
+    if run_all or "derivados" in requested:
+        run_external_morphometry_integration(cfg)
+    if run_all or "fs_mni_motor" in requested:
+        run_freesurfer_mni_motor(cfg)
+    if run_all or "cst_tronco" in requested:
+        run_cst_tronco_module(cfg)
+    if run_all or "estructura_funcion" in requested:
+        run_structure_function_coupling(cfg)
+    if run_all or "correlaciones" in requested:
+        run_volume_correlations(cfg)
+    if run_all or "comparacion" in requested:
+        run_before_after_comparisons(cfg)
+    if run_all or "consolidado" in requested:
+        run_patient_consolidation(cfg)
+
+    report = build_global_report(cfg)
+    readme = write_readme_results(cfg)
+    print("\n" + "=" * 100)
+    print("FINALIZADO")
+    print(f"Resultados en: {cfg.results_root()}")
+    if report:
+        print(f"Reporte global: {report}")
+    print(f"Guía de resultados: {readme}")
+    print("=" * 100)
+    return 0
+
+
+###############################################################################################################################
+###############################################################################################################################
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  6. SETUP, DIAGNÓSTICO Y CLI
+# ══════════════════════════════════════════════════════════════════════════════
+
+
+def run_setup(args) -> int:
+    """Crea/actualiza .venv e instala dependencias Python sin usar `.sh`."""
+    root = Path(args.project_root).expanduser().resolve()
+    venv = root / ".venv"
+    req = Path(__file__).resolve().parent / "requirements.txt"
+    print("=" * 90)
+    print("SETUP LINUX PYTHON")
+    print(f"Proyecto: {root}")
+    print(f"Entorno:  {venv}")
+    print(f"Reqs:     {req}")
+    print("=" * 90)
+    if not venv.exists():
+        subprocess.check_call([sys.executable, "-m", "venv", str(venv)])
+    py = venv / "bin" / "python"
+    subprocess.check_call([str(py), "-m", "pip", "install", "--upgrade", "pip", "setuptools", "wheel"])
+    subprocess.check_call([str(py), "-m", "pip", "install", "-r", str(req)])
+    print("\nSetup finalizado. Para ejecutar usa:")
+    print(f"{py} {Path(__file__).resolve()} run --patients 3 --stages Antes --sections cst_tronco --force")
+    return 0
+
+
+def run_doctor(args) -> int:
+    """Diagnóstico rápido de entorno y estructura sin procesar imágenes."""
+    project_root = Path(args.project_root).expanduser().resolve()
+    data_root = Path(args.data_root).expanduser().resolve() if args.data_root else project_root / "datos"
+    results_root = Path(args.results_root).expanduser().resolve() if args.results_root else project_root / "resultados"
+    print("=" * 90)
+    print("DOCTOR VCE")
+    print(f"Python:     {sys.executable}")
+    print(f"Proyecto:   {project_root} -> {project_root.exists()}")
+    print(f"Datos:      {data_root} -> {data_root.exists()}")
+    print(f"Resultados: {results_root} -> {results_root.exists()}")
+    print(f"FreeSurfer: {os.environ.get('FREESURFER_HOME', 'no definido')}")
+    print(f"FS_LICENSE: {os.environ.get('FS_LICENSE', str(project_root / 'license.txt'))}")
+    print("Pacientes detectados:", ", ".join(discover_patients(data_root)) or "ninguno")
+    print("=" * 90)
+    return 0
+
+
+def add_run_arguments(parser: argparse.ArgumentParser) -> None:
+    """Argumentos compartidos para `run`."""
+    parser.add_argument("--project-root", default=str(DEFAULT_PROJECT_ROOT), help="Raíz del proyecto. Linux recomendado: /home/humath/Escritorio")
+    parser.add_argument("--data-root", default=None, help="Carpeta exacta de datos. Por defecto: <project-root>/datos")
+    parser.add_argument("--results-root", default=None, help="Carpeta exacta de resultados. Por defecto: <project-root>/resultados")
+    parser.add_argument("--patients", nargs="*", default=["3"], help="Pacientes: --patients 3 6 7 9")
+    parser.add_argument("--all-patients", action="store_true", help="Detecta y corre todos los pacientes encontrados en datos/")
+    parser.add_argument("--stages", nargs="*", default=["Antes"], help="Etapas: --stages Antes Despues")
+    parser.add_argument("--sections", "--only", nargs="*", default=list(DEFAULT_SECTIONS), help="Secciones: cst_tronco, tomografia, resonancias, todo, etc.")
+    parser.add_argument("--interactive", action="store_true", help="Pregunta pacientes, etapas y secciones en consola.")
+    parser.add_argument("--control", default="sano", help="Nombre de carpeta del control sano.")
+    parser.add_argument("--force", action="store_true", help="Reprocesa aunque existan salidas/checkpoints.")
+    parser.add_argument("--no-resume", action="store_true", help="Desactiva reanudación por checkpoints.")
+    parser.add_argument("--skip-stuck", action="store_true", help="Salta tareas previas marcadas como running/failed.")
+    parser.add_argument("--gpu", choices=["auto", "on", "off"], default="auto")
+    parser.add_argument("--gpu-device", type=int, default=0)
+    parser.add_argument("--gpu-min-elements", type=int, default=250_000)
+    parser.add_argument("--fs-home", default=os.environ.get("FREESURFER_HOME", "/usr/local/freesurfer/8.2.0"))
+    parser.add_argument("--fs-license", default=os.environ.get("FS_LICENSE", "/home/humath/Escritorio/license.txt"))
+    parser.add_argument("--fs-subjects-dir", default=os.environ.get("VCE_FREESURFER_SUBJECTS_DIR", str(Path.home() / "freesurfer_subjects")))
+    parser.add_argument("--fs-threads", type=int, default=int(os.environ.get("VCE_FS_THREADS", "8")))
+    parser.add_argument("--registro-com-corregir", action="store_true", help="Activa corrección COM del registro b0→T1.")
+    parser.add_argument("--registro-com-ejes", choices=["z", "xyz"], default="z", help="Ejes de corrección COM.")
+    parser.add_argument("--clean-tractografia", action="store_true", help="Borra tractografías previas antes de correr.")
+    parser.add_argument("--no-suspend", action="store_true", help="Usa systemd-inhibit para evitar suspensión del equipo.")
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=f"Suite Integrada VCE v{VERSION}: punto de entrada único para Linux/GitHub.")
+    parser.add_argument("--list-sections", action="store_true", help="Muestra secciones disponibles y sale.")
+    sub = parser.add_subparsers(dest="command")
+
+    p_run = sub.add_parser("run", help="Ejecuta una o varias secciones por paciente/etapa.")
+    add_run_arguments(p_run)
+
+    p_setup = sub.add_parser("setup", help="Crea .venv e instala requirements.txt sin scripts .sh.")
+    p_setup.add_argument("--project-root", default=str(Path.cwd()))
+
+    p_clean = sub.add_parser("clean", help="Limpieza controlada de resultados.")
+    p_clean.add_argument("--project-root", default=str(DEFAULT_PROJECT_ROOT))
+    p_clean.add_argument("--results-root", default=None)
+    p_clean.add_argument("--target", choices=["tractografia"], default="tractografia")
+    p_clean.add_argument("--yes", action="store_true", help="Confirma borrado real. Sin --yes solo muestra vista previa.")
+
+    p_doctor = sub.add_parser("doctor", help="Verifica estructura y entorno.")
+    p_doctor.add_argument("--project-root", default=str(DEFAULT_PROJECT_ROOT))
+    p_doctor.add_argument("--data-root", default=None)
+    p_doctor.add_argument("--results-root", default=None)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+
+    # Compatibilidad: si el usuario usa el estilo viejo `python main.py --only ...`, asumimos `run`.
+    # Se respeta `--help` para mostrar la ayuda general del programa.
+    if argv and argv[0].startswith("--") and argv[0] not in {"--list-sections", "--help", "-h"}:
+        argv = ["run", *argv]
+    if not argv:
+        argv = ["run", "--interactive"]
+
+    parser = build_parser()
+    args = parser.parse_args(argv)
+
+    if args.list_sections:
+        print("Secciones disponibles:")
+        for key in sorted(SECTION_ALIASES):
+            print(" -", key)
+        return 0
+
+    if args.command == "setup":
+        return run_setup(args)
+    if args.command == "doctor":
+        return run_doctor(args)
+    if args.command == "clean":
+        root = Path(args.results_root).expanduser().resolve() if args.results_root else Path(args.project_root).expanduser().resolve() / "resultados"
+        return clean_tractography(root, yes=args.yes)
+
+    if args.command in {None, "run"}:
+        if getattr(args, "no_suspend", False):
+            maybe_reexec_with_systemd_inhibit(argv)
+        cfg, sections = build_config(args)
+        if getattr(args, "clean_tractografia", False):
+            clean_tractography(cfg.results_root(), yes=True)
+        return run_pipeline_sections(cfg, sections)
+
+    parser.print_help()
+    return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

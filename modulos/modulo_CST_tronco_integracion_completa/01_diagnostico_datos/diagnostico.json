@@ -1,0 +1,12 @@
+[
+  "generated_at",
+  "software",
+  "input_paths",
+  "dicomdir_index",
+  "scan_statistics",
+  "series_count",
+  "series",
+  "t1_nifti",
+  "findings",
+  "read_errors"
+]

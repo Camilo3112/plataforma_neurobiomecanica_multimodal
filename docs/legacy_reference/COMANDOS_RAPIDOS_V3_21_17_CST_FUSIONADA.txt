@@ -1,0 +1,25 @@
+cd /home/humath/Escritorio
+unzip -o suite_integrada_vce_v3_21_17_linux_cst_fusionada_rgb_interactivo.zip
+cd /home/humath/Escritorio/suite_integrada_vce_v3_21_17_linux_cst_fusionada_rgb_interactivo
+chmod +x *.sh
+./00_instalar_todo_linux.sh
+
+# Ver qué se borraría:
+./08_limpiar_todas_tractografias_propias_resultados.sh /home/humath/Escritorio/resultados
+
+# Borrar todas las carpetas tractografia_propia / tractografias_propias / backups:
+./08_limpiar_todas_tractografias_propias_resultados.sh /home/humath/Escritorio/resultados --yes
+
+# Test solo paciente 3 Antes:
+./11_run_paciente_3_antes_test_cst_completa_fusionada_sin_suspension_linux.sh
+
+# Interactivo para correr selección o todos:
+./09_run_interactivo_cst_completa_fusionada_sin_suspension_linux.sh
+
+# Correr todos los pacientes detectados limpiando antes:
+CLEAN_TRACTOGRAFIA_PREVIA=1 ./10_run_todos_pacientes_cst_completa_fusionada_sin_suspension_linux.sh
+
+# Ver salida paciente 3 Antes:
+OUT="/home/humath/Escritorio/resultados/paciente 3/Antes/tractografia_propia"
+ls -lh "$OUT"/via_cortico_espinal_completa.*
+find "$OUT/cst_visualizacion_ventral_medial" -type f | sort

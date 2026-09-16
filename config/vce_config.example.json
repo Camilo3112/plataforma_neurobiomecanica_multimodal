@@ -1,0 +1,24 @@
+{
+  "project_root": "/home/humath/Escritorio",
+  "data_root": "/home/humath/Escritorio/datos",
+  "results_root": "/home/humath/Escritorio/resultados",
+  "patients": [
+    "3",
+    "6",
+    "7",
+    "9"
+  ],
+  "stages": [
+    "Antes",
+    "Despues"
+  ],
+  "sections": [
+    "cst_tronco"
+  ],
+  "freesurfer_home": "/usr/local/freesurfer/8.2.0",
+  "fs_license": "/home/humath/Escritorio/license.txt",
+  "fs_subjects_dir": "/home/humath/freesurfer_subjects",
+  "fs_threads": 8,
+  "registro_com_corregir": true,
+  "registro_com_ejes": "z"
+}

@@ -1,0 +1,52 @@
+{
+  "strict_mode": true,
+  "allow_heuristic_motor_rois": false,
+  "allow_heuristic_brainstem": false,
+  "valid_for_tractography": true,
+  "missing_or_empty": [],
+  "method_priority": [
+    "explicit_roi",
+    "suite_roi_motor_final_or_freesurfer_native",
+    "freesurfer_aparc_aseg",
+    "suite_atlas_refinada_or_roi_shell",
+    "heuristic_only_if_explicitly_enabled"
+  ],
+  "freesurfer_labels": {
+    "m1_left": [
+      1024
+    ],
+    "m1_right": [
+      2024
+    ],
+    "m2_left": [
+      1003,
+      1028,
+      1017
+    ],
+    "m2_right": [
+      2003,
+      2028,
+      2017
+    ]
+  },
+  "brainstem_label": 16,
+  "aparc_aseg": null,
+  "sources": {
+    "m1_left": "suite_final_mask:D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto_atlas_refinada.nii.gz",
+    "m1_right": "suite_final_mask:D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m1_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_primari_corregida_auto_atlas_refinada.nii.gz",
+    "m2_left": "suite_final_mask:D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_izquierda_rMOTOR_IZQDA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto_atlas_refinada.nii.gz",
+    "m2_right": "suite_final_mask:D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\morfometria\\interna\\corregidas_corticales\\overlap_m2_derecha_rMOTOR_DERECHA_FWE001_mask_p95_nii_x_freesurfer_internal_corteza_motora_secunda_corregida_auto_atlas_refinada.nii.gz",
+    "brainstem": "found_anatomical_mask:D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\atlas_motor_rois\\brainstem_T1.nii.gz"
+  },
+  "prior_paths": {},
+  "voxel_counts": {
+    "m1_left": 284,
+    "m1_right": 428,
+    "m2_left": 167,
+    "m2_right": 442,
+    "brainstem": 83021
+  },
+  "candidate_report": "D:\\EAFIT\\01-2026\\proyecto\\resultados\\paciente 6\\Antes\\tractografia_propia\\atlas_motor_rois\\atlas_motor_candidatos.json",
+  "required_action": "ROI completas y listas para revisión visual.",
+  "warning": "M1 FreeSurfer=precentral. M2 es aproximación caudalmiddlefrontal+superiorfrontal+paracentral. El modo estricto rechaza cajas geométricas."
+}

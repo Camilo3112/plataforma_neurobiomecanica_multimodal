@@ -1,0 +1,745 @@
+==========================================================================================
+DIAGNÓSTICO PREVIO PARA RM DE DIFUSIÓN Y TRACTOGRAFÍA
+==========================================================================================
+Fecha de ejecución: 2026-07-30T17:37:54
+
+Este análisis NO convierte DICOM, NO ajusta tensores y NO genera tractografía.
+
+1. RUTAS
+------------------------------------------------------------------------------------------
+DICOMDIR: D:\EAFIT\01-2026\proyecto\datos\paciente 6\Antes\RESONANCIA\DICOMDIR
+Raíz escaneada: D:\EAFIT\01-2026\proyecto\datos\paciente 6\Antes\RESONANCIA
+T1: D:\EAFIT\01-2026\proyecto\datos\paciente 6\Antes\Resultados funcional\REFORMATEO\rT1.nii
+Salida: D:\EAFIT\01-2026\proyecto\resultados\paciente 6\Antes\diagnostico_previo_tractografia
+
+2. ESTADO DEL DICOMDIR
+------------------------------------------------------------------------------------------
+exists: True
+is_file: True
+is_directory: False
+referenced_file_count: 1998
+existing_referenced_file_count: 1998
+missing_referenced_file_count: 0
+error: No disponible
+
+3. ESCANEO DICOM
+------------------------------------------------------------------------------------------
+scan_root: D:\EAFIT\01-2026\proyecto\datos\paciente 6\Antes\RESONANCIA
+candidate_file_count: 2043
+valid_dicom_instance_count: 1998
+unreadable_or_non_dicom_count: 45
+series_detectadas: 42
+
+4. HALLAZGOS GENERALES
+------------------------------------------------------------------------------------------
+- Se encontraron 1 serie(s) con metadatos compatibles con una adquisición DWI cruda probable.
+- Se encontraron 5 mapa(s) derivado(s) de difusión. ADC, FA o TRACE no sustituyen la adquisición DWI original.
+- rT1.nii pudo abrirse y se documentaron dimensiones, resolución, orientación, affine y estadísticos de intensidad.
+- Este diagnóstico no evalúa artefactos, movimiento, distorsión EPI, eddy currents ni calidad visual de la DWI; eso corresponde al paso siguiente.
+
+5. SERIES ORDENADAS POR RELEVANCIA
+------------------------------------------------------------------------------------------
+
+[1] DWI_CRUDA_PROBABLE | puntaje=16
+Serie 31: t2 difusion axial_30dir
+Protocolo: t2 difusion axial_30dir
+Secuencia: *ep_b0
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 33 / 33
+Matriz: 910 x 912 | PixelSpacing: [1.69230771065, 1.69230771065] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 33.0
+b-values agrupados: [0.0, 1000.0]
+Mediciones b≈0: 3 | Mediciones b>0: 30
+Ejes de gradiente no nulos: 30
+Fuente de metadatos de difusión: ["standard_dicom"]
+ImageType: ['ORIGINAL', 'SECONDARY', 'DIFFUSION', 'NONE', 'ND', 'NORM', 'MOSAIC']
+Motivos de clasificación: contiene b-values mayores que cero; se detectaron 30 ejes de gradiente no nulos; el nombre/protocolo contiene términos de difusión; se detectaron mediciones b≈0
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206560533554292451.0.0.0
+
+[2] MAPA_DERIVADO_DIFUSION | puntaje=1
+Serie 33: t2 difusion axial_30dir_TRACEW
+Protocolo: t2 difusion axial_30dir
+Secuencia: *ep_b1000t
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 45 / 45
+Matriz: 130 x 132 | PixelSpacing: [1.69230771065, 1.69230771065] | SliceThickness: 3.0
+Posiciones de corte: 45 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: [1000.0]
+Mediciones b≈0: 0 | Mediciones b>0: 45
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: ["standard_dicom"]
+ImageType: ['DERIVED', 'SECONDARY', 'DIFFUSION', 'TRACEW', 'ND', 'NORM']
+Motivos de clasificación: contiene b-values mayores que cero; el nombre/protocolo contiene términos de difusión; parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206560533556492453.0.0.0
+
+[3] MAPA_DERIVADO_DIFUSION | puntaje=-5
+Serie 32: t2 difusion axial_30dir_ADC
+Protocolo: t2 difusion axial_30dir
+Secuencia: *ep_b0_1000
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 45 / 45
+Matriz: 130 x 132 | PixelSpacing: [1.69230771065, 1.69230771065] | SliceThickness: 3.0
+Posiciones de corte: 45 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'DIFFUSION', 'ADC', 'ND', 'NORM']
+Motivos de clasificación: el nombre/protocolo contiene términos de difusión; parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206560533556192452.0.0.0
+
+[4] MAPA_DERIVADO_DIFUSION | puntaje=-5
+Serie 34: t2 difusion axial_30dir_FA
+Protocolo: t2 difusion axial_30dir
+Secuencia: *ep_b0_1000
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 45 / 45
+Matriz: 130 x 132 | PixelSpacing: [1.69230771065, 1.69230771065] | SliceThickness: 3.0
+Posiciones de corte: 45 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'DIFFUSION', 'FA', 'ND', 'NORM']
+Motivos de clasificación: el nombre/protocolo contiene términos de difusión; parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206560533556992455.0.0.0
+
+[5] MAPA_DERIVADO_DIFUSION | puntaje=-5
+Serie 35: t2 difusion axial_30dir_ColFA
+Protocolo: t2 difusion axial_30dir
+Secuencia: (sin nombre)
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 45 / 45
+Matriz: 130 x 130 | PixelSpacing: No disponible | SliceThickness: No disponible
+Posiciones de corte: 0 | Volúmenes estimados por cortes: No disponible
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'DIFFUSION', 'FA', 'ND', 'NORM']
+Motivos de clasificación: el nombre/protocolo contiene términos de difusión; parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206560533557192456.0.0.0
+
+[6] MAPA_DERIVADO_DIFUSION | puntaje=-5
+Serie 36: t2 difusion axial_30dir_TENSOR
+Protocolo: t2 difusion axial_30dir
+Secuencia: (sin nombre)
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 45 / 45
+Matriz: 130 x 132 | PixelSpacing: No disponible | SliceThickness: No disponible
+Posiciones de corte: 0 | Volúmenes estimados por cortes: No disponible
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'DIFFUSION', 'TENSOR_B0']
+Motivos de clasificación: el nombre/protocolo contiene términos de difusión; parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206560533557392457.0.0.0
+
+[7] ANATOMICA_T1_PROBABLE | puntaje=0
+Serie 6: t1 spc vol sag
+Protocolo: t1 spc vol sag
+Secuencia: *tfl3d1_16ns
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 192 / 192
+Matriz: 256 x 256 | PixelSpacing: [1.0546875, 1.0546875] | SliceThickness: 0.98000001907349
+Posiciones de corte: 192 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['ORIGINAL', 'SECONDARY', 'M', 'ND', 'NORM']
+Motivos de clasificación: 
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206295343243602550.0.0.0
+
+[8] ANATOMICA_T1_PROBABLE | puntaje=-8
+Serie 100: <MPR Rango>
+Protocolo: t1 spc vol sag
+Secuencia: *tfl3d1_16ns
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 168 / 168
+Matriz: 256 x 256 | PixelSpacing: [1.05468702316, 1.05468702316] | SliceThickness: 0.98000001907349
+Posiciones de corte: 168 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'MPR', 'CSA MPR', 'CSAPARALLEL', 'M', 'ND', 'NORM'] | ['DERIVED', 'SECONDARY', 'PROJECTION IMAGE', 'CSA MPR', 'CSAPARALLEL', 'M', 'ND', 'NORM']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.5.2.19.45286.30000025102211495476300000494
+
+[9] ANATOMICA_T1_PROBABLE | puntaje=-8
+Serie 101: <MPR Rango[1]>
+Protocolo: t1 spc vol sag
+Secuencia: *tfl3d1_16ns
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 190 / 190
+Matriz: 256 x 256 | PixelSpacing: [1.05468702316, 1.05468702316] | SliceThickness: 0.98000001907349
+Posiciones de corte: 190 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'MPR', 'CSA MPR', 'CSAPARALLEL', 'M', 'ND', 'NORM'] | ['DERIVED', 'SECONDARY', 'PROJECTION IMAGE', 'CSA MPR', 'CSAPARALLEL', 'M', 'ND', 'NORM']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.5.2.19.45286.30000025102211495476300001382
+
+[10] ANATOMICA_T1_PROBABLE | puntaje=-8
+Serie 1013: TRACTOGRAFÍA
+Protocolo: t1 spc vol sag
+Secuencia: (sin nombre)
+Fabricante/modelo: Siemens Healthineers / syngo.via.VB80F
+Archivos/frames: 57 / 57
+Matriz: 2048 x 1421 | PixelSpacing: No disponible | SliceThickness: 0.0
+Posiciones de corte: 0 | Volúmenes estimados por cortes: No disponible
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.05.8.15.102457.30000025102307455326500000134
+
+[11] ANATOMICA_T1_PROBABLE | puntaje=-8
+Serie 1976: TRACTO CORTICOESPINAL
+Protocolo: t1 spc vol sag
+Secuencia: (sin nombre)
+Fabricante/modelo: Siemens Healthineers / syngo.via.VB80F
+Archivos/frames: 22 / 22
+Matriz: 918 x 637 | PixelSpacing: No disponible | SliceThickness: 0.0
+Posiciones de corte: 0 | Volúmenes estimados por cortes: No disponible
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.05.8.15.102457.30000025102307455326500000264
+
+[12] OTRA_SERIE | puntaje=0
+Serie 1: AAHScout
+Protocolo: AAHScout
+Secuencia: *fl3d1_ns
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 128 / 128
+Matriz: 160 x 160 | PixelSpacing: [1.625, 1.625] | SliceThickness: 1.6000000238419
+Posiciones de corte: 128 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['ORIGINAL', 'SECONDARY', 'M', 'ND', 'NORM']
+Motivos de clasificación: 
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206253757334200753.0.0.0
+
+[13] OTRA_SERIE | puntaje=0
+Serie 15: ep2d_pace_MOTOR DERECHA
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 80 / 80
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 80.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['ORIGINAL', 'SECONDARY', 'FMRI', 'NONE', 'ND', 'NORM', 'MOSAIC']
+Motivos de clasificación: 
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206382052411409894.0.0.0
+
+[14] OTRA_SERIE | puntaje=0
+Serie 22: ep2d_pace_MOTOR IZQUIERDA
+Protocolo: ep2d_pace_MOTOR IZQUIERDA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 80 / 80
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 80.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['ORIGINAL', 'SECONDARY', 'FMRI', 'NONE', 'ND', 'NORM', 'MOSAIC']
+Motivos de clasificación: 
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206441211360432982.0.0.0
+
+[15] OTRA_SERIE | puntaje=0
+Serie 29: ep2d_pace_170 RESTING
+Protocolo: ep2d_pace_170 RESTING
+Secuencia: *epfid2d1_85
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 170 / 170
+Matriz: 564 x 564 | PixelSpacing: [2.19148945808, 2.19148945808] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 170.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['ORIGINAL', 'SECONDARY', 'M', 'ND', 'NORM', 'MOSAIC']
+Motivos de clasificación: 
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206484346633256064.0.0.0
+
+[16] OTRA_SERIE | puntaje=0
+Serie 30: MoCoSeries
+Protocolo: ep2d_pace_170 RESTING
+Secuencia: *epfid2d1_85
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 170 / 170
+Matriz: 564 x 564 | PixelSpacing: [2.19148945808, 2.19148945808] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 170.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['ORIGINAL', 'SECONDARY', 'M', 'ND', 'NORM', 'MOCO', 'MOSAIC']
+Motivos de clasificación: 
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206484343894956062.0.0.0
+
+[17] OTRA_SERIE | puntaje=0
+Serie 5: t2 tse axial
+Protocolo: t2 tse axial
+Secuencia: *tse2d1_20
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 33 / 33
+Matriz: 512 x 512 | PixelSpacing: [0.44921875, 0.44921875] | SliceThickness: 4.0
+Posiciones de corte: 33 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['ORIGINAL', 'SECONDARY', 'M', 'NORM', 'DIS2D']
+Motivos de clasificación: 
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206291890057702482.0.0.0
+
+[18] OTRA_SERIE | puntaje=0
+Serie 7: gre_field_mapping
+Protocolo: gre_field_mapping
+Secuencia: *fm2d2r
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 47 / 47
+Matriz: 64 x 64 | PixelSpacing: [3.4375, 3.4375] | SliceThickness: 3.0
+Posiciones de corte: 47 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['ORIGINAL', 'SECONDARY', 'P', 'ND']
+Motivos de clasificación: 
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206351985863603633.0.0.0
+
+[19] OTRA_SERIE | puntaje=0
+Serie 7: gre_field_mapping - PR
+Protocolo: gre_field_mapping
+Secuencia: *fm2d2r
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 47 / 47
+Matriz: 64 x 64 | PixelSpacing: [3.4375, 3.4375] | SliceThickness: 3.0
+Posiciones de corte: 47 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['ORIGINAL', 'SECONDARY', 'P', 'ND']
+Motivos de clasificación: 
+SeriesInstanceUID: 1.2.840.113704.7.32.0.5.2.19.45286.30000025102210543100100000002
+
+[20] OTRA_SERIE | puntaje=0
+Serie 8: ep2d_pace_MOTOR DERECHA
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 20 / 20
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 20.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['ORIGINAL', 'SECONDARY', 'FMRI', 'NONE', 'ND', 'NORM', 'MOSAIC']
+Motivos de clasificación: 
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206363299348703930.0.0.0
+
+[21] OTRA_SERIE | puntaje=-8
+Serie 10: MoCoSeries
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 20 / 20
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 20.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'ND', 'NORM', 'MOCO', 'MOSAIC']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206363296548703922.0.0.0
+
+[22] OTRA_SERIE | puntaje=-8
+Serie 11: intermediate t-Map
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 1 / 1
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'TTEST', 'ND', 'NORM', 'MOCO', 'MOSAIC']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206363296554503926.0.0.0
+
+[23] OTRA_SERIE | puntaje=-8
+Serie 12: Design
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 1 / 1
+Matriz: 64 x 172 | PixelSpacing: [0.0010000000475, 0.0010000000475] | SliceThickness: 0.001
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'DESIGN', 'ND', 'NORM', 'MOCO']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206363296555103929.0.0.0
+
+[24] OTRA_SERIE | puntaje=-8
+Serie 13: EvaSeries_GLM
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 1 / 1
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'TTEST', 'ND', 'NORM', 'MOCO', 'MOSAIC', 'GLM']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206364887531104221.0.0.0
+
+[25] OTRA_SERIE | puntaje=-8
+Serie 14: Mean_&_t-Maps
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 3 / 3
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 3.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'ND', 'NORM', 'MOCO', 'MOSAIC', 'MEAN']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206364887532104222.0.0.0
+
+[26] OTRA_SERIE | puntaje=-8
+Serie 16: StartFMRI
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 1 / 1
+Matriz: 16 x 16 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'ND', 'NORM', 'MOCO', 'DUMMY IMAGE']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206382049500109888.0.0.0
+
+[27] OTRA_SERIE | puntaje=-8
+Serie 17: MoCoSeries
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 80 / 80
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 80.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'ND', 'NORM', 'MOCO', 'MOSAIC']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206382049496109886.0.0.0
+
+[28] OTRA_SERIE | puntaje=-8
+Serie 18: intermediate t-Map
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 61 / 61
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 61.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'TTEST', 'ND', 'NORM', 'MOCO', 'MOSAIC']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206382049500709890.0.0.0
+
+[29] OTRA_SERIE | puntaje=-8
+Serie 19: Design
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 1 / 1
+Matriz: 80 x 172 | PixelSpacing: [0.0010000000475, 0.0010000000475] | SliceThickness: 0.001
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'DESIGN', 'ND', 'NORM', 'MOCO']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206382049501209893.0.0.0
+
+[30] OTRA_SERIE | puntaje=-8
+Serie 2: AAHScout_MPR_sag
+Protocolo: AAHScout
+Secuencia: *fl3d1_ns
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 5 / 5
+Matriz: 162 x 164 | PixelSpacing: [1.60000002384, 1.60000002384] | SliceThickness: 1.6000000238419
+Posiciones de corte: 5 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'MPR', 'ND', 'NORM']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206254172507201822.0.0.0
+
+[31] OTRA_SERIE | puntaje=-8
+Serie 20: EvaSeries_GLM
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 1 / 1
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'TTEST', 'ND', 'NORM', 'MOCO', 'MOSAIC', 'GLM']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206383995726410185.0.0.0
+
+[32] OTRA_SERIE | puntaje=-8
+Serie 21: Mean_&_t-Maps
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 3 / 3
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 3.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'ND', 'NORM', 'MOCO', 'MOSAIC', 'MEAN']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206383995727310186.0.0.0
+
+[33] OTRA_SERIE | puntaje=-8
+Serie 23: StartFMRI
+Protocolo: ep2d_pace_MOTOR IZQUIERDA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 1 / 1
+Matriz: 16 x 16 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'ND', 'NORM', 'MOCO', 'DUMMY IMAGE']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.05.2.19.45286.202510220644128582932976.0.0.0
+
+[34] OTRA_SERIE | puntaje=-8
+Serie 24: MoCoSeries
+Protocolo: ep2d_pace_MOTOR IZQUIERDA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 80 / 80
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 80.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'ND', 'NORM', 'MOCO', 'MOSAIC']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.05.2.19.45286.202510220644128579032974.0.0.0
+
+[35] OTRA_SERIE | puntaje=-8
+Serie 25: intermediate t-Map
+Protocolo: ep2d_pace_MOTOR IZQUIERDA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 61 / 61
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 61.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'TTEST', 'ND', 'NORM', 'MOCO', 'MOSAIC']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.05.2.19.45286.202510220644128583532978.0.0.0
+
+[36] OTRA_SERIE | puntaje=-8
+Serie 26: Design
+Protocolo: ep2d_pace_MOTOR IZQUIERDA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 1 / 1
+Matriz: 80 x 172 | PixelSpacing: [0.0010000000475, 0.0010000000475] | SliceThickness: 0.001
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'DESIGN', 'ND', 'NORM', 'MOCO']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.05.2.19.45286.202510220644128584132981.0.0.0
+
+[37] OTRA_SERIE | puntaje=-8
+Serie 27: EvaSeries_GLM
+Protocolo: ep2d_pace_MOTOR IZQUIERDA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 1 / 1
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'TTEST', 'ND', 'NORM', 'MOCO', 'MOSAIC', 'GLM']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206442681469233273.0.0.0
+
+[38] OTRA_SERIE | puntaje=-8
+Serie 28: Mean_&_t-Maps
+Protocolo: ep2d_pace_MOTOR IZQUIERDA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 3 / 3
+Matriz: 630 x 632 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 3.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'ND', 'NORM', 'MOCO', 'MOSAIC', 'MEAN']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206442681470133274.0.0.0
+
+[39] OTRA_SERIE | puntaje=-8
+Serie 3: AAHScout_MPR_cor
+Protocolo: AAHScout
+Secuencia: *fl3d1_ns
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 3 / 3
+Matriz: 162 x 164 | PixelSpacing: [1.60000002384, 1.60000002384] | SliceThickness: 1.6000000238419
+Posiciones de corte: 3 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'MPR', 'ND', 'NORM']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206254172567601828.0.0.0
+
+[40] OTRA_SERIE | puntaje=-8
+Serie 4: AAHScout_MPR_tra
+Protocolo: AAHScout
+Secuencia: *fl3d1_ns
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 3 / 3
+Matriz: 162 x 164 | PixelSpacing: [1.60000002384, 1.60000002384] | SliceThickness: 1.6000000238419
+Posiciones de corte: 3 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'MPR', 'ND', 'NORM']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206254172596701832.0.0.0
+
+[41] OTRA_SERIE | puntaje=-8
+Serie 777: POSTPROCESO
+Protocolo: POSTPROCESO-BIOMEDICA
+Secuencia: (sin nombre)
+Fabricante/modelo: SIEMENS / IMG2DCM V1
+Archivos/frames: 4 / 4
+Matriz: 605 x 756 | PixelSpacing: No disponible | SliceThickness: 0.0
+Posiciones de corte: 0 | Volúmenes estimados por cortes: No disponible
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['__DERIVED__ _SECONDARY__ ___', 'SECONDARY']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.05.8.15.102457.30000020073112431051900458962
+
+[42] OTRA_SERIE | puntaje=-8
+Serie 9: StartFMRI
+Protocolo: ep2d_pace_MOTOR DERECHA
+Secuencia: *epfid2d1_81
+Fabricante/modelo: SIEMENS / Skyra
+Archivos/frames: 1 / 1
+Matriz: 16 x 16 | PixelSpacing: [2.44444441795, 2.44444441795] | SliceThickness: 3.0
+Posiciones de corte: 1 | Volúmenes estimados por cortes: 1.0
+b-values agrupados: []
+Mediciones b≈0: 0 | Mediciones b>0: 0
+Ejes de gradiente no nulos: 0
+Fuente de metadatos de difusión: []
+ImageType: ['DERIVED', 'SECONDARY', 'FMRI', 'ND', 'NORM', 'MOCO', 'DUMMY IMAGE']
+Motivos de clasificación: parece una imagen derivada, no la adquisición cruda
+SeriesInstanceUID: 1.2.840.113704.7.32.0.2.19.45286.2025102206363296553803924.0.0.0
+
+6. INSPECCIÓN DE rT1.nii
+------------------------------------------------------------------------------------------
+exists: True
+error: No disponible
+image_class: Nifti1Image
+shape: [181, 217, 181]
+ndim: 3
+dtype_on_disk: uint16
+voxel_sizes_mm: [0.9999999936767825, 0.9999999682414179, 0.999999988042214]
+orientation_axcodes: ["R", "A", "S"]
+affine: [[0.9991422295570374, -0.040860891342163086, -0.006721377372741699, -85.49259185791016], [0.04093825817108154, 0.9990919828414917, 0.011798620223999023, -132.4215087890625], [0.006233096122741699, -0.012063741683959961, 0.9999077916145325, -72.48640441894531], [0.0, 0.0, 0.0, 1.0]]
+affine_determinant_3x3: 0.9999999499604078
+qform_code: 2
+sform_code: 2
+xyzt_units: ["mm", "sec"]
+zooms: [1.0, 0.9999999403953552, 1.0]
+obliquity_degrees_per_axis: [2.373299883384625, 2.441799139422572, 0.7780329976504594]
+intensity_statistics: ["finite_voxel_count", "nonfinite_voxel_count", "minimum", "p01", "p05", "median", "p95", "p99", "maximum", "mean", "standard_deviation", "nonzero_fraction"]
+nonzero_bounding_box: ["min_voxel", "max_voxel", "size_voxels"]
+is_3d: True
+has_valid_spatial_affine: True
+preview_path: D:\EAFIT\01-2026\proyecto\resultados\paciente 6\Antes\diagnostico_previo_tractografia\vista_previa_rT1.png
+
+7. ARCHIVOS QUE DEBES COMPARTIR PARA LA SIGUIENTE REVISIÓN
+------------------------------------------------------------------------------------------
+- reporte_resumen.txt
+- series_summary.csv
+- diagnostico.json
+- vista_previa_rT1.png
+
+No es necesario compartir todavía los DICOM originales ni datos identificables.

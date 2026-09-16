@@ -1,0 +1,46 @@
+cd /d "D:\EAFIT\01-2026\proyecto\suite_integrada_vce_v3_21_6_windows_qc_rescate_cst_integrado"
+
+REM 1) Crear entorno corto, evitando WinError 206
+rmdir /s /q D:\vce_env
+python -m venv D:\vce_env
+D:\vce_env\Scripts\python.exe -m pip install --upgrade pip setuptools wheel
+D:\vce_env\Scripts\python.exe -m pip install pandas numpy scipy matplotlib openpyxl nibabel pydicom scikit-image opencv-python pillow tqdm
+
+REM 2) Activar rescate de cortes con dos femures
+set VCE_TAC_MIN_TWO_FEMUR_SLICES=8
+set VCE_TAC_MIN_FEMUR_PAIR_SEPARATION_PX=35
+set VCE_TAC_MIDPOINT_TWO_FEMUR_WINDOW=90
+set VCE_TAC_RESCATE_GLOBAL_DOS_FEMURES=1
+set VCE_TAC_PERMITIR_POCOS_CORTES_DOS_FEMURES=1
+
+REM 3) Reprocesar tomografia avanzada solo paciente 3 y 6
+D:\vce_env\Scripts\python.exe main.py ^
+  --project-root "D:\EAFIT\01-2026\proyecto" ^
+  --data-root "D:\EAFIT\01-2026\proyecto\datos" ^
+  --patients 3 6 ^
+  --only tomografia_avanzada ^
+  --gpu off ^
+  --force ^
+  --no-resume ^
+  --skip-stuck
+
+REM 4) Rehacer consolidado
+D:\vce_env\Scripts\python.exe main.py ^
+  --project-root "D:\EAFIT\01-2026\proyecto" ^
+  --data-root "D:\EAFIT\01-2026\proyecto\datos" ^
+  --patients 3 6 ^
+  --only consolidado ^
+  --gpu off ^
+  --force ^
+  --no-resume ^
+  --skip-stuck
+
+REM 5) Opcional: correr modulo tronco/CST cuando existan rT1, wholebrain_T1.trk y licencia FreeSurfer
+D:\vce_env\Scripts\python.exe main.py ^
+  --project-root "D:\EAFIT\01-2026\proyecto" ^
+  --data-root "D:\EAFIT\01-2026\proyecto\datos" ^
+  --patients 6 ^
+  --stages Antes ^
+  --only cst_tronco ^
+  --gpu off ^
+  --skip-stuck

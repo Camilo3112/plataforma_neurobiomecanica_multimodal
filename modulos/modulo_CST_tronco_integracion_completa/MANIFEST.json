@@ -1,0 +1,265 @@
+{
+  "package": "modulo_CST_tronco_integracion_completa",
+  "created_utc": "2026-08-14T15:04:50.432844Z",
+  "scope": "Código, soporte, documentación e historial del módulo de segmentación de tronco y visualización CST desarrollado para paciente 6 / Antes.",
+  "production_versions": {
+    "brainstem": "FINAL_V9",
+    "cst": "FINAL_V4_CORONAL"
+  },
+  "excluded_large_or_private_data": [
+    "DICOM",
+    "rT1.nii del paciente",
+    "wholebrain_T1.trk real",
+    "NIfTI generados localmente",
+    "FreeSurfer license.txt",
+    "FreeSurfer .deb de 6.51 GB"
+  ],
+  "files": [
+    {
+      "path": "01_diagnostico_datos/atlas_motor_candidatos.json",
+      "status": "DIAGNOSTICO",
+      "size_bytes": 150696,
+      "sha256": "000b1dbf659a87020376a6e7b835cce22590c0206315fd10bff3b31845ba46d4"
+    },
+    {
+      "path": "01_diagnostico_datos/atlas_motor_reporte.json",
+      "status": "DIAGNOSTICO",
+      "size_bytes": 2511,
+      "sha256": "b1ebc4e3058d544e836e9799340e114e492c9dcb19503615f17af8fdde1c07d4"
+    },
+    {
+      "path": "01_diagnostico_datos/diagnostico.json",
+      "status": "DIAGNOSTICO",
+      "size_bytes": 178,
+      "sha256": "e16b6c1279c0b97e32e5e650e8837fa8e8fbaa55d0b0e523cac570d1b3d6d79c"
+    },
+    {
+      "path": "01_diagnostico_datos/errores_lectura.csv",
+      "status": "DIAGNOSTICO",
+      "size_bytes": 6046,
+      "sha256": "7388a08af97f38b1d18c1070dca38f72c0cf554b5296842ee34180ce6bcfda71"
+    },
+    {
+      "path": "01_diagnostico_datos/inspeccionar_datos_tractografia.py",
+      "status": "DIAGNOSTICO",
+      "size_bytes": 47149,
+      "sha256": "73fa8bda88eb92a0971247e18782142c2a394f489223aa1dbac2434fa2effaa7"
+    },
+    {
+      "path": "01_diagnostico_datos/reporte_resumen.txt",
+      "status": "DIAGNOSTICO",
+      "size_bytes": 33592,
+      "sha256": "8bf28e270fbb8aadf7550d460e2517f1449e4d6f2ef715373786135b60a0752b"
+    },
+    {
+      "path": "01_diagnostico_datos/series_summary.csv",
+      "status": "DIAGNOSTICO",
+      "size_bytes": 15960,
+      "sha256": "8bf684c75933618de3d9a50add44d04514f27704563573ca8d63520bfb9dea87"
+    },
+    {
+      "path": "02_segmentacion_tronco/FINAL_V9/EJECUTAR_SEGMENTACION_TRONCO_WINDOWS_V9.cmd",
+      "status": "FINAL",
+      "size_bytes": 771,
+      "sha256": "20488d64acd33121be4c4e84ea055beceb3c23105fe91072cf921001ec8d2ad5"
+    },
+    {
+      "path": "02_segmentacion_tronco/FINAL_V9/README_WINDOWS_V9.txt",
+      "status": "FINAL",
+      "size_bytes": 1341,
+      "sha256": "d466d853366605cacd67f9078b43f9797c4392ff017cb103040427db60b3b48f"
+    },
+    {
+      "path": "02_segmentacion_tronco/FINAL_V9/segmentar_tronco_todo_windows_V9.ps1",
+      "status": "FINAL",
+      "size_bytes": 23697,
+      "sha256": "a8f8e5b3a6c3ea268daa770914c754c93cad3e7526fc1525e97f3516e2c38615"
+    },
+    {
+      "path": "02_segmentacion_tronco/FINAL_V9/validar_brainstem_substructures_T1_windows.py",
+      "status": "FINAL",
+      "size_bytes": 7628,
+      "sha256": "cb62078e67b912ce7ab7b5d55e689c8bb894fda33c04fc8bddd62289c5822e60"
+    },
+    {
+      "path": "02_segmentacion_tronco/soporte_WSL_DNS/REPARAR_DNS_WSL.cmd",
+      "status": "SOPORTE",
+      "size_bytes": 758,
+      "sha256": "fe4e9f86c78fc929f22583f7d568f253ad6b7477d0cb1a9fc9a34250b39fddf1"
+    },
+    {
+      "path": "02_segmentacion_tronco/soporte_WSL_DNS/REPARAR_DNS_WSL.ps1",
+      "status": "SOPORTE",
+      "size_bytes": 9243,
+      "sha256": "6b42622e1c31e9fc4df4cd62fd281f40d737bc6f0b86f9b7b145f4df8ada55be"
+    },
+    {
+      "path": "03_cst_visualizacion/FINAL_V4_CORONAL/EJECUTAR_CST_COLORES_V4_CORONAL.cmd",
+      "status": "FINAL",
+      "size_bytes": 788,
+      "sha256": "92ff1c024bbcd2ae02aca3944ac4ac7215fb7b0b2e31d0e300c74be3fd56f46a"
+    },
+    {
+      "path": "03_cst_visualizacion/FINAL_V4_CORONAL/README_CST_COLORES_V4_CORONAL.txt",
+      "status": "FINAL",
+      "size_bytes": 1555,
+      "sha256": "429ad2149e6c70e20f2f503060573397eab2b9c90fe9fd5bae8231ad3c5a3a14"
+    },
+    {
+      "path": "03_cst_visualizacion/FINAL_V4_CORONAL/extraer_visualizar_cst_colores_V4_coronal.py",
+      "status": "FINAL",
+      "size_bytes": 53553,
+      "sha256": "19343a231baf4c7e669c68aa6501c9a78d0351f864d05a6e272a8fbe4a2f78d0"
+    },
+    {
+      "path": "04_validacion/validar_brainstem_substructures_T1.py",
+      "status": "DOCUMENTACION",
+      "size_bytes": 9549,
+      "sha256": "c45fa95cf49564cb1284b4fe0ec1161822a7180dd5e434dc0a3a3e335bb99105"
+    },
+    {
+      "path": "04_validacion/validar_brainstem_substructures_T1_windows.py",
+      "status": "DOCUMENTACION",
+      "size_bytes": 7628,
+      "sha256": "cb62078e67b912ce7ab7b5d55e689c8bb894fda33c04fc8bddd62289c5822e60"
+    },
+    {
+      "path": "05_configuracion_ejemplo/CHECKLIST_INTEGRACION.md",
+      "status": "DOCUMENTACION",
+      "size_bytes": 1509,
+      "sha256": "206f76b404112360e8d7f5af185c64782c361cb0b18d121841bc9e463540a575"
+    },
+    {
+      "path": "05_configuracion_ejemplo/config_proyecto_ejemplo.json",
+      "status": "DOCUMENTACION",
+      "size_bytes": 1342,
+      "sha256": "17298f1036f3c34b9b39fb8c6164034842344d737db663060a0556452fa962fd"
+    },
+    {
+      "path": "05_configuracion_ejemplo/requirements_python.txt",
+      "status": "DOCUMENTACION",
+      "size_bytes": 31,
+      "sha256": "5e254cc6b749de8c64bf66e47cb582742658bc1a0c1a00536e49d5e8477fd8e9"
+    },
+    {
+      "path": "06_evidencia/seleccion_archivos_itksnap.png",
+      "status": "EVIDENCIA",
+      "size_bytes": 62433,
+      "sha256": "04ede15cd88b8b0eaca98394880f43e1234db23f9183d1fc7b3f43bafa40a729"
+    },
+    {
+      "path": "06_evidencia/tronco_delimitado_itksnap.png",
+      "status": "EVIDENCIA",
+      "size_bytes": 343843,
+      "sha256": "6356dc7679f712aa0d9c05800786f3178280fbb29c1ed5448e5aecee766f8ce1"
+    },
+    {
+      "path": "99_historico/cst/cst_colores_paciente6_antes.zip",
+      "status": "HISTORICO",
+      "size_bytes": 11654,
+      "sha256": "f5822c1ad9b45d6ee57aa005783b1a8cbff2d9785a3f6d4dcaca5ac7573f3005"
+    },
+    {
+      "path": "99_historico/cst/cst_colores_paciente6_antes_V2.zip",
+      "status": "HISTORICO",
+      "size_bytes": 12394,
+      "sha256": "71c38f1c8c54957a1f877bb906de01157be5b67371db91cb642da3f20f5436ae"
+    },
+    {
+      "path": "99_historico/cst/cst_colores_paciente6_antes_V3_ventral.zip",
+      "status": "HISTORICO",
+      "size_bytes": 13464,
+      "sha256": "5bd4aa1529fad8140a9ffe4614d9f46b0a743e974b2579c82748acd8658c3ef9"
+    },
+    {
+      "path": "99_historico/segmentacion_tronco/segmentacion_tronco_windows_V3.zip",
+      "status": "HISTORICO",
+      "size_bytes": 9119,
+      "sha256": "01b8cdf2fc3f53c12eebda3121c6edde85177d20e951caa97c38ab9f2d6c4f41"
+    },
+    {
+      "path": "99_historico/segmentacion_tronco/segmentacion_tronco_windows_V4.zip",
+      "status": "HISTORICO",
+      "size_bytes": 10201,
+      "sha256": "38c2a19317f35e75c45db15e44751b947855098dd0c5739ce44d3703881bebbd"
+    },
+    {
+      "path": "99_historico/segmentacion_tronco/segmentacion_tronco_windows_V5.zip",
+      "status": "HISTORICO",
+      "size_bytes": 10316,
+      "sha256": "4d927644067a73789c1110bba3a92dd1013214e5fcc03aefbc2692d6875e4637"
+    },
+    {
+      "path": "99_historico/segmentacion_tronco/segmentacion_tronco_windows_V6.zip",
+      "status": "HISTORICO",
+      "size_bytes": 10352,
+      "sha256": "f95cc60b29094a2b8fe04a3e629c1be8cbb2ce688d82acf8cbc274a462bd2d61"
+    },
+    {
+      "path": "99_historico/segmentacion_tronco/segmentacion_tronco_windows_V7.zip",
+      "status": "HISTORICO",
+      "size_bytes": 10656,
+      "sha256": "a6b014cb2c0065902e11fd882557bce112067e8d229a066dc016888a739b368f"
+    },
+    {
+      "path": "99_historico/segmentacion_tronco/segmentacion_tronco_windows_V8.zip",
+      "status": "HISTORICO",
+      "size_bytes": 11007,
+      "sha256": "8fadbf0aaa055afc33f687d6560b9f1c438395fcbb6c4e10d38aceb80f97a43f"
+    },
+    {
+      "path": "99_historico/tractografia_prototipos/README_atlas_motor_tractografia.txt",
+      "status": "HISTORICO",
+      "size_bytes": 2278,
+      "sha256": "048c90fb9c18f01b842df238fd8b6b083f8103e6ea0874fe520cdc500cac7e02"
+    },
+    {
+      "path": "99_historico/tractografia_prototipos/README_atlas_motor_v2_estricto.txt",
+      "status": "HISTORICO",
+      "size_bytes": 1937,
+      "sha256": "40dde62f9a71000c6904e1febb309a96dc54ffb9b946891b0e6df3079ff9c659"
+    },
+    {
+      "path": "99_historico/tractografia_prototipos/README_atlas_motor_v3.txt",
+      "status": "HISTORICO",
+      "size_bytes": 2569,
+      "sha256": "b211c5cf92e52853c3ce8986b372aef86571bbe87b75566360d4940cd521362e"
+    },
+    {
+      "path": "99_historico/tractografia_prototipos/README_tractografia_propia.txt",
+      "status": "HISTORICO",
+      "size_bytes": 1264,
+      "sha256": "1031fff79c15eec7ae0412166af5bcd81c49d00f6105239454e73f7a22e9ddaf"
+    },
+    {
+      "path": "99_historico/tractografia_prototipos/tractografia_propia_T1.py",
+      "status": "HISTORICO",
+      "size_bytes": 30714,
+      "sha256": "a7f68390590ec1fc24085afa45bb7e3af6efde35a0905cd06592ee747dc84412"
+    },
+    {
+      "path": "99_historico/tractografia_prototipos/tractografia_propia_T1_atlas_motor.py",
+      "status": "HISTORICO",
+      "size_bytes": 48876,
+      "sha256": "fe2f0d3ebbfd9920a10b0eb4778affc9b3bd0554e747ac118065ec908c0f9c4b"
+    },
+    {
+      "path": "99_historico/tractografia_prototipos/tractografia_propia_T1_atlas_motor_v2_estricto.py",
+      "status": "HISTORICO",
+      "size_bytes": 54925,
+      "sha256": "4f4bb03caef9362f2e33de03a2268a11ede28c6477fa5916ad86af042d501a6b"
+    },
+    {
+      "path": "99_historico/tractografia_prototipos/tractografia_propia_T1_atlas_motor_v3_harvard_oxford.py",
+      "status": "HISTORICO",
+      "size_bytes": 69463,
+      "sha256": "6da3484922335de9b124da5cf23464a54b5ee8f9d385944e28a81b19aa27ba6d"
+    },
+    {
+      "path": "README.md",
+      "status": "DOCUMENTACION",
+      "size_bytes": 27156,
+      "sha256": "7dfad9b82813e135868351d70a7e31af5bae70d7b585746d4e3aee2662e226eb"
+    }
+  ]
+}
