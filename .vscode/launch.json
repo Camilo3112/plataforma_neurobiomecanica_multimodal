@@ -1,0 +1,115 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "VCE | Menú interactivo",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [],
+      "env": {
+        "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
+        "FS_LICENSE": "/home/humath/Escritorio/license.txt",
+        "VCE_FREESURFER_SUBJECTS_DIR": "/home/humath/freesurfer_subjects"
+      }
+    },
+    {
+      "name": "VCE | Listar secciones",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": ["--list-sections"],
+      "env": {
+        "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
+        "FS_LICENSE": "/home/humath/Escritorio/license.txt",
+        "VCE_FREESURFER_SUBJECTS_DIR": "/home/humath/freesurfer_subjects"
+      }
+    },
+    {
+      "name": "VCE | CST paciente 3 Antes",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "run",
+        "--project-root", "/home/humath/Escritorio",
+        "--patients", "3",
+        "--stages", "Antes",
+        "--sections", "cst_tronco",
+        "--registro-com-corregir",
+        "--registro-com-ejes", "z",
+        "--no-suspend"
+      ],
+      "env": {
+        "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
+        "FS_LICENSE": "/home/humath/Escritorio/license.txt",
+        "VCE_FREESURFER_SUBJECTS_DIR": "/home/humath/freesurfer_subjects"
+      }
+    },
+    {
+      "name": "VCE | 19 zonas + correlación paciente 3",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "run",
+        "--project-root", "/home/humath/Escritorio",
+        "--patients", "3",
+        "--stages", "Antes", "Despues",
+        "--sections", "zonas_correlacion",
+        "--no-suspend"
+      ],
+      "env": {
+        "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
+        "FS_LICENSE": "/home/humath/Escritorio/license.txt",
+        "VCE_FREESURFER_SUBJECTS_DIR": "/home/humath/freesurfer_subjects"
+      }
+    },
+    {
+      "name": "VCE | CST + 19 zonas paciente 3",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "run",
+        "--project-root", "/home/humath/Escritorio",
+        "--patients", "3",
+        "--stages", "Antes", "Despues",
+        "--sections", "cst_tronco", "zonas_correlacion",
+        "--registro-com-corregir",
+        "--registro-com-ejes", "z",
+        "--no-suspend"
+      ],
+      "env": {
+        "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
+        "FS_LICENSE": "/home/humath/Escritorio/license.txt",
+        "VCE_FREESURFER_SUBJECTS_DIR": "/home/humath/freesurfer_subjects"
+      }
+    },
+    {
+      "name": "VCE | 19 zonas + correlación todos",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "run",
+        "--project-root", "/home/humath/Escritorio",
+        "--all-patients",
+        "--stages", "Antes", "Despues",
+        "--sections", "zonas_correlacion",
+        "--no-suspend"
+      ],
+      "env": {
+        "FREESURFER_HOME": "/usr/local/freesurfer/8.2.0",
+        "FS_LICENSE": "/home/humath/Escritorio/license.txt",
+        "VCE_FREESURFER_SUBJECTS_DIR": "/home/humath/freesurfer_subjects"
+      }
+    }
+  ]
+}

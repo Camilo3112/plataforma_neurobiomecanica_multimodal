@@ -4,7 +4,7 @@
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Archivo: main.py
-Versión: v3.21.22
+Versión: v3.21.23
 
 Descripción
 -----------
@@ -54,7 +54,7 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
-VERSION = "3.21.22"
+VERSION = "3.21.23"
 DEFAULT_PROJECT_ROOT = Path("/home/humath/Escritorio")
 
 SECTION_ALIASES = {
@@ -79,6 +79,11 @@ SECTION_ALIASES = {
     "cst": "cst_tronco",
     "cst_tronco": "cst_tronco",
     "tractografia": "cst_tronco",
+    "zonas": "zonas_correlacion",
+    "19_zonas": "zonas_correlacion",
+    "regiones": "zonas_correlacion",
+    "zonas_correlacion": "zonas_correlacion",
+    "correlacion_zonas": "zonas_correlacion",
     "estructura_funcion": "estructura_funcion",
     "correlaciones": "correlaciones",
     "comparacion": "comparacion",
@@ -103,6 +108,7 @@ SECTION_ORDER = (
     "derivados",
     "fs_mni_motor",
     "cst_tronco",
+    "zonas_correlacion",
     "estructura_funcion",
     "correlaciones",
     "comparacion",
@@ -194,6 +200,12 @@ SECTION_CATALOG = {
         "modelo": "DWI, tensor/CSD según disponibilidad, streamlines, waypoints anatómicos, densidad de fibras y color RGB por orientación local.",
         "alias": "cst_tronco, cst, tractografia",
     },
+    "zonas_correlacion": {
+        "titulo": "19 zonas anatómicas, correlación local y Excel",
+        "descripcion": "Delimita 19 regiones sobre T1, calcula correlación local Antes/Después y genera NIfTI/Excel.",
+        "modelo": "FreeSurfer aparc+aseg/aseg, remuestreo nearest-neighbor, volumen = voxeles × spacing, registro rígido, z-score robusto y correlación local 2D Pearson/NCC en tres planos.",
+        "alias": "zonas_correlacion, zonas, 19_zonas, regiones, correlacion_zonas",
+    },
     "estructura_funcion": {
         "titulo": "Acople estructura-función",
         "descripcion": "Relaciona mediciones estructurales con resultados funcionales/biomecánicos.",
@@ -256,8 +268,12 @@ def print_terminal_examples() -> None:
     print("python main.py")
     print("\nEjecución recomendada paciente 3 Antes CST:")
     print(f"python main.py run --project-root {root} --patients 3 --stages Antes --sections cst_tronco --registro-com-corregir --registro-com-ejes z --no-suspend")
+    print("\n19 zonas + correlación Antes/Después para paciente 3:")
+    print(f"python main.py run --project-root {root} --patients 3 --stages Antes Despues --sections zonas_correlacion --no-suspend")
+    print("\nCST + 19 zonas + correlación para paciente 3:")
+    print(f"python main.py run --project-root {root} --patients 3 --stages Antes Despues --sections cst_tronco zonas_correlacion --registro-com-corregir --registro-com-ejes z --no-suspend")
     print("\nEjecución completa de todos los pacientes:")
-    print(f"python main.py run --project-root {root} --all-patients --stages Antes Despues --sections cst_tronco --registro-com-corregir --registro-com-ejes z --no-suspend")
+    print(f"python main.py run --project-root {root} --all-patients --stages Antes Despues --sections cst_tronco zonas_correlacion --registro-com-corregir --registro-com-ejes z --no-suspend")
     print("=" * 100 + "\n")
 
 
@@ -356,7 +372,7 @@ def build_config(args):
         print_section_catalog()
         patients = normalize_patients(prompt_list("Pacientes a correr, ejemplo 3,6,7,9", "3"))
         stages = tuple(x.strip() for x in re.split(r"[,;\s]+", prompt_list("Etapas", "Antes")) if x.strip())
-        sections = normalize_sections(prompt_list("Secciones, ejemplo cst_tronco, tomografia, fs_mni_motor o todo", "cst_tronco"))
+        sections = normalize_sections(prompt_list("Secciones, ejemplo cst_tronco, zonas_correlacion, tomografia, fs_mni_motor o todo", "cst_tronco"))
     elif getattr(args, "all_patients", False):
         patients = discover_patients(data_root or (project_root / "datos"))
         stages = tuple(args.stages)
@@ -525,6 +541,7 @@ def run_pipeline_sections(cfg, sections: tuple[str, ...]) -> int:
     from src.cortical_roi_runner import run_cortical_roi_corrections
     from src.freesurfer_mni_motor import run_freesurfer_mni_motor
     from src.cst_tronco_runner import run_cst_tronco_module
+    from src.zonas_correlacion_runner import run_zonas_correlacion_module
 
     gpu_status = configure_gpu(cfg)
     cfg.results_root().mkdir(parents=True, exist_ok=True)
@@ -574,6 +591,8 @@ def run_pipeline_sections(cfg, sections: tuple[str, ...]) -> int:
         run_freesurfer_mni_motor(cfg)
     if run_all or "cst_tronco" in requested:
         run_cst_tronco_module(cfg)
+    if run_all or "zonas_correlacion" in requested:
+        run_zonas_correlacion_module(cfg)
     if run_all or "estructura_funcion" in requested:
         run_structure_function_coupling(cfg)
     if run_all or "correlaciones" in requested:
