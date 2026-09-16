@@ -4,7 +4,7 @@
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Archivo: main.py
-Versión: v3.21.21
+Versión: v3.21.22
 
 Descripción
 -----------
@@ -54,7 +54,7 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
-VERSION = "3.21.20"
+VERSION = "3.21.22"
 DEFAULT_PROJECT_ROOT = Path("/home/humath/Escritorio")
 
 SECTION_ALIASES = {
@@ -86,6 +86,179 @@ SECTION_ALIASES = {
 }
 
 DEFAULT_SECTIONS = ("todo",)
+
+
+SECTION_ORDER = (
+    "todo",
+    "diagnostico",
+    "biomecanica",
+    "tomografia",
+    "tomografia_avanzada",
+    "mapas",
+    "resonancias",
+    "preparar_derivados",
+    "preparar_derivados_reales",
+    "morfometria_interna",
+    "corteza_fix",
+    "derivados",
+    "fs_mni_motor",
+    "cst_tronco",
+    "estructura_funcion",
+    "correlaciones",
+    "comparacion",
+    "consolidado",
+)
+
+SECTION_CATALOG = {
+    "todo": {
+        "titulo": "Pipeline completo",
+        "descripcion": "Ejecuta todas las secciones disponibles en el orden fisiológico y computacional del proyecto.",
+        "modelo": "Orquestación secuencial D_i = f_i(D_{i-1}, parámetros), manteniendo trazabilidad paciente/etapa.",
+        "alias": "todo",
+    },
+    "diagnostico": {
+        "titulo": "Diagnóstico de resonancias y datos disponibles",
+        "descripcion": "Inspecciona carpetas, NIfTI, DICOM, bval/bvec y disponibilidad anatómica antes de procesar.",
+        "modelo": "Control de consistencia geométrica y dimensional: forma del volumen, número de gradientes y coherencia de metadatos.",
+        "alias": "diagnostico",
+    },
+    "biomecanica": {
+        "titulo": "Biomecánica, EMG y dinamometría",
+        "descripcion": "Procesa señales musculares y cinéticas para métricas temporales, espectrales y de simetría.",
+        "modelo": "RMS, normalización, FFT, correlación cruzada, autocorrelación e interpolación multi-rate.",
+        "alias": "biomecanica, emg, dinamometria",
+    },
+    "tomografia": {
+        "titulo": "Tomografía TAC base",
+        "descripcion": "Segmenta tejido muscular/adiposo y genera métricas morfológicas desde imágenes TAC.",
+        "modelo": "Unidades Hounsfield, umbralización tisular, morfología matemática y cálculo de área/volumen por voxel spacing.",
+        "alias": "tomografia, tac",
+    },
+    "tomografia_avanzada": {
+        "titulo": "Tomografía avanzada",
+        "descripcion": "Ejecuta análisis complementario de miembro completo, cortes de control y métricas refinadas.",
+        "modelo": "Selección anatómica de cortes, detección de regiones bilaterales y cuantificación volumétrica por integración discreta.",
+        "alias": "tomografia_avanzada",
+    },
+    "mapas": {
+        "titulo": "Mapas funcionales y derivados de imagen",
+        "descripcion": "Procesa mapas derivados y productos intermedios de neuroimagen.",
+        "modelo": "Remuestreo espacial, máscaras binarias, operaciones voxel a voxel y preservación de afines NIfTI.",
+        "alias": "mapas",
+    },
+    "resonancias": {
+        "titulo": "Resonancias estructurales y funcionales",
+        "descripcion": "Procesa resonancias disponibles por paciente y etapa para análisis morfológico/funcional.",
+        "modelo": "Alineación de volúmenes, normalización de intensidades y comparación en espacio anatómico nativo.",
+        "alias": "resonancias, mri",
+    },
+    "preparar_derivados": {
+        "titulo": "Plantilla para derivados externos",
+        "descripcion": "Crea carpetas y plantillas para anexar derivados externos del proyecto.",
+        "modelo": "Organización reproducible de entradas derivadas sin modificar datos crudos.",
+        "alias": "preparar_derivados",
+    },
+    "preparar_derivados_reales": {
+        "titulo": "Workspace de derivados reales",
+        "descripcion": "Prepara estructura de trabajo para generar derivados reales con trazabilidad.",
+        "modelo": "Separación de insumos, derivados y reportes mediante rutas determinísticas por paciente/etapa.",
+        "alias": "preparar_derivados_reales",
+    },
+    "morfometria_interna": {
+        "titulo": "Morfometría interna",
+        "descripcion": "Integra métricas volumétricas y morfológicas calculadas dentro de la suite.",
+        "modelo": "Conteo voxelizado: volumen = número de voxeles × tamaño de voxel; índices de asimetría y diferencia longitudinal.",
+        "alias": "morfometria_interna",
+    },
+    "corteza_fix": {
+        "titulo": "Corrección de ROI cortical",
+        "descripcion": "Ajusta regiones corticales motoras a la geometría del T1/rAnatomico.",
+        "modelo": "Máscaras corticales, shell cerebral, transformaciones afines y búsqueda geométrica de superposición anatómica.",
+        "alias": "corteza_fix",
+    },
+    "derivados": {
+        "titulo": "Integración de morfometría externa",
+        "descripcion": "Integra resultados externos al consolidado del paciente.",
+        "modelo": "Unificación tabular de métricas por paciente, etapa, hemisferio, estructura y unidad física.",
+        "alias": "derivados",
+    },
+    "fs_mni_motor": {
+        "titulo": "FreeSurfer, MNI y corteza motora",
+        "descripcion": "Usa FreeSurfer y atlas anatómicos para corteza motora y etiquetas estructurales.",
+        "modelo": "recon-all, aparc+aseg, aseg, atlas MNI, transformaciones directas/inversas y remuestreo nearest-neighbor para etiquetas.",
+        "alias": "fs_mni_motor, freesurfer",
+    },
+    "cst_tronco": {
+        "titulo": "Tractografía CST y tronco encefálico",
+        "descripcion": "Reconstruye vía corticoespinal, mesencéfalo, puente, bulbo y salidas para Slicer/ITK-SNAP.",
+        "modelo": "DWI, tensor/CSD según disponibilidad, streamlines, waypoints anatómicos, densidad de fibras y color RGB por orientación local.",
+        "alias": "cst_tronco, cst, tractografia",
+    },
+    "estructura_funcion": {
+        "titulo": "Acople estructura-función",
+        "descripcion": "Relaciona mediciones estructurales con resultados funcionales/biomecánicos.",
+        "modelo": "Normalización de variables, emparejamiento longitudinal y métricas de asociación entre dominios.",
+        "alias": "estructura_funcion",
+    },
+    "correlaciones": {
+        "titulo": "Correlaciones de volumen e imagen",
+        "descripcion": "Calcula correlaciones y mapas comparativos entre volúmenes antes/después.",
+        "modelo": "Correlación de Pearson/Spearman según datos, comparación voxel-wise y métricas de similitud espacial.",
+        "alias": "correlaciones",
+    },
+    "comparacion": {
+        "titulo": "Comparación Antes vs Después",
+        "descripcion": "Genera diferencias longitudinales por paciente y etapa.",
+        "modelo": "Delta = Después - Antes, porcentaje de cambio, índices de asimetría y tablas longitudinales.",
+        "alias": "comparacion",
+    },
+    "consolidado": {
+        "titulo": "Consolidado final por paciente",
+        "descripcion": "Une métricas, reportes y salidas principales en tablas finales.",
+        "modelo": "Agregación tabular reproducible con claves paciente/etapa/sección/métrica/unidad.",
+        "alias": "consolidado",
+    },
+}
+
+
+def print_section_catalog() -> None:
+    """Imprime el catálogo profesional de secciones disponibles para ejecución."""
+    print("\n" + "=" * 100)
+    print("SECCIONES DISPONIBLES DEL PIPELINE")
+    print("=" * 100)
+    for i, section in enumerate(SECTION_ORDER, start=1):
+        info = SECTION_CATALOG[section]
+        print(f"{i:02d}. {section}")
+        print(f"    Nombre:  {info['titulo']}")
+        print(f"    Uso:     --sections {section}")
+        print(f"    Alias:   {info['alias']}")
+        print(f"    Modelo:  {info['modelo']}")
+        print(f"    Salida:  {info['descripcion']}")
+        print("-" * 100)
+    print("Ejemplo: python main.py run --project-root /home/humath/Escritorio --patients 3 --stages Antes --sections cst_tronco")
+    print("=" * 100 + "\n")
+
+
+def print_terminal_examples() -> None:
+    """Imprime comandos listos para copiar en la terminal integrada de Visual Studio Code."""
+    root = "/home/humath/Escritorio"
+    repo = "/home/humath/Escritorio/plataforma_neurobiomecanica_multimodal-main"
+    print("\n" + "=" * 100)
+    print("COMANDOS RÁPIDOS PARA TERMINAL DE VISUAL STUDIO CODE")
+    print("=" * 100)
+    print(f"cd {repo}")
+    print("source .venv/bin/activate")
+    print("export FREESURFER_HOME=/usr/local/freesurfer/8.2.0")
+    print('source "$FREESURFER_HOME/SetUpFreeSurfer.sh"')
+    print("export FS_LICENSE=/home/humath/Escritorio/license.txt")
+    print("python main.py doctor --project-root /home/humath/Escritorio")
+    print("python main.py --list-sections")
+    print("python main.py")
+    print("\nEjecución recomendada paciente 3 Antes CST:")
+    print(f"python main.py run --project-root {root} --patients 3 --stages Antes --sections cst_tronco --registro-com-corregir --registro-com-ejes z --no-suspend")
+    print("\nEjecución completa de todos los pacientes:")
+    print(f"python main.py run --project-root {root} --all-patients --stages Antes Despues --sections cst_tronco --registro-com-corregir --registro-com-ejes z --no-suspend")
+    print("=" * 100 + "\n")
 
 
 ###############################################################################################################################
@@ -180,9 +353,10 @@ def build_config(args):
     results_root = Path(args.results_root).expanduser().resolve() if args.results_root else None
 
     if getattr(args, "interactive", False):
+        print_section_catalog()
         patients = normalize_patients(prompt_list("Pacientes a correr, ejemplo 3,6,7,9", "3"))
         stages = tuple(x.strip() for x in re.split(r"[,;\s]+", prompt_list("Etapas", "Antes")) if x.strip())
-        sections = normalize_sections(prompt_list("Secciones, ejemplo cst_tronco o todo", "cst_tronco"))
+        sections = normalize_sections(prompt_list("Secciones, ejemplo cst_tronco, tomografia, fs_mni_motor o todo", "cst_tronco"))
     elif getattr(args, "all_patients", False):
         patients = discover_patients(data_root or (project_root / "datos"))
         stages = tuple(args.stages)
@@ -516,6 +690,8 @@ def build_parser() -> argparse.ArgumentParser:
     p_doctor.add_argument("--project-root", default=str(DEFAULT_PROJECT_ROOT))
     p_doctor.add_argument("--data-root", default=None)
     p_doctor.add_argument("--results-root", default=None)
+
+    sub.add_parser("examples", help="Imprime comandos rápidos para la terminal integrada de Visual Studio Code.")
     return parser
 
 
@@ -533,9 +709,11 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.list_sections:
-        print("Secciones disponibles:")
-        for key in sorted(SECTION_ALIASES):
-            print(" -", key)
+        print_section_catalog()
+        return 0
+
+    if args.command == "examples":
+        print_terminal_examples()
         return 0
 
     if args.command == "setup":
