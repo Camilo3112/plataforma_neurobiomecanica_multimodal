@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
+
 -----------------------------------------
 Resuelve rutas manteniendo una convención paciente/etapa/sección. El modelo
 computacional separa datos crudos D, resultados R y derivados intermedios para

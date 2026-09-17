@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
+Fundamento
 -----------------------------------------
 Inicializa el paquete y expone utilidades centrales. Este archivo no calcula
 biomarcadores directamente; organiza el espacio de nombres para que los

@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
+
 -----------------------------------------
 Ejecuta la corrección de ROI cortical en espacio del paciente. El modelo
 combina

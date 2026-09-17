@@ -11,7 +11,6 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
 -----------------------------------------
 Compara morfometría del paciente contra referencias externas cuando están
 disponibles. El modelo usa normalización por dominio, diferencias respecto a

@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
+
 -----------------------------------------
 Genera salidas tabulares y reportes reproducibles. Las métricas se conservan
 con

@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
+o
 -----------------------------------------
 Gestiona cómputo CPU/GPU para operaciones numéricas. El modelo computacional
 prioriza matrices y tensores en GPU cuando existe soporte, manteniendo

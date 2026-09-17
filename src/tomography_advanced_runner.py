@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
+
 -----------------------------------------
 Orquesta el análisis TAC avanzado por paciente. Conserva metadatos DICOM,
 selecciona

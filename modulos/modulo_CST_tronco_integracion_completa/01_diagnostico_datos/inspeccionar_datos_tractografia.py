@@ -11,7 +11,7 @@ Descripción
 Inspecciona datos de difusión y anatomía para verificar compatibilidad con
 tractografía.
 
-Fundamento físico-matemático implementado
+Fundamento implementado
 -----------------------------------------
 Diagnostica series DICOM/NIfTI para tractografía. Evalúa geometría, número de
 volúmenes, b-values, direcciones no nulas y consistencia entre DWI, bvec y

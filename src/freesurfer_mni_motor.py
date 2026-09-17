@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
+Fundamento 
 -----------------------------------------
 Relaciona espacio nativo del paciente con referencias atlas/MNI. La
 transferencia

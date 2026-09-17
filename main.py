@@ -11,7 +11,7 @@ Descripción
 Punto de entrada único para ejecutar secciones por paciente, etapa o corrida
 completa.
 
-Fundamento físico-matemático implementado
+
 -----------------------------------------
 Integra módulos heterogéneos bajo un flujo reproducible por paciente y etapa.
 La lógica de ejecución conserva la relación entre espacios de imagen mediante

@@ -10,7 +10,7 @@ Descripción
 -----------
 Valida máscaras anatómicas del tronco encefálico y sus etiquetas derivadas.
 
-Fundamento físico-matemático implementado
+Fundamento implementado
 -----------------------------------------
 Valida subestructuras del tronco encefálico en el T1 del paciente. Las
 etiquetas

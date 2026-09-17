@@ -94,7 +94,7 @@ def multiscale_entropy_curve(y: np.ndarray, max_scale: int = 12) -> pd.DataFrame
 
 
 def hurst_rs(y: np.ndarray, min_window: int = 8) -> float:
-    """Estimación Hurst R/S robusta para señales EMG/DIN."""
+    """Estimación Hurst R/S para señales EMG/DIN."""
     y = _zscore(y)
     n = len(y)
     if n < min_window * 4:

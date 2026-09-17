@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
+
 -----------------------------------------
 Calcula derivadas y cambios reales entre mediciones del paciente. El operador
 principal es la diferencia discreta Δx entre etapas y dominios, con

@@ -11,7 +11,6 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
 -----------------------------------------
 Configura dependencias necesarias para derivar métricas y visualizaciones. Su
 función es garantizar que bibliotecas numéricas, lectura DICOM/NIfTI y módulos

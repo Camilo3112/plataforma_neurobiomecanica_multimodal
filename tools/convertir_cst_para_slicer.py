@@ -11,7 +11,7 @@ Descripción
 -----------
 Genera versiones TRK/VTK compatibles con 3D Slicer.
 
-Fundamento físico-matemático implementado
+
 -----------------------------------------
 Convierte tractogramas a formatos compatibles con 3D Slicer. El tracto se
 modela

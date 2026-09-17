@@ -10,7 +10,7 @@ Descripción
 -----------
 Ejecuta FreeSurfer BrainstemSubstructures y transforma etiquetas al T1 nativo.
 
-Fundamento físico-matemático implementado
+Fundamento
 -----------------------------------------
 Segmenta subestructuras del tronco encefálico usando etiquetas anatómicas de
 FreeSurfer. El modelo espacial conserva la correspondencia voxel-mundo con

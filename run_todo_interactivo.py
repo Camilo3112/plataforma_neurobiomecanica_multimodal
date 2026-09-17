@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
+
 -----------------------------------------
 Permite selección interactiva de pacientes, etapas y secciones. Representa la
 corrida como un conjunto de tareas T={(paciente, etapa, sección)} y ejecuta

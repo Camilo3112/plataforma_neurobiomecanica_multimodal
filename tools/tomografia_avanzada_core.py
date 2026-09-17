@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento físico-matemático implementado
+Fundamento 
 -----------------------------------------
 Implementa segmentación avanzada de miembro inferior sobre cortes TAC. El
 modelo
