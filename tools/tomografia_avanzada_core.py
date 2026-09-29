@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento 
+Fundamento físico-matemático implementado
 -----------------------------------------
 Implementa segmentación avanzada de miembro inferior sobre cortes TAC. El
 modelo
@@ -211,6 +211,17 @@ ADIPOSE_METRICS_CSV_FILENAME = "Metricas_Tejido_Adiposo.csv"
 # ==============================================================================
 def get_side_roi_mask(shape_2d: Tuple[int, int], roi_side: str) -> np.ndarray:
     """Crea la máscara de la mitad izquierda o derecha de la matriz."""
+    # Entrada:
+    #   - shape_2d: parámetro `shape_2d` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     h, w = shape_2d
     mask = np.zeros((h, w), dtype=bool)
     if roi_side == "left":
@@ -223,18 +234,52 @@ def get_side_roi_mask(shape_2d: Tuple[int, int], roi_side: str) -> np.ndarray:
 
 
 def round_point(point: Optional[Tuple[float, float, float]]) -> Optional[Tuple[int, int, int]]:
+    # Entrada:
+    #   - point: coordenada espacial o índice de vóxel que representa una posición anatómica
+    #   puntual.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     if point is None:
         return None
     return tuple(int(round(v)) for v in point)
 
 
 def point_inside_volume(point: Tuple[int, int, int], shape: Tuple[int, int, int]) -> bool:
+    # Entrada:
+    #   - point: coordenada espacial o índice de vóxel que representa una posición anatómica
+    #   puntual.
+    #   - shape: parámetro `shape` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     y, x, z = point
     return 0 <= y < shape[0] and 0 <= x < shape[1] and 0 <= z < shape[2]
 
 
 def voxel_to_world(affine: np.ndarray, point_yxz: Optional[Tuple[float, float, float]]):
     """Convierte índices del volumen (fila, columna, corte) a coordenadas físicas."""
+    # Entrada:
+    #   - affine: matriz afín 4x4 que relaciona coordenadas de vóxel con coordenadas físicas
+    #   o espaciales de la imagen.
+    #   - point_yxz: parámetro `point_yxz` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve coordenadas transformadas o una matriz de transformación que conserva la
+    #   relación entre espacio de vóxel y espacio físico.
     if point_yxz is None:
         return None
     homogeneous = np.array([point_yxz[0], point_yxz[1], point_yxz[2], 1.0], dtype=float)
@@ -243,6 +288,16 @@ def voxel_to_world(affine: np.ndarray, point_yxz: Optional[Tuple[float, float, f
 
 
 def format_point(point) -> str:
+    # Entrada:
+    #   - point: coordenada espacial o índice de vóxel que representa una posición anatómica
+    #   puntual.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     if point is None:
         return "No detectado"
     return "(" + ", ".join(f"{v:.2f}" if isinstance(v, float) else str(v) for v in point) + ")"
@@ -252,6 +307,18 @@ def format_point(point) -> str:
 # FASE 1: LECTURA DICOM ROBUSTA Y CONSTRUCCIÓN DEL AFFINE
 # ==============================================================================
 def _slice_projection(dcm, normal_vector: np.ndarray) -> float:
+    # Entrada:
+    #   - dcm: parámetro `dcm` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - normal_vector: parámetro `normal_vector` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     position = np.asarray(dcm.ImagePositionPatient, dtype=float)
     return float(np.dot(position, normal_vector))
 
@@ -264,6 +331,20 @@ def build_dicom_affine(first_slice, slice_spacing: float, slice_direction_sign: 
     entre columnas. ImageOrientationPatient contiene las direcciones de fila y
     columna del DICOM en coordenadas del paciente.
     """
+    # Entrada:
+    #   - first_slice: parámetro `first_slice` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - slice_spacing: parámetro `slice_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - slice_direction_sign: parámetro `slice_direction_sign` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve coordenadas transformadas o una matriz de transformación que conserva la
+    #   relación entre espacio de vóxel y espacio físico.
     pixel_spacing = np.asarray(first_slice.PixelSpacing, dtype=float)
     position = np.asarray(first_slice.ImagePositionPatient, dtype=float)
 
@@ -315,6 +396,16 @@ MIDPOINT_QC_FILENAME = "QC_Cortes_Medios_Ajustados_Dos_Femures.csv"
 
 
 def _safe_dicom_key_value(value):
+    # Entrada:
+    #   - value: parámetro `value` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     try:
         if isinstance(value, (list, tuple)):
             return "_".join(str(round(float(v), 6)) for v in value)
@@ -325,6 +416,16 @@ def _safe_dicom_key_value(value):
 
 def _dicom_group_key(dcm):
     """Agrupa por serie y geometría para no mezclar series DICOM distintas."""
+    # Entrada:
+    #   - dcm: parámetro `dcm` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     uid = getattr(dcm, "SeriesInstanceUID", "SIN_UID")
     rows = int(getattr(dcm, "Rows", 0))
     cols = int(getattr(dcm, "Columns", 0))
@@ -335,6 +436,16 @@ def _dicom_group_key(dcm):
 
 
 def _sort_unique_dicom_slices(raw_slices):
+    # Entrada:
+    #   - raw_slices: parámetro `raw_slices` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     if not raw_slices:
         raise ValueError("Grupo DICOM vacío.")
     first = raw_slices[0]
@@ -370,6 +481,20 @@ def _sort_unique_dicom_slices(raw_slices):
 
 
 def _build_volume_from_sorted_slices(slices, real_z_spacing, direction_sign):
+    # Entrada:
+    #   - slices: parámetro `slices` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - real_z_spacing: parámetro `real_z_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - direction_sign: parámetro `direction_sign` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     first = slices[0]
     pixel_spacing = [float(v) for v in first.PixelSpacing]
     image_3d = np.stack([dcm.pixel_array for dcm in slices], axis=-1)
@@ -382,6 +507,16 @@ def _build_volume_from_sorted_slices(slices, real_z_spacing, direction_sign):
 
 def _femur_components_full_field_qc(image_slice_hu: np.ndarray) -> List[Dict]:
     """Componentes óseos candidatos a fémur en todo el campo de visión."""
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     bone_mask = image_slice_hu > BONE_HU_THRESHOLD
     bone_mask = binary_opening(bone_mask, iterations=1)
     labels, num = scipy_label(bone_mask)
@@ -404,6 +539,18 @@ def _femur_components_full_field_qc(image_slice_hu: np.ndarray) -> List[Dict]:
 
 def _select_two_femur_pair(components: List[Dict], shape_2d: Tuple[int, int]):
     """Determina si hay dos fémures plausibles en el corte."""
+    # Entrada:
+    #   - components: parámetro `components` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - shape_2d: parámetro `shape_2d` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     if len(components) < 2:
         return None
     candidates = components[: min(8, len(components))]
@@ -444,6 +591,16 @@ def get_bilateral_femur_centroids_for_slice(image_slice_hu: np.ndarray):
     miembro izquierdo (roi_side="right"). Esta función evita que ambos lados
     tomen el mismo fémur cuando el punto anatómico esperado quedó mal estimado.
     """
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     components = _femur_components_full_field_qc(image_slice_hu)
     pair = _select_two_femur_pair(components, image_slice_hu.shape[:2])
     if pair is None:
@@ -459,11 +616,33 @@ def get_bilateral_femur_centroids_for_slice(image_slice_hu: np.ndarray):
 
 
 def slice_has_two_femurs(image_slice_hu: np.ndarray) -> bool:
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     return get_bilateral_femur_centroids_for_slice(image_slice_hu) is not None
 
 
 def scan_volume_two_femur_qc(image_hu: np.ndarray, z_values: Optional[List[int]] = None) -> List[Dict]:
     """Escanea cortes y marca cuáles contienen dos fémures plausibles."""
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_values: parámetro `z_values` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     records = []
     total_slices = image_hu.shape[2]
     if z_values is None:
@@ -500,6 +679,16 @@ def scan_volume_two_femur_qc(image_hu: np.ndarray, z_values: Optional[List[int]]
 
 def _two_femur_score_for_volume(image_hu: np.ndarray) -> Dict:
     # Muestreo rápido para seleccionar serie: suficiente para detectar si contiene ambos miembros.
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     n = image_hu.shape[2]
     if n <= 0:
         return {"good_slices": 0, "sampled_slices": 0, "best_z": None}
@@ -519,6 +708,19 @@ def _two_femur_score_for_volume(image_hu: np.ndarray) -> Dict:
 
 
 def _write_csv_rows(path: str, rows: List[Dict], fieldnames: List[str]):
+    # Entrada:
+    #   - path: ruta de archivo o carpeta usada como entrada o salida del proceso.
+    #   - rows: parámetro `rows` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - fieldnames: parámetro `fieldnames` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -528,6 +730,16 @@ def _write_csv_rows(path: str, rows: List[Dict], fieldnames: List[str]):
 
 
 def _write_series_qc_csv(rows: List[Dict]):
+    # Entrada:
+    #   - rows: parámetro `rows` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     path = os.path.join(OUTPUT_DIR, DICOM_SERIES_QC_FILENAME)
     fields = [
         "selected", "series_uid", "series_description", "rows", "columns", "n_raw_slices",
@@ -539,6 +751,16 @@ def _write_series_qc_csv(rows: List[Dict]):
 
 
 def _write_slice_qc_csv(records: List[Dict]):
+    # Entrada:
+    #   - records: parámetro `records` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     path = os.path.join(OUTPUT_DIR, SLICE_QC_FILENAME)
     fields = [
         "z", "n_bone_components", "has_two_femurs", "pair_separation_px", "pair_area_ratio",
@@ -555,6 +777,16 @@ def validate_loaded_volume_has_two_femurs(image_hu: np.ndarray) -> List[Dict]:
     uno; entra en modo rescate y las etapas posteriores reemplazan cualquier
     corte medio con un solo fémur por el corte bilateral más cercano.
     """
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     records = scan_volume_two_femur_qc(image_hu)
     good = [r for r in records if r["has_two_femurs"]]
     _write_slice_qc_csv(records)
@@ -580,6 +812,18 @@ def validate_loaded_volume_has_two_femurs(image_hu: np.ndarray) -> List[Dict]:
 
 
 def _qc_record_for_z(qc_records: List[Dict], z: Optional[int]):
+    # Entrada:
+    #   - qc_records: parámetro `qc_records` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - z: parámetro `z` usado por la función para controlar la operación, definir datos
+    #   de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     if z is None:
         return None
     zi = int(z)
@@ -590,6 +834,20 @@ def _qc_record_for_z(qc_records: List[Dict], z: Optional[int]):
 
 
 def _nearest_two_femur_slice(qc_records: List[Dict], z: int, window: int = MIDPOINT_TWO_FEMUR_SEARCH_WINDOW):
+    # Entrada:
+    #   - qc_records: parámetro `qc_records` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - z: parámetro `z` usado por la función para controlar la operación, definir datos
+    #   de entrada o especificar rutas/resultados.
+    #   - window: parámetro `window` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     good_z = [int(r["z"]) for r in qc_records if r["has_two_femurs"]]
     if not good_z:
         return None
@@ -610,6 +868,20 @@ def enforce_midpoint_slices_have_two_femurs(image_hu: np.ndarray, landmarks: Dic
     Si no existe dentro de la ventana y el rescate global está activo, busca en todo
     el stack. Solo si no hay ningún corte bilateral se anula ese lado.
     """
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - landmarks: parámetro `landmarks` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - qc_records: parámetro `qc_records` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     rows = []
     for roi_side, info in landmarks.items():
         z_original = info.get("midpoint_slice")
@@ -659,6 +931,16 @@ def enforce_midpoint_slices_have_two_femurs(image_hu: np.ndarray, landmarks: Dic
     return landmarks
 
 def load_dicom_series(directory: str):
+    # Entrada:
+    #   - directory: parámetro `directory` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve volumen, metadatos espaciales y/o rutas organizadas para continuar el
+    #   procesamiento anatómico.
     print(f"Explorando DICOM en: {directory} ...")
     raw_slices = []
 
@@ -783,6 +1065,16 @@ def load_dicom_series(directory: str):
 # FASE 1.5: AUTO-DETECCIÓN DE LÍMITES Z
 # ==============================================================================
 def auto_detect_z_limits(image_hu: np.ndarray) -> Tuple[int, int]:
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     print("Analizando topología ósea bilateral para auto-detectar límites anatómicos...")
     total_slices = image_hu.shape[2]
 
@@ -820,6 +1112,18 @@ def auto_detect_z_limits(image_hu: np.ndarray) -> Tuple[int, int]:
 # FASE 2: EXTRACCIÓN Y DETECCIÓN ADAPTATIVA 1D
 # ==============================================================================
 def find_fascia_1d(signal_1d: np.ndarray, mm_per_pixel: float) -> int:
+    # Entrada:
+    #   - signal_1d: parámetro `signal_1d` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - mm_per_pixel: parámetro `mm_per_pixel` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     signal_length = len(signal_1d)
     if signal_length < 3:
         return max(0, signal_length - 1)
@@ -856,6 +1160,22 @@ def get_bone_components(
     hu_threshold: float = BONE_HU_THRESHOLD,
     min_area_px: int = MIN_BONE_COMPONENT_AREA_PX,
 ) -> List[Dict]:
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - hu_threshold: parámetro `hu_threshold` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - min_area_px: parámetro `min_area_px` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     roi = get_side_roi_mask(image_slice_hu.shape, roi_side)
     bone_mask = (image_slice_hu > hu_threshold) & roi
     bone_mask = binary_opening(bone_mask, iterations=1)
@@ -884,6 +1204,18 @@ def get_bone_components(
 
 
 def get_femur_centroid(image_slice_hu: np.ndarray, roi_side: str):
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     components = get_bone_components(image_slice_hu, roi_side)
     if not components:
         return None
@@ -891,6 +1223,18 @@ def get_femur_centroid(image_slice_hu: np.ndarray, roi_side: str):
 
 
 def process_multi_muscle_slice(image_slice_hu: np.ndarray, pixel_spacing: List[float]):
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - pixel_spacing: parámetro `pixel_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     h, w = image_slice_hu.shape
     slice_masks = {name: np.zeros((h, w), dtype=bool) for name in MUSCLES_CONFIG}
     slice_compartment_masks = {name: np.zeros((h, w), dtype=bool) for name in MUSCLES_CONFIG}
@@ -956,6 +1300,22 @@ def segment_all_muscles(
     z_start: int,
     z_end: int,
 ):
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - pixel_spacing: parámetro `pixel_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - z_start: parámetro `z_start` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_end: parámetro `z_end` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     print("Ejecutando Ray-Casting simultáneo para 4 músculos...")
     volume_masks = {name: np.zeros_like(image_hu, dtype=bool) for name in MUSCLES_CONFIG}
     compartment_masks = {name: np.zeros_like(image_hu, dtype=bool) for name in MUSCLES_CONFIG}
@@ -981,6 +1341,22 @@ def compute_side_bone_profile(
     z_start: int,
     z_end: int,
 ) -> Dict[str, np.ndarray]:
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_start: parámetro `z_start` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_end: parámetro `z_end` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     areas = []
     component_counts = []
     lateral_protrusions = []
@@ -1029,6 +1405,16 @@ def compute_side_bone_profile(
 
 def infer_proximal_end(profile: Dict[str, np.ndarray]) -> str:
     """Determina si la cadera está hacia índices Z altos o bajos."""
+    # Entrada:
+    #   - profile: parámetro `profile` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     areas = profile["areas_smooth"]
     if len(areas) == 0:
         return "high_z"
@@ -1040,6 +1426,22 @@ def infer_proximal_end(profile: Dict[str, np.ndarray]) -> str:
 
 
 def choose_end_band(z_start: int, z_end: int, end_name: str, fraction: float) -> List[int]:
+    # Entrada:
+    #   - z_start: parámetro `z_start` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_end: parámetro `z_end` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - end_name: parámetro `end_name` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - fraction: parámetro `fraction` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     total = max(1, z_end - z_start)
     band_size = max(8, int(round(total * fraction)))
 
@@ -1058,6 +1460,22 @@ def find_reference_shaft_slice(
     z_end: int,
 ):
     """Busca un corte central con un componente óseo dominante compatible con diáfisis."""
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_start: parámetro `z_start` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_end: parámetro `z_end` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     center = (z_start + z_end - 1) // 2
     offsets = [0]
     for delta in range(1, max(center - z_start + 1, z_end - center)):
@@ -1084,6 +1502,24 @@ def track_bone_component_to_end(
     Sigue el componente óseo desde la diáfisis hacia un extremo mediante
     continuidad del centroide. Reduce saltos desde el fémur hacia la pelvis.
     """
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_start: parámetro `z_start` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_end: parámetro `z_end` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - end_name: parámetro `end_name` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     reference_z, reference_component = find_reference_shaft_slice(
         image_hu, roi_side, z_start, z_end
     )
@@ -1126,6 +1562,24 @@ def select_trochanteric_point(
     z_end: int,
     profile: Dict[str, np.ndarray],
 ):
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_start: parámetro `z_start` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_end: parámetro `z_end` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - profile: parámetro `profile` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     proximal_end = infer_proximal_end(profile)
     candidate_slices = choose_end_band(
         z_start, z_end, proximal_end, PROXIMAL_SEARCH_FRACTION
@@ -1171,6 +1625,20 @@ def select_trochanteric_point(
 
 
 def _anteromedial_boundary_point(component: Dict, roi_side: str, z: int):
+    # Entrada:
+    #   - component: parámetro `component` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z: parámetro `z` usado por la función para controlar la operación, definir datos
+    #   de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     boundary = find_boundaries(component["mask"], mode="inner")
     ys, xs = np.where(boundary)
     if len(xs) == 0:
@@ -1197,6 +1665,24 @@ def select_tibial_anteromedial_point(
     z_end: int,
     proximal_end: str,
 ):
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_start: parámetro `z_start` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_end: parámetro `z_end` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - proximal_end: parámetro `proximal_end` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     distal_end = "low_z" if proximal_end == "high_z" else "high_z"
     candidate_slices = choose_end_band(
         z_start, z_end, distal_end, DISTAL_SEARCH_FRACTION
@@ -1247,6 +1733,18 @@ def calculate_midpoint(
     p1: Optional[Tuple[int, int, int]],
     p2: Optional[Tuple[int, int, int]],
 ):
+    # Entrada:
+    #   - p1: parámetro `p1` usado por la función para controlar la operación, definir datos
+    #   de entrada o especificar rutas/resultados.
+    #   - p2: parámetro `p2` usado por la función para controlar la operación, definir datos
+    #   de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     if p1 is None or p2 is None:
         return None, None
     midpoint_float = tuple((np.asarray(p1, dtype=float) + np.asarray(p2, dtype=float)) / 2.0)
@@ -1259,6 +1757,22 @@ def detect_bony_landmarks(
     z_start: int,
     z_end: int,
 ):
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - affine: matriz afín 4x4 que relaciona coordenadas de vóxel con coordenadas físicas
+    #   o espaciales de la imagen.
+    #   - z_start: parámetro `z_start` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_end: parámetro `z_end` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     print("\nDetectando puntos trocantéricos y tibiales anteromediales...")
     results = {}
 
@@ -1336,6 +1850,18 @@ def detect_bony_landmarks(
 # FASE 4: ÁREAS TRANSVERSALES EN EL CORTE MEDIO
 # ==============================================================================
 def compute_area_cm2(mask_slice: np.ndarray, pixel_spacing: List[float]) -> float:
+    # Entrada:
+    #   - mask_slice: parámetro `mask_slice` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - pixel_spacing: parámetro `pixel_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Calcula métricas cuantitativas a partir de máscaras y geometría espacial; convierte
+    #   conteos de píxeles/vóxeles a unidades físicas usando espaciado, área de vóxel o
+    #   volumen de vóxel.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     pixel_area_cm2 = float(pixel_spacing[0] * pixel_spacing[1] / 100.0)
     return float(np.sum(mask_slice) * pixel_area_cm2)
 
@@ -1353,6 +1879,18 @@ def compute_external_perimeter_mm(
     internos o ruido, se conserva únicamente el contorno de mayor longitud, que
     corresponde al límite externo principal del miembro.
     """
+    # Entrada:
+    #   - mask_slice: parámetro `mask_slice` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - pixel_spacing: parámetro `pixel_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Calcula métricas cuantitativas a partir de máscaras y geometría espacial; convierte
+    #   conteos de píxeles/vóxeles a unidades físicas usando espaciado, área de vóxel o
+    #   volumen de vóxel.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     mask = np.asarray(mask_slice, dtype=bool)
     if mask.ndim != 2 or not np.any(mask):
         return 0.0
@@ -1384,6 +1922,20 @@ def compute_midpoint_areas(
     pixel_spacing: List[float],
     landmarks: Dict,
 ):
+    # Entrada:
+    #   - masks_dict: parámetro `masks_dict` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - pixel_spacing: parámetro `pixel_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - landmarks: parámetro `landmarks` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Calcula métricas cuantitativas a partir de máscaras y geometría espacial; convierte
+    #   conteos de píxeles/vóxeles a unidades físicas usando espaciado, área de vóxel o
+    #   volumen de vóxel.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     area_report = {}
 
     for roi_side, info in landmarks.items():
@@ -1415,6 +1967,17 @@ def compute_midpoint_areas(
 # ==============================================================================
 def remove_small_components(mask: np.ndarray, min_area_px: int) -> np.ndarray:
     """Elimina componentes 2D pequeños sin depender de funciones obsoletas."""
+    # Entrada:
+    #   - mask: máscara binaria o booleana que delimita la región anatómica o computacional
+    #   de interés.
+    #   - min_area_px: parámetro `min_area_px` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     labels, num = scipy_label(mask)
     cleaned = np.zeros_like(mask, dtype=bool)
     for component_id in range(1, num + 1):
@@ -1425,6 +1988,18 @@ def remove_small_components(mask: np.ndarray, min_area_px: int) -> np.ndarray:
 
 
 def clean_binary_volume_slicewise(mask_volume: np.ndarray, min_area_px: int) -> np.ndarray:
+    # Entrada:
+    #   - mask_volume: parámetro `mask_volume` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - min_area_px: parámetro `min_area_px` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     cleaned = np.zeros_like(mask_volume, dtype=bool)
     for z in range(mask_volume.shape[2]):
         cleaned[:, :, z] = remove_small_components(mask_volume[:, :, z], min_area_px)
@@ -1432,6 +2007,17 @@ def clean_binary_volume_slicewise(mask_volume: np.ndarray, min_area_px: int) -> 
 
 
 def build_union_mask(mask_dict: Dict[str, np.ndarray], muscle_names: List[str]) -> np.ndarray:
+    # Entrada:
+    #   - mask_dict: parámetro `mask_dict` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - muscle_names: parámetro `muscle_names` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     union = np.zeros_like(next(iter(mask_dict.values())), dtype=bool)
     for name in muscle_names:
         union |= mask_dict[name]
@@ -1447,6 +2033,16 @@ def _get_full_body_mask_for_limb(image_slice_hu: np.ndarray) -> np.ndarray:
     parcialmente fuera del campo de visión. Ahora se detecta el cuerpo en todo el
     corte y luego se selecciona el componente anatómico asociado al fémur/landmark.
     """
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     body = image_slice_hu > TISSUE_BODY_HU_THRESHOLD
     body = binary_closing(body, iterations=2)
     body = binary_fill_holes(body)
@@ -1460,6 +2056,20 @@ def _bone_components_full_field(
     min_area_px: int = MIN_BONE_COMPONENT_AREA_PX,
 ) -> List[Dict]:
     """Componentes óseos del corte completo, sin hemicampo."""
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - hu_threshold: parámetro `hu_threshold` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - min_area_px: parámetro `min_area_px` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     bone_mask = image_slice_hu > hu_threshold
     bone_mask = binary_opening(bone_mask, iterations=1)
     labels, num = scipy_label(bone_mask)
@@ -1495,6 +2105,20 @@ def get_femur_centroid_near_point(
     del miembro. Esto evita que el fémur quede artificialmente partido por la línea
     media de la matriz.
     """
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - target_yx: parámetro `target_yx` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     bilateral_centroids = get_bilateral_femur_centroids_for_slice(image_slice_hu)
     if bilateral_centroids is not None and roi_side in {"left", "right"}:
         return bilateral_centroids[roi_side]
@@ -1521,6 +2145,19 @@ def _select_component_containing_or_nearest(
     center_yx: Tuple[float, float],
 ) -> np.ndarray:
     """Selecciona el componente corporal que contiene o está más cerca del centro."""
+    # Entrada:
+    #   - labels: parámetro `labels` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - num: parámetro `num` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - center_yx: parámetro `center_yx` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     if num <= 0:
         return np.zeros_like(labels, dtype=bool)
 
@@ -1553,6 +2190,17 @@ def _select_component_containing_or_nearest(
 
 
 def _keep_component_around_center(mask: np.ndarray, center_yx: Tuple[float, float]) -> np.ndarray:
+    # Entrada:
+    #   - mask: máscara binaria o booleana que delimita la región anatómica o computacional
+    #   de interés.
+    #   - center_yx: parámetro `center_yx` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     labels, num = scipy_label(mask)
     if num == 0:
         return np.zeros_like(mask, dtype=bool)
@@ -1571,6 +2219,20 @@ def _split_touching_limbs_by_femur_voronoi(
     cercana al fémur objetivo. Esto es distinto a partir por la mitad de la imagen:
     la frontera se calcula entre centros anatómicos.
     """
+    # Entrada:
+    #   - component_mask: parámetro `component_mask` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - target_center_yx: parámetro `target_center_yx` usado por la función para controlar
+    #   la operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     bone_components = _bone_components_full_field(image_slice_hu)
     centers = []
     for comp in bone_components:
@@ -1623,6 +2285,20 @@ def get_limb_component_mask(
     - Si ambos muslos están unidos por contacto, separa con frontera anatómica por
       cercanía a centros femorales, no por la mitad de la imagen.
     """
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - center_yx: parámetro `center_yx` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     body = _get_full_body_mask_for_limb(image_slice_hu)
     labels, num = scipy_label(body)
     if num == 0:
@@ -1653,6 +2329,21 @@ def ray_radius_to_roi_border(
     línea vertical y cortar el miembro. Ahora se permite que el rayo recorra el
     campo completo; la pertenencia al miembro la controla `limb_mask`.
     """
+    # Entrada:
+    #   - center_yx: parámetro `center_yx` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - angle: parámetro `angle` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - shape: parámetro `shape` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     cy, cx = center_yx
     h, w = shape
     dy = -float(np.sin(angle))
@@ -1680,6 +2371,16 @@ def ray_radius_to_roi_border(
 
 def compute_tissue_wavelet_power(signal_1d: np.ndarray) -> np.ndarray:
     """Potencia máxima CWT para localizar interfaces tisulares en un rayo."""
+    # Entrada:
+    #   - signal_1d: parámetro `signal_1d` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Normaliza la señal, aplica convoluciones multiescala con una wavelet tipo sombrero
+    #   mexicano/LoG y calcula una representación energía-escala similar a un escalograma
+    #   CWT.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     signal_1d = np.asarray(signal_1d, dtype=float)
     if signal_1d.size < 6:
         return np.zeros_like(signal_1d, dtype=float)
@@ -1701,6 +2402,20 @@ def compute_tissue_wavelet_power(signal_1d: np.ndarray) -> np.ndarray:
 
 
 def first_sustained_false(mask_1d: np.ndarray, start: int, run_length: int = 3):
+    # Entrada:
+    #   - mask_1d: parámetro `mask_1d` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - start: parámetro `start` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - run_length: parámetro `run_length` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     for idx in range(max(0, start), max(0, len(mask_1d) - run_length + 1)):
         if not np.any(mask_1d[idx : idx + run_length]):
             return idx
@@ -1718,6 +2433,20 @@ def detect_tissue_interfaces_on_ray(
     2. límite interno dérmico,
     3. fascia profunda que separa grasa subcutánea del compartimento muscular.
     """
+    # Entrada:
+    #   - signal_hu: parámetro `signal_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - body_signal: parámetro `body_signal` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - mm_per_pixel: parámetro `mm_per_pixel` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     signal_hu = np.asarray(signal_hu, dtype=float)
     body_signal = np.asarray(body_signal, dtype=bool)
     n = signal_hu.size
@@ -1852,6 +2581,20 @@ def circular_interpolate_and_smooth(
     fallback: Optional[np.ndarray] = None,
     sigma: float = TISSUE_BOUNDARY_SMOOTH_SIGMA,
 ):
+    # Entrada:
+    #   - values: parámetro `values` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - fallback: parámetro `fallback` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - sigma: parámetro `sigma` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Aplica una operación auxiliar de procesamiento, validación o conversión manteniendo
+    #   consistencia espacial y numérica entre los datos de entrada y los resultados
+    #   derivados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     values = np.asarray(values, dtype=float)
     n = len(values)
     valid = np.isfinite(values)
@@ -1876,6 +2619,21 @@ def radii_to_polygon_mask(
     angles: np.ndarray,
     radii: np.ndarray,
 ) -> np.ndarray:
+    # Entrada:
+    #   - shape: parámetro `shape` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - center_yx: parámetro `center_yx` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - angles: parámetro `angles` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - radii: parámetro `radii` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     cy, cx = center_yx
     rows = cy - radii * np.sin(angles)
     cols = cx + radii * np.cos(angles)
@@ -1892,6 +2650,22 @@ def analyze_limb_midpoint_slice(
     midpoint_yx: Tuple[float, float],
 ):
     """Analiza composición corporal de un miembro en un único corte axial."""
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - pixel_spacing: parámetro `pixel_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - roi_side: parámetro `roi_side` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - midpoint_yx: parámetro `midpoint_yx` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     mean_spacing = float((pixel_spacing[0] + pixel_spacing[1]) / 2.0)
     # Corrección v3.21.4: el centro se toma del fémur más cercano al landmark,
     # no del fémur recortado por hemicampo. Esto evita cortar el miembro cuando
@@ -2077,6 +2851,20 @@ def analyze_midpoint_tissue_composition(
     pixel_spacing: List[float],
     landmarks: Dict,
 ):
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - pixel_spacing: parámetro `pixel_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - landmarks: parámetro `landmarks` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     print("\nAnalizando piel, grasa subcutánea y músculo total en los cortes medios...")
     results = {}
 
@@ -2153,6 +2941,18 @@ def build_tissue_labelmap(
     image_shape: Tuple[int, int, int],
     tissue_composition: Dict,
 ) -> np.ndarray:
+    # Entrada:
+    #   - image_shape: parámetro `image_shape` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - tissue_composition: parámetro `tissue_composition` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     labelmap = np.zeros(image_shape, dtype=np.uint8)
 
     for roi_side, analysis in tissue_composition.items():
@@ -2171,6 +2971,18 @@ def build_tissue_labelmap(
 
 
 def build_tissue_overlay(image_hu: np.ndarray, tissue_composition: Dict) -> np.ndarray:
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - tissue_composition: parámetro `tissue_composition` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     overlay = image_hu.astype(np.float32).copy()
 
     for _, analysis in tissue_composition.items():
@@ -2188,6 +3000,20 @@ def build_tissue_overlay(image_hu: np.ndarray, tissue_composition: Dict) -> np.n
 
 def window_soft_tissue_image(image_slice_hu: np.ndarray, center: float = 40.0, width: float = 400.0) -> np.ndarray:
     """Convierte un corte HU a imagen 0-1 con ventana de tejidos blandos."""
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - center: centro geométrico o anatómico usado como referencia para búsqueda,
+    #   segmentación o medición.
+    #   - width: parámetro `width` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     low = center - width / 2.0
     high = center + width / 2.0
     clipped = np.clip(image_slice_hu.astype(float), low, high)
@@ -2195,6 +3021,16 @@ def window_soft_tissue_image(image_slice_hu: np.ndarray, center: float = 40.0, w
 
 
 def build_tissue_png_legend_handles():
+    # Entrada:
+    #   No recibe argumentos directos; usa configuración, rutas globales, argumentos de
+    #   consola o datos definidos en el contexto de ejecución.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     return [
         Line2D([0], [0], color="#00FFFF", lw=2.5, label="Piel / contorno epidérmico"),
         Patch(facecolor="#1F77B4", edgecolor="#1F77B4", alpha=0.45, label="Dermis estimada"),
@@ -2204,6 +3040,22 @@ def build_tissue_png_legend_handles():
 
 
 def _apply_mask_overlay(rgba: np.ndarray, mask: np.ndarray, color_rgb, alpha: float):
+    # Entrada:
+    #   - rgba: parámetro `rgba` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - mask: máscara binaria o booleana que delimita la región anatómica o computacional
+    #   de interés.
+    #   - color_rgb: parámetro `color_rgb` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - alpha: parámetro `alpha` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Genera salidas visuales o de intercambio: mapas de etiquetas, superposiciones
+    #   RGB/RGBA, archivos NIfTI, CSV o descripciones de color para revisión en visores
+    #   médicos y auditoría de resultados.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     if mask is None or not np.any(mask):
         return
     color = np.asarray(color_rgb, dtype=float)
@@ -2216,6 +3068,18 @@ def make_tissue_overlay_rgba(
     analysis: Dict,
 ) -> np.ndarray:
     """Genera una imagen RGBA con las capas anatómicas coloreadas."""
+    # Entrada:
+    #   - image_slice_hu: parámetro `image_slice_hu` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - analysis: parámetro `analysis` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     gray = window_soft_tissue_image(image_slice_hu)
     rgba = np.dstack([gray, gray, gray, np.ones_like(gray)])
 
@@ -2246,6 +3110,22 @@ def export_tissue_pngs(
     disponible. En ese caso guarda el corte medio en escala de grises con una
     advertencia diagnóstica, evitando que el fallo pase silenciosamente.
     """
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - tissue_composition: parámetro `tissue_composition` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - landmarks: parámetro `landmarks` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - out_dir: parámetro `out_dir` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     png_dir = os.path.join(out_dir, PNG_OUTPUT_SUBDIR)
     os.makedirs(png_dir, exist_ok=True)
     print(f"\nGenerando imágenes PNG en: {png_dir}")
@@ -2431,6 +3311,26 @@ def analyze_subcutaneous_fat_volume_all_slices(
     landmarks: Dict,
 ):
     """Estima el volumen de grasa subcutánea en cada miembro a lo largo del rango Z."""
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - pixel_spacing: parámetro `pixel_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - slice_spacing: parámetro `slice_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - z_start: parámetro `z_start` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_end: parámetro `z_end` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - landmarks: parámetro `landmarks` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     print("\nEstimando volumen de grasa subcutánea en todos los cortes...")
     voxel_volume_cm3 = float(
         pixel_spacing[0] * pixel_spacing[1] * slice_spacing / 1000.0
@@ -2521,6 +3421,22 @@ def compute_intramuscular_fat_metrics(
     Los totales por lado y global se calculan con uniones para evitar duplicar
     vóxeles cuando dos compartimentos segmentados se superponen.
     """
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - compartment_masks: parámetro `compartment_masks` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - pixel_spacing: parámetro `pixel_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - slice_spacing: parámetro `slice_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     print("\nAnalizando grasa intramuscular en cada corte y músculo...")
 
     voxel_volume_cm3 = float(
@@ -2683,6 +3599,19 @@ def combine_global_fat_metrics(
     intramuscular_metrics: Dict,
     subcutaneous_volume_results: Dict,
 ):
+    # Entrada:
+    #   - intramuscular_metrics: parámetro `intramuscular_metrics` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - subcutaneous_volume_results: parámetro `subcutaneous_volume_results` usado por la
+    #   función para controlar la operación, definir datos de entrada o especificar
+    #   rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     total_muscle = float(intramuscular_metrics["total_muscle_volume_cm3"])
     total_intramuscular = float(
         intramuscular_metrics["total_intramuscular_fat_volume_cm3"]
@@ -2756,6 +3685,19 @@ def build_total_adipose_labelmap(subcutaneous_labelmap: np.ndarray, intramuscula
     3 = grasa intramuscular miembro derecho
     4 = grasa intramuscular miembro izquierdo
     """
+    # Entrada:
+    #   - subcutaneous_labelmap: parámetro `subcutaneous_labelmap` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - intramuscular_labelmap: parámetro `intramuscular_labelmap` usado por la función
+    #   para controlar la operación, definir datos de entrada o especificar
+    #   rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     total = np.zeros_like(subcutaneous_labelmap, dtype=np.uint8)
     total[subcutaneous_labelmap == 1] = 1
     total[subcutaneous_labelmap == 2] = 2
@@ -2766,6 +3708,15 @@ def build_total_adipose_labelmap(subcutaneous_labelmap: np.ndarray, intramuscula
 
 
 def export_adipose_labels_description(path: str):
+    # Entrada:
+    #   - path: ruta de archivo o carpeta usada como entrada o salida del proceso.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     lines = [
         "ETIQUETAS DEL ARCHIVO Tejido_Adiposo_Total_Volumen.nii.gz",
         "0 = Fondo",
@@ -2787,6 +3738,30 @@ def export_adipose_labels_description(path: str):
 
 
 def _append_metric_row(rows: List[Dict], section: str, entity: str, side: str, metric_name: str, value, unit: str, description: str):
+    # Entrada:
+    #   - rows: parámetro `rows` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - section: parámetro `section` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - entity: parámetro `entity` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - side: parámetro `side` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - metric_name: parámetro `metric_name` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - value: parámetro `value` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - unit: parámetro `unit` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - description: parámetro `description` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Calcula métricas cuantitativas a partir de máscaras y geometría espacial; convierte
+    #   conteos de píxeles/vóxeles a unidades físicas usando espaciado, área de vóxel o
+    #   volumen de vóxel.
+    # Salida:
+    #   Devuelve valores métricos, filas de reporte o tablas numéricas listas para ser
+    #   consolidadas en CSV/Excel.
     if value is None:
         return
     try:
@@ -2812,6 +3787,24 @@ def export_adipose_metrics_csv(
     global_fat_metrics: Dict,
 ):
     """Exporta todas las métricas de grasa/músculo en formato largo."""
+    # Entrada:
+    #   - path: ruta de archivo o carpeta usada como entrada o salida del proceso.
+    #   - tissue_composition: parámetro `tissue_composition` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - intramuscular_metrics: parámetro `intramuscular_metrics` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - subcutaneous_volume_results: parámetro `subcutaneous_volume_results` usado por la
+    #   función para controlar la operación, definir datos de entrada o especificar
+    #   rutas/resultados.
+    #   - global_fat_metrics: parámetro `global_fat_metrics` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     rows: List[Dict] = []
 
     # Corte medio por miembro.
@@ -2875,6 +3868,15 @@ def export_adipose_metrics_csv(
         writer.writerows(rows)
 
 def export_intramuscular_labels_description(path: str):
+    # Entrada:
+    #   - path: ruta de archivo o carpeta usada como entrada o salida del proceso.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     lines = [
         "ETIQUETAS DEL ARCHIVO Grasa_Intramuscular_Muscular.nii",
         "0 = Fondo",
@@ -2892,6 +3894,17 @@ def export_intramuscular_labels_description(path: str):
 
 
 def export_intramuscular_area_csv(path: str, area_rows: List[Dict]):
+    # Entrada:
+    #   - path: ruta de archivo o carpeta usada como entrada o salida del proceso.
+    #   - area_rows: parámetro `area_rows` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     fieldnames = ["Z"] + [
         f"{name}_cm2" for name in MUSCLES_CONFIG
     ] + ["Total_Grasa_Intramuscular_cm2"]
@@ -2906,6 +3919,18 @@ def build_intramuscular_overlay(
     image_hu: np.ndarray,
     labelmap: np.ndarray,
 ) -> np.ndarray:
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - labelmap: parámetro `labelmap` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     overlay = image_hu.astype(np.float32).copy()
     display_values = {1: 1600.0, 2: 2000.0, 3: 2400.0, 4: 2800.0}
     for label_value, display_value in display_values.items():
@@ -2922,6 +3947,22 @@ def paint_sphere(
     value: int,
     radius: int,
 ):
+    # Entrada:
+    #   - volume: volumen 3D de imagen médica, usualmente TAC o mapa derivado en formato de
+    #   matriz numérica.
+    #   - center: centro geométrico o anatómico usado como referencia para búsqueda,
+    #   segmentación o medición.
+    #   - value: parámetro `value` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - radius: parámetro `radius` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Genera salidas visuales o de intercambio: mapas de etiquetas, superposiciones
+    #   RGB/RGBA, archivos NIfTI, CSV o descripciones de color para revisión en visores
+    #   médicos y auditoría de resultados.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     if center is None:
         return
 
@@ -2945,6 +3986,24 @@ def paint_line(
     value: int,
     radius: int = 1,
 ):
+    # Entrada:
+    #   - volume: volumen 3D de imagen médica, usualmente TAC o mapa derivado en formato de
+    #   matriz numérica.
+    #   - p1: parámetro `p1` usado por la función para controlar la operación, definir datos
+    #   de entrada o especificar rutas/resultados.
+    #   - p2: parámetro `p2` usado por la función para controlar la operación, definir datos
+    #   de entrada o especificar rutas/resultados.
+    #   - value: parámetro `value` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - radius: parámetro `radius` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Genera salidas visuales o de intercambio: mapas de etiquetas, superposiciones
+    #   RGB/RGBA, archivos NIfTI, CSV o descripciones de color para revisión en visores
+    #   médicos y auditoría de resultados.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     if p1 is None or p2 is None:
         return
 
@@ -2959,6 +4018,18 @@ def paint_line(
 
 
 def build_landmark_labelmap(image_shape: Tuple[int, int, int], landmarks: Dict) -> np.ndarray:
+    # Entrada:
+    #   - image_shape: parámetro `image_shape` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - landmarks: parámetro `landmarks` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     labelmap = np.zeros(image_shape, dtype=np.uint8)
 
     for _, info in landmarks.items():
@@ -2998,6 +4069,18 @@ def build_landmark_labelmap(image_shape: Tuple[int, int, int], landmarks: Dict) 
 
 def build_landmark_overlay(image_hu: np.ndarray, landmarks: Dict) -> np.ndarray:
     """Genera un TAC con marcas intensas para revisión rápida como volumen escalar."""
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - landmarks: parámetro `landmarks` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Extrae referencias óseas mediante umbrales de alta densidad, conectividad
+    #   morfológica y criterios geométricos; estas referencias sirven para ubicar cortes,
+    #   lados anatómicos y puntos de medición.
+    # Salida:
+    #   Devuelve una imagen, mapa de etiquetas o arreglo visual que puede guardarse como
+    #   NIfTI/PNG o cargarse en visores médicos.
     overlay = image_hu.astype(np.float32).copy()
 
     for _, info in landmarks.items():
@@ -3017,11 +4100,33 @@ def build_landmark_overlay(image_hu: np.ndarray, landmarks: Dict) -> np.ndarray:
 # FASE 6: REPORTE Y EXPORTACIÓN
 # ==============================================================================
 def save_nifti(data: np.ndarray, affine: np.ndarray, path: str):
+    # Entrada:
+    #   - data: parámetro `data` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - affine: matriz afín 4x4 que relaciona coordenadas de vóxel con coordenadas físicas
+    #   o espaciales de la imagen.
+    #   - path: ruta de archivo o carpeta usada como entrada o salida del proceso.
+    # Proceso:
+    #   Genera salidas visuales o de intercambio: mapas de etiquetas, superposiciones
+    #   RGB/RGBA, archivos NIfTI, CSV o descripciones de color para revisión en visores
+    #   médicos y auditoría de resultados.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     nifti = nib.Nifti1Image(data, affine)
     nib.save(nifti, path)
 
 
 def export_labels_description(path: str):
+    # Entrada:
+    #   - path: ruta de archivo o carpeta usada como entrada o salida del proceso.
+    # Proceso:
+    #   Genera salidas visuales o de intercambio: mapas de etiquetas, superposiciones
+    #   RGB/RGBA, archivos NIfTI, CSV o descripciones de color para revisión en visores
+    #   médicos y auditoría de resultados.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     lines = [
         "ETIQUETAS DEL ARCHIVO Landmarks_Linea_CorteMedio.nii",
         "0 = Fondo",
@@ -3041,6 +4146,15 @@ def export_labels_description(path: str):
 
 
 def export_tissue_labels_description(path: str):
+    # Entrada:
+    #   - path: ruta de archivo o carpeta usada como entrada o salida del proceso.
+    # Proceso:
+    #   Segmenta y cuantifica tejidos usando intensidad, conectividad, morfología matemática
+    #   y relaciones anatómicas; el objetivo es separar músculo, grasa subcutánea, grasa
+    #   intramuscular, hueso y fondo.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     lines = [
         "ETIQUETAS DEL ARCHIVO Composicion_Corporal_CorteMedio.nii",
         "0 = Fondo",
@@ -3078,6 +4192,43 @@ def export_and_report_all(
     subcutaneous_volume_results: Dict,
     global_fat_metrics: Dict,
 ):
+    # Entrada:
+    #   - image_hu: parámetro `image_hu` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - masks_dict: parámetro `masks_dict` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - compartment_masks: parámetro `compartment_masks` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - pixel_spacing: parámetro `pixel_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - slice_spacing: parámetro `slice_spacing` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - affine: matriz afín 4x4 que relaciona coordenadas de vóxel con coordenadas físicas
+    #   o espaciales de la imagen.
+    #   - out_dir: parámetro `out_dir` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_start: parámetro `z_start` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - z_end: parámetro `z_end` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - landmarks: parámetro `landmarks` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - tissue_composition: parámetro `tissue_composition` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - intramuscular_metrics: parámetro `intramuscular_metrics` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - subcutaneous_volume_results: parámetro `subcutaneous_volume_results` usado por la
+    #   función para controlar la operación, definir datos de entrada o especificar
+    #   rutas/resultados.
+    #   - global_fat_metrics: parámetro `global_fat_metrics` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Genera salidas visuales o de intercambio: mapas de etiquetas, superposiciones
+    #   RGB/RGBA, archivos NIfTI, CSV o descripciones de color para revisión en visores
+    #   médicos y auditoría de resultados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     os.makedirs(out_dir, exist_ok=True)
 
     voxel_volume_cm3 = float(pixel_spacing[0] * pixel_spacing[1] * slice_spacing / 1000.0)
@@ -3512,6 +4663,15 @@ def export_and_report_all(
 # ==============================================================================
 def main():
     # 1. Leer imágenes y conservar la geometría DICOM.
+    # Entrada:
+    #   No recibe argumentos directos; usa configuración, rutas globales, argumentos de
+    #   consola o datos definidos en el contexto de ejecución.
+    # Proceso:
+    #   Coordina la ejecución del módulo: interpreta argumentos, valida rutas, llama a las
+    #   funciones de procesamiento y organiza los archivos de salida.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     image_hu, pixel_spacing, slice_spacing, affine = load_dicom_series(INPUT_DIR)
 
     # 2. Auto-detectar el rango longitudinal útil para segmentación muscular.

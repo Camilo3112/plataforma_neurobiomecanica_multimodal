@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-
+Fundamento físico-matemático implementado
 -----------------------------------------
 Corrige máscaras corticales proyectándolas sobre una envolvente cortical
 estimada.
@@ -102,6 +102,18 @@ class CandidateResult:
 # =============================================================================
 def ensure_3d(data: np.ndarray, name: str) -> np.ndarray:
     """Acepta 3D o 4D con un único volumen y devuelve un arreglo 3D."""
+    # Entrada:
+    #   - data: parámetro `data` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - name: parámetro `name` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Evalúa transformaciones candidatas y criterios de calidad para ajustar una región de
+    #   interés al espacio anatómico, priorizando solapamiento, posición y coherencia
+    #   espacial.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     data = np.asarray(data)
     if data.ndim == 4 and data.shape[3] == 1:
         data = data[..., 0]
@@ -111,6 +123,15 @@ def ensure_3d(data: np.ndarray, name: str) -> np.ndarray:
 
 
 def largest_connected_component(mask: np.ndarray) -> np.ndarray:
+    # Entrada:
+    #   - mask: máscara binaria o booleana que delimita la región anatómica o computacional
+    #   de interés.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     labels, number = label(mask)
     if number == 0:
         return np.zeros_like(mask, dtype=bool)
@@ -122,6 +143,17 @@ def largest_connected_component(mask: np.ndarray) -> np.ndarray:
 
 def otsu_threshold(values: np.ndarray, bins: int = 512) -> float:
     """Implementación NumPy de Otsu para evitar una dependencia adicional."""
+    # Entrada:
+    #   - values: parámetro `values` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - bins: parámetro `bins` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     values = np.asarray(values, dtype=np.float64)
     values = values[np.isfinite(values)]
     if values.size == 0:
@@ -154,6 +186,15 @@ def otsu_threshold(values: np.ndarray, bins: int = 512) -> float:
 
 
 def border_values(volume: np.ndarray) -> np.ndarray:
+    # Entrada:
+    #   - volume: volumen 3D de imagen médica, usualmente TAC o mapa derivado en formato de
+    #   matriz numérica.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     return np.concatenate(
         [
             volume[0, :, :].ravel(),
@@ -173,6 +214,15 @@ def create_brain_mask(brain: np.ndarray) -> tuple[np.ndarray, dict]:
     Si los bordes son prácticamente constantes, utiliza el fondo de los bordes.
     En caso contrario utiliza Otsu sobre la distancia respecto al fondo.
     """
+    # Entrada:
+    #   - brain: parámetro `brain` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     brain = np.asarray(brain, dtype=np.float32)
     finite = np.isfinite(brain)
     if not np.any(finite):
@@ -218,6 +268,15 @@ def create_brain_mask(brain: np.ndarray) -> tuple[np.ndarray, dict]:
 
 
 def bounding_box(mask: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    # Entrada:
+    #   - mask: máscara binaria o booleana que delimita la región anatómica o computacional
+    #   de interés.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     coordinates = np.argwhere(mask)
     if coordinates.size == 0:
         raise ValueError("La máscara está vacía.")
@@ -225,6 +284,16 @@ def bounding_box(mask: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 
 def voxel_sizes_from_affine(affine: np.ndarray) -> np.ndarray:
+    # Entrada:
+    #   - affine: matriz afín 4x4 que relaciona coordenadas de vóxel con coordenadas físicas
+    #   o espaciales de la imagen.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve coordenadas transformadas o una matriz de transformación que conserva la
+    #   relación entre espacio de vóxel y espacio físico.
     return np.sqrt(np.sum(np.asarray(affine[:3, :3], dtype=float) ** 2, axis=0))
 
 
@@ -234,11 +303,41 @@ def apply_voxel_transform_to_points(
     shift_vox: Iterable[float],
     scale: float,
 ) -> np.ndarray:
+    # Entrada:
+    #   - points: conjunto de coordenadas espaciales o puntos de una geometría anatómica o
+    #   tractográfica.
+    #   - center: centro geométrico o anatómico usado como referencia para búsqueda,
+    #   segmentación o medición.
+    #   - shift_vox: parámetro `shift_vox` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - scale: escala de análisis usada para ajustar el ancho efectivo del operador o del
+    #   filtro.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve coordenadas transformadas o una matriz de transformación que conserva la
+    #   relación entre espacio de vóxel y espacio físico.
     shift_vox = np.asarray(tuple(shift_vox), dtype=float)
     return (points - center) * float(scale) + center + shift_vox
 
 
 def hemisphere_side(center_vox: np.ndarray, affine: np.ndarray, brain_center_vox: np.ndarray) -> int:
+    # Entrada:
+    #   - center_vox: parámetro `center_vox` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - affine: matriz afín 4x4 que relaciona coordenadas de vóxel con coordenadas físicas
+    #   o espaciales de la imagen.
+    #   - brain_center_vox: parámetro `brain_center_vox` usado por la función para controlar
+    #   la operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Evalúa transformaciones candidatas y criterios de calidad para ajustar una región de
+    #   interés al espacio anatómico, priorizando solapamiento, posición y coherencia
+    #   espacial.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     center_world = nib.affines.apply_affine(affine, center_vox)
     brain_center_world = nib.affines.apply_affine(affine, brain_center_vox)
     delta = float(center_world[0] - brain_center_world[0])
@@ -265,6 +364,41 @@ def evaluate_candidate(
     original_hemisphere: int,
     brain_center_vox: np.ndarray,
 ) -> CandidateResult:
+    # Entrada:
+    #   - sample_points: parámetro `sample_points` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - roi_center: parámetro `roi_center` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - shift_vox: parámetro `shift_vox` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - scale: escala de análisis usada para ajustar el ancho efectivo del operador o del
+    #   filtro.
+    #   - volume_shape: parámetro `volume_shape` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - brain_mask: parámetro `brain_mask` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - cortical_shell: parámetro `cortical_shell` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - distance_to_shell: parámetro `distance_to_shell` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - distance_to_brain: parámetro `distance_to_brain` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - brain_affine: parámetro `brain_affine` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - maximum_translation_mm: parámetro `maximum_translation_mm` usado por la función
+    #   para controlar la operación, definir datos de entrada o especificar
+    #   rutas/resultados.
+    #   - original_hemisphere: parámetro `original_hemisphere` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - brain_center_vox: parámetro `brain_center_vox` usado por la función para controlar
+    #   la operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Evalúa transformaciones candidatas y criterios de calidad para ajustar una región de
+    #   interés al espacio anatómico, priorizando solapamiento, posición y coherencia
+    #   espacial.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     transformed = apply_voxel_transform_to_points(
         sample_points,
         center=roi_center,
@@ -344,6 +478,20 @@ def evaluate_candidate(
 
 
 def inclusive_range(start: int, stop: int, step: int) -> list[int]:
+    # Entrada:
+    #   - start: parámetro `start` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - stop: parámetro `stop` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - step: parámetro `step` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Evalúa transformaciones candidatas y criterios de calidad para ajustar una región de
+    #   interés al espacio anatómico, priorizando solapamiento, posición y coherencia
+    #   espacial.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     if stop < start:
         return []
     values = list(range(int(start), int(stop) + 1, max(1, int(step))))
@@ -364,6 +512,32 @@ def automatic_search(
     fine_radius_voxels: int,
     scale_candidates: tuple[float, ...],
 ) -> tuple[CandidateResult, dict]:
+    # Entrada:
+    #   - roi_mask: máscara de región de interés usada para restringir mediciones o
+    #   evaluaciones a una zona anatómica concreta.
+    #   - brain_mask: parámetro `brain_mask` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - brain_affine: parámetro `brain_affine` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - cortical_shell_thickness_mm: parámetro `cortical_shell_thickness_mm` usado por la
+    #   función para controlar la operación, definir datos de entrada o especificar
+    #   rutas/resultados.
+    #   - maximum_translation_mm: parámetro `maximum_translation_mm` usado por la función
+    #   para controlar la operación, definir datos de entrada o especificar
+    #   rutas/resultados.
+    #   - coarse_step_mm: parámetro `coarse_step_mm` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - fine_radius_voxels: parámetro `fine_radius_voxels` usado por la función para
+    #   controlar la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - scale_candidates: parámetro `scale_candidates` usado por la función para controlar
+    #   la operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Evalúa transformaciones candidatas y criterios de calidad para ajustar una región de
+    #   interés al espacio anatómico, priorizando solapamiento, posición y coherencia
+    #   espacial.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     volume_shape = np.asarray(brain_mask.shape, dtype=int)
     zooms = voxel_sizes_from_affine(brain_affine)
 
@@ -519,6 +693,23 @@ def transform_binary_mask(
 
     scipy.affine_transform requiere la transformación inversa salida -> entrada.
     """
+    # Entrada:
+    #   - mask: máscara binaria o booleana que delimita la región anatómica o computacional
+    #   de interés.
+    #   - output_shape: parámetro `output_shape` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - center_vox: parámetro `center_vox` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - shift_vox: parámetro `shift_vox` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - scale: escala de análisis usada para ajustar el ancho efectivo del operador o del
+    #   filtro.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     inverse_matrix = np.eye(3, dtype=float) / float(scale)
     shift = np.asarray(shift_vox, dtype=float)
     inverse_offset = center_vox - (center_vox + shift) / float(scale)
@@ -537,6 +728,20 @@ def transform_binary_mask(
 
 
 def voxel_transform_matrix(center_vox: np.ndarray, shift_vox: np.ndarray, scale: float) -> np.ndarray:
+    # Entrada:
+    #   - center_vox: parámetro `center_vox` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    #   - shift_vox: parámetro `shift_vox` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - scale: escala de análisis usada para ajustar el ancho efectivo del operador o del
+    #   filtro.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   Devuelve coordenadas transformadas o una matriz de transformación que conserva la
+    #   relación entre espacio de vóxel y espacio físico.
     matrix = np.eye(4, dtype=float)
     matrix[:3, :3] = np.eye(3) * float(scale)
     matrix[:3, 3] = center_vox + shift_vox - float(scale) * center_vox
@@ -544,6 +749,16 @@ def voxel_transform_matrix(center_vox: np.ndarray, shift_vox: np.ndarray, scale:
 
 
 def quality_label(result: CandidateResult) -> str:
+    # Entrada:
+    #   - result: parámetro `result` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Genera salidas visuales o de intercambio: mapas de etiquetas, superposiciones
+    #   RGB/RGBA, archivos NIfTI, CSV o descripciones de color para revisión en visores
+    #   médicos y auditoría de resultados.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     if result.shell_overlap >= 0.55 and result.inside_fraction >= 0.75:
         return "alta"
     if result.shell_overlap >= 0.30 and result.inside_fraction >= 0.50:
@@ -555,6 +770,16 @@ def quality_label(result: CandidateResult) -> str:
 # VISUALIZACIÓN
 # =============================================================================
 def intensity_limits(brain: np.ndarray) -> tuple[float, float]:
+    # Entrada:
+    #   - brain: parámetro `brain` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Evalúa transformaciones candidatas y criterios de calidad para ajustar una región de
+    #   interés al espacio anatómico, priorizando solapamiento, posición y coherencia
+    #   espacial.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     valid = brain[np.isfinite(brain)]
     valid = valid[valid != 0]
     if valid.size == 0:
@@ -563,6 +788,15 @@ def intensity_limits(brain: np.ndarray) -> tuple[float, float]:
 
 
 def mask_center(mask: np.ndarray) -> np.ndarray:
+    # Entrada:
+    #   - mask: máscara binaria o booleana que delimita la región anatómica o computacional
+    #   de interés.
+    # Proceso:
+    #   Construye o depura máscaras mediante umbralización, componentes conectados, cajas
+    #   envolventes y operaciones morfológicas para aislar la región anatómica relevante.
+    # Salida:
+    #   Devuelve una máscara binaria, un componente segmentado o una estructura equivalente
+    #   que delimita la región procesada.
     points = np.argwhere(mask)
     if points.size == 0:
         return np.asarray(mask.shape, dtype=float) / 2.0
@@ -575,6 +809,22 @@ def save_preview(
     corrected: np.ndarray,
     output_path: Path,
 ) -> None:
+    # Entrada:
+    #   - brain: parámetro `brain` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - original: parámetro `original` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - corrected: parámetro `corrected` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - output_path: parámetro `output_path` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Genera salidas visuales o de intercambio: mapas de etiquetas, superposiciones
+    #   RGB/RGBA, archivos NIfTI, CSV o descripciones de color para revisión en visores
+    #   médicos y auditoría de resultados.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     vmin, vmax = intensity_limits(brain)
     figure, axes = plt.subplots(2, 3, figsize=(15, 10))
 
@@ -613,6 +863,16 @@ def save_preview(
 # PROGRAMA PRINCIPAL
 # =============================================================================
 def parse_arguments() -> argparse.Namespace:
+    # Entrada:
+    #   No recibe argumentos directos; usa configuración, rutas globales, argumentos de
+    #   consola o datos definidos en el contexto de ejecución.
+    # Proceso:
+    #   Evalúa transformaciones candidatas y criterios de calidad para ajustar una región de
+    #   interés al espacio anatómico, priorizando solapamiento, posición y coherencia
+    #   espacial.
+    # Salida:
+    #   Devuelve estado de ejecución o argumentos procesados; cuando actúa como punto de
+    #   entrada, coordina salidas en disco.
     parser = argparse.ArgumentParser(
         description="Alinea automáticamente una máscara cortical con Brain00mm."
     )
@@ -645,6 +905,16 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def main() -> None:
+    # Entrada:
+    #   No recibe argumentos directos; usa configuración, rutas globales, argumentos de
+    #   consola o datos definidos en el contexto de ejecución.
+    # Proceso:
+    #   Evalúa transformaciones candidatas y criterios de calidad para ajustar una región de
+    #   interés al espacio anatómico, priorizando solapamiento, posición y coherencia
+    #   espacial.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     args = parse_arguments()
     brain_path = args.brain.expanduser()
     mask_path = args.mask.expanduser()

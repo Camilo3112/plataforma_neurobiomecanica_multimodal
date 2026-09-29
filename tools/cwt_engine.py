@@ -49,6 +49,18 @@ class CWTResult:
     power: np.ndarray
 
 def _mexican_hat_kernel(width: float, radius_factor: float = 6.0) -> np.ndarray:
+    # Entrada:
+    #   - width: parámetro `width` usado por la función para controlar la operación, definir
+    #   datos de entrada o especificar rutas/resultados.
+    #   - radius_factor: parámetro `radius_factor` usado por la función para controlar la
+    #   operación, definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Construye un núcleo tipo sombrero mexicano/LoG a partir de una escala; este operador
+    #   aproxima una segunda derivada suavizada y permite detectar transiciones, picos y
+    #   cambios locales en una señal.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     width = max(float(width), 1e-6)
     half = max(3, int(np.ceil(radius_factor * width)))
     x = np.arange(-half, half + 1, dtype=float)
@@ -60,6 +72,24 @@ def _mexican_hat_kernel(width: float, radius_factor: float = 6.0) -> np.ndarray:
     return kernel
 
 def cwt_1d(signal, wavelet="mexican_hat", n_scales=12, min_scale=1.0, max_scale=6.0):
+    # Entrada:
+    #   - signal: parámetro `signal` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - wavelet: parámetro `wavelet` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - n_scales: parámetro `n_scales` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - min_scale: parámetro `min_scale` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    #   - max_scale: parámetro `max_scale` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Normaliza la señal, aplica convoluciones multiescala con una wavelet tipo sombrero
+    #   mexicano/LoG y calcula una representación energía-escala similar a un escalograma
+    #   CWT.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     x = np.asarray(signal, dtype=float).ravel()
     scales = np.linspace(float(min_scale), float(max_scale), int(n_scales))
     if x.size == 0:

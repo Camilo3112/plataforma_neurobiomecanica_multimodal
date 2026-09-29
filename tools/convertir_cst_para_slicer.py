@@ -11,7 +11,7 @@ Descripción
 -----------
 Genera versiones TRK/VTK compatibles con 3D Slicer.
 
-
+Fundamento físico-matemático implementado
 -----------------------------------------
 Convierte tractogramas a formatos compatibles con 3D Slicer. El tracto se
 modela
@@ -48,6 +48,16 @@ from nibabel.streamlines.trk import TrkFile, Field
 
 
 def clean_streamlines(streamlines):
+    # Entrada:
+    #   - streamlines: conjunto de fibras tractográficas; cada fibra está representada por
+    #   una secuencia de puntos 3D.
+    # Proceso:
+    #   Prepara tractografía para visualización: depura fibras inválidas, conserva
+    #   coordenadas espaciales, asigna color por orientación local y exporta formatos
+    #   compatibles con 3D Slicer.
+    # Salida:
+    #   Devuelve streamlines depuradas o colores RGB por orientación, manteniendo
+    #   correspondencia con la geometría tractográfica.
     cleaned = []
     for sl in streamlines:
         arr = np.asarray(sl, dtype=np.float32)
@@ -60,6 +70,16 @@ def clean_streamlines(streamlines):
 
 
 def orientation_rgb(sl: np.ndarray) -> np.ndarray:
+    # Entrada:
+    #   - sl: parámetro `sl` usado por la función para controlar la operación, definir datos
+    #   de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Prepara tractografía para visualización: depura fibras inválidas, conserva
+    #   coordenadas espaciales, asigna color por orientación local y exporta formatos
+    #   compatibles con 3D Slicer.
+    # Salida:
+    #   Devuelve streamlines depuradas o colores RGB por orientación, manteniendo
+    #   correspondencia con la geometría tractográfica.
     n = sl.shape[0]
     if n == 0:
         return np.zeros((0, 3), dtype=np.float32)
@@ -73,6 +93,18 @@ def orientation_rgb(sl: np.ndarray) -> np.ndarray:
 
 
 def save_slicer_trk(streamlines, t1_img, out_path: Path):
+    # Entrada:
+    #   - streamlines: conjunto de fibras tractográficas; cada fibra está representada por
+    #   una secuencia de puntos 3D.
+    #   - t1_img: imagen anatómica T1 o rAnatomico usada como referencia espacial.
+    #   - out_path: ruta de salida donde se guarda el archivo generado.
+    # Proceso:
+    #   Procesa información espacial de imagen médica: ordena cortes, interpreta metadatos
+    #   DICOM/NIfTI, conserva geometría física mediante matriz afín y transforma entre
+    #   coordenadas de vóxel y coordenadas reales.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     header = TrkFile.create_empty_header()
     header[Field.DIMENSIONS] = np.asarray(t1_img.shape[:3], dtype=np.int16)
     header[Field.VOXEL_SIZES] = np.asarray(t1_img.header.get_zooms()[:3], dtype=np.float32)
@@ -87,6 +119,17 @@ def save_slicer_trk(streamlines, t1_img, out_path: Path):
 
 
 def save_vtk(streamlines, out_path: Path):
+    # Entrada:
+    #   - streamlines: conjunto de fibras tractográficas; cada fibra está representada por
+    #   una secuencia de puntos 3D.
+    #   - out_path: ruta de salida donde se guarda el archivo generado.
+    # Proceso:
+    #   Genera salidas visuales o de intercambio: mapas de etiquetas, superposiciones
+    #   RGB/RGBA, archivos NIfTI, CSV o descripciones de color para revisión en visores
+    #   médicos y auditoría de resultados.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     points = []
     lines = []
     colors = []
@@ -116,6 +159,18 @@ def save_vtk(streamlines, out_path: Path):
 
 
 def find_t1(tractografia_dir: Path, explicit: str | None):
+    # Entrada:
+    #   - tractografia_dir: parámetro `tractografia_dir` usado por la función para controlar
+    #   la operación, definir datos de entrada o especificar rutas/resultados.
+    #   - explicit: parámetro `explicit` usado por la función para controlar la operación,
+    #   definir datos de entrada o especificar rutas/resultados.
+    # Proceso:
+    #   Prepara tractografía para visualización: depura fibras inválidas, conserva
+    #   coordenadas espaciales, asigna color por orientación local y exporta formatos
+    #   compatibles con 3D Slicer.
+    # Salida:
+    #   Devuelve el resultado procesado por la función, listo para alimentar el siguiente
+    #   paso del pipeline o para ser exportado.
     if explicit:
         p = Path(explicit)
         if p.exists():
@@ -133,6 +188,16 @@ def find_t1(tractografia_dir: Path, explicit: str | None):
 
 
 def main():
+    # Entrada:
+    #   No recibe argumentos directos; usa configuración, rutas globales, argumentos de
+    #   consola o datos definidos en el contexto de ejecución.
+    # Proceso:
+    #   Prepara tractografía para visualización: depura fibras inválidas, conserva
+    #   coordenadas espaciales, asigna color por orientación local y exporta formatos
+    #   compatibles con 3D Slicer.
+    # Salida:
+    #   No devuelve un valor principal explícito; su efecto esperado es guardar archivos,
+    #   actualizar estructuras o coordinar pasos del flujo de trabajo.
     ap = argparse.ArgumentParser()
     ap.add_argument("--tractografia-dir", required=True)
     ap.add_argument("--t1-path", default=None)
