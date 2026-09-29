@@ -66,6 +66,7 @@ from .gpu import (
 
 
 def _require_neuro_libs():
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
@@ -77,6 +78,7 @@ def _require_neuro_libs():
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función.
     # -----------------------------------------------------------------------------
+    """
     import pydicom  # noqa
     import nibabel as nib  # noqa
     from scipy import ndimage  # noqa
@@ -84,6 +86,7 @@ def _require_neuro_libs():
 
 
 def is_nifti(path: Path) -> bool:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
@@ -95,11 +98,13 @@ def is_nifti(path: Path) -> bool:
     #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
     #     Tipo de retorno anotado: bool.
     # -----------------------------------------------------------------------------
+    """
     name = path.name.lower()
     return name.endswith(".nii") or name.endswith(".nii.gz")
 
 
 def find_nifti_files(folder: Path) -> list[Path]:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - folder: parámetro de entrada usado por la función para controlar el cálculo o suministrar
@@ -111,12 +116,14 @@ def find_nifti_files(folder: Path) -> list[Path]:
     #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
     #     Tipo de retorno anotado: list[Path].
     # -----------------------------------------------------------------------------
+    """
     if not folder or not folder.exists():
         return []
     return sorted([p for p in folder.rglob("*") if p.is_file() and is_nifti(p)])
 
 
 def _to_float(value: Any, default: float = math.nan) -> float:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - value: parámetro de entrada usado por la función para controlar el cálculo o suministrar
@@ -130,6 +137,7 @@ def _to_float(value: Any, default: float = math.nan) -> float:
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función. Tipo de retorno anotado: float.
     # -----------------------------------------------------------------------------
+    """
     try:
         if value is None or str(value) == "":
             return default
@@ -139,6 +147,7 @@ def _to_float(value: Any, default: float = math.nan) -> float:
 
 
 def _list_float(value: Any, default: list[float] | None = None) -> list[float]:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - value: parámetro de entrada usado por la función para controlar el cálculo o suministrar
@@ -152,6 +161,7 @@ def _list_float(value: Any, default: list[float] | None = None) -> list[float]:
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función. Tipo de retorno anotado: list[float].
     # -----------------------------------------------------------------------------
+    """
     if default is None:
         default = [1.0, 1.0]
     try:
@@ -163,7 +173,7 @@ def _list_float(value: Any, default: list[float] | None = None) -> list[float]:
 
 
 def _dicom_sort_key(ds):
-    """Ordena por posición real cuando existe; si no, por InstanceNumber."""
+    """Ordena por posición real cuando existe; si no, por InstanceNumber.
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
@@ -174,6 +184,7 @@ def _dicom_sort_key(ds):
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función.
     # -----------------------------------------------------------------------------
+    """
     if hasattr(ds, "ImagePositionPatient"):
         try:
             return float(ds.ImagePositionPatient[2])
@@ -193,6 +204,7 @@ def _dicom_sort_key(ds):
 
 
 def _dicom_file_path(ds) -> str:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
@@ -203,10 +215,12 @@ def _dicom_file_path(ds) -> str:
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función. Tipo de retorno anotado: str.
     # -----------------------------------------------------------------------------
+    """
     return str(getattr(ds, "filename", ""))
 
 
 def _series_text(ds) -> str:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
@@ -217,6 +231,7 @@ def _series_text(ds) -> str:
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función. Tipo de retorno anotado: str.
     # -----------------------------------------------------------------------------
+    """
     return " ".join([
         str(getattr(ds, "SeriesDescription", "")),
         str(getattr(ds, "ProtocolName", "")),
@@ -233,7 +248,7 @@ def side_from_text(text: str) -> str:
     - rMap_MotRodillaIzq_fwe005.nii
     - rMOTOR_DERECHA_FWE001.nii
     - rmap_motorIzq_fwe005.nii
-    """
+    
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - text: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
@@ -247,6 +262,7 @@ def side_from_text(text: str) -> str:
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función. Tipo de retorno anotado: str.
     # -----------------------------------------------------------------------------
+    """
     n = norm_key(text)
     compact = re.sub(r"[^a-z0-9]+", "", n)
 
@@ -275,6 +291,7 @@ def side_from_text(text: str) -> str:
 
 
 def side_from_name(path: Path) -> str:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
@@ -286,6 +303,7 @@ def side_from_name(path: Path) -> str:
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función. Tipo de retorno anotado: str.
     # -----------------------------------------------------------------------------
+    """
     return side_from_text(path.name)
 
 
@@ -294,7 +312,7 @@ def classify_series(desc: str, protocol: str) -> dict[str, str]:
 
     Basado en los nombres vistos en tus datos: T1, T2, ep2d_pace_MOTOR derecha/izquierda,
     t-Maps, DTI/difusión, FA/ADC/RD/AD/TRACEW, tractografía y tracto corticoespinal.
-    """
+    
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - desc: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
@@ -309,6 +327,7 @@ def classify_series(desc: str, protocol: str) -> dict[str, str]:
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función. Tipo de retorno anotado: dict[str, str].
     # -----------------------------------------------------------------------------
+    """
     raw = f"{desc} {protocol}"
     t = norm_key(raw)
     side = side_from_text(raw)
@@ -375,6 +394,7 @@ def classify_series(desc: str, protocol: str) -> dict[str, str]:
 
 
 def sanitize_name(text: str, max_len: int = 80) -> str:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - text: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
@@ -388,12 +408,14 @@ def sanitize_name(text: str, max_len: int = 80) -> str:
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función. Tipo de retorno anotado: str.
     # -----------------------------------------------------------------------------
+    """
     name = re.sub(r"[^A-Za-z0-9_áéíóúÁÉÍÓÚñÑ-]+", "_", str(text)).strip("_")
     name = name.replace("__", "_")
     return (name[:max_len] or "serie")
 
 
 def collect_dicom_series(directory: Path) -> dict[str, list]:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - directory: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
@@ -405,6 +427,7 @@ def collect_dicom_series(directory: Path) -> dict[str, list]:
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función. Tipo de retorno anotado: dict[str, list].
     # -----------------------------------------------------------------------------
+    """
     pydicom, _, _ = _require_neuro_libs()
     groups: dict[str, list] = {}
     for f in Path(directory).rglob("*"):
@@ -431,7 +454,7 @@ def dicom_piece_to_array(ds) -> np.ndarray:
 
     Maneja imágenes RGB postprocesadas de tractografía/tracto corticoespinal convirtiéndolas
     a escala de grises y maneja multiframe como volumen 3D.
-    """
+    
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
@@ -442,6 +465,7 @@ def dicom_piece_to_array(ds) -> np.ndarray:
     #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
     #     la función. Tipo de retorno anotado: np.ndarray.
     # -----------------------------------------------------------------------------
+    """
     arr = ds.pixel_array.astype(np.float32)
     if arr.ndim == 2:
         return arr[:, :, None]
@@ -464,6 +488,7 @@ def dicom_piece_to_array(ds) -> np.ndarray:
 
 
 def dicom_series_to_volume(ds_list: list) -> tuple[np.ndarray, np.ndarray, dict]:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - ds_list: parámetro de entrada usado por la función para controlar el cálculo o suministrar
@@ -474,6 +499,7 @@ def dicom_series_to_volume(ds_list: list) -> tuple[np.ndarray, np.ndarray, dict]
     #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
     #     Tipo de retorno anotado: tuple[np.ndarray, np.ndarray, dict].
     # -----------------------------------------------------------------------------
+    """
     if not ds_list:
         raise ValueError("Serie DICOM vacía")
     ds_list = sorted(ds_list, key=_dicom_sort_key)
@@ -546,6 +572,7 @@ def dicom_series_to_volume(ds_list: list) -> tuple[np.ndarray, np.ndarray, dict]
 
 
 def build_dicom_manifest(series: dict[str, list], out_dir: Path) -> pd.DataFrame:
+    """
     # -----------------------------------------------------------------------------
     # Entrada:
     #   - series: parámetro de entrada usado por la función para controlar el cálculo o suministrar
@@ -558,6 +585,7 @@ def build_dicom_manifest(series: dict[str, list], out_dir: Path) -> pd.DataFrame
     #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
     #     módulo. Tipo de retorno anotado: pd.DataFrame.
     # -----------------------------------------------------------------------------
+    """
     rows = []
     for uid, ds_list in sorted(series.items(), key=lambda kv: str(kv[0])):
         if not ds_list:
