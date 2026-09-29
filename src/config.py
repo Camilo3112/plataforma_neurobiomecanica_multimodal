@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento 
+Fundamento físico-matemático implementado
 -----------------------------------------
 Define parámetros del pipeline como un modelo de configuración reproducible.
 Las
@@ -128,9 +128,31 @@ class PipelineConfig:
     ad_motor_prior_sigma_scale: float = 1.0
 
     def data_root(self) -> Path:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        # Proceso:
+        #   - Ejecuta el bloque "data root" dentro del módulo de resolución centralizada de rutas y
+        #     configuración del proyecto.
+        # Salida:
+        #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+        #     específica de la función. Tipo de retorno anotado: Path.
+        # -----------------------------------------------------------------------------
         return self.data_root_override if self.data_root_override is not None else self.project_root / self.data_dirname
 
     def results_root(self) -> Path:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        # Proceso:
+        #   - Ejecuta el bloque "results root" dentro del módulo de resolución centralizada de rutas y
+        #     configuración del proyecto.
+        # Salida:
+        #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+        #     específica de la función. Tipo de retorno anotado: Path.
+        # -----------------------------------------------------------------------------
         return self.results_root_override if self.results_root_override is not None else self.project_root / self.results_dirname
 
 

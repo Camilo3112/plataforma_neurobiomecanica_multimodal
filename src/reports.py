@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-
+Fundamento físico-matemático implementado
 -----------------------------------------
 Genera salidas tabulares y reportes reproducibles. Las métricas se conservan
 con
@@ -46,9 +46,33 @@ from .io_utils import safe_mkdir, save_dataframe
 
 def _write_excel_report(out_path: Path, available: dict[str, Path]) -> Path:
     """Escribe Excel global. Si el archivo esta abierto en Excel/OneDrive, usa copia con timestamp."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - out_path: ruta donde se guarda el resultado generado por la función. Tipo esperado/anotado:
+    #       Path.
+    #   - available: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: dict[str, Path].
+    # Proceso:
+    #   - Organiza resultados en tablas Excel para revisión, auditoría y comparación entre pacientes,
+    #     etapas o modalidades.
+    # Salida:
+    #   - archivo de reporte, tabla Excel/CSV/Markdown o ruta donde quedó guardado el resumen. Tipo de
+    #     retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     safe_mkdir(out_path.parent)
 
     def _write(path: Path) -> None:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación.
+        #       Tipo esperado/anotado: Path.
+        # Proceso:
+        #   - Ejecuta el bloque "write" dentro del módulo de construcción de reportes globales en Excel
+        #     y Markdown con salidas del pipeline.
+        # Salida:
+        #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita
+        #     mediante ausencia de error. Tipo de retorno anotado: None.
+        # -----------------------------------------------------------------------------
         with pd.ExcelWriter(path) as writer:
             for name, src_path in available.items():
                 try:
@@ -75,6 +99,17 @@ def _write_excel_report(out_path: Path, available: dict[str, Path]) -> Path:
 
 def build_global_report(cfg: PipelineConfig) -> Path | None:
     """Une todos los CSV globales en un Excel resumen."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Construye reportes estructurados a partir de métricas disponibles y los guarda en formatos
+    #     tabulares o documentales.
+    # Salida:
+    #   - archivo de reporte, tabla Excel/CSV/Markdown o ruta donde quedó guardado el resumen. Tipo de
+    #     retorno anotado: Path | None.
+    # -----------------------------------------------------------------------------
     out_path = cfg.results_root() / "reporte_global_integrado.xlsx"
     csvs = {
         "biomecanica": cfg.results_root() / "resumen_global_biomecanica.csv",
@@ -95,6 +130,17 @@ def build_global_report(cfg: PipelineConfig) -> Path | None:
 
 
 def write_readme_results(cfg: PipelineConfig) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "write readme results" dentro del módulo de construcción de reportes
+    #     globales en Excel y Markdown con salidas del pipeline.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     path = cfg.results_root() / "LEEME_RESULTADOS.txt"
     safe_mkdir(path.parent)
     text = f"""

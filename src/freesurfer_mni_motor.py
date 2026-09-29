@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento 
+Fundamento físico-matemático implementado
 -----------------------------------------
 Relaciona espacio nativo del paciente con referencias atlas/MNI. La
 transferencia
@@ -66,6 +66,17 @@ MOTOR_PROTOCOL_NOTE = (
 
 
 def _control_stages(cfg: PipelineConfig) -> list[str]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "control stages" dentro del módulo de procesamiento de corteza motora
+    #     combinando FreeSurfer, atlas MNI y espacio nativo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[str].
+    # -----------------------------------------------------------------------------
     control_dir = cfg.data_root() / cfg.control_name
     stages = [st for st in cfg.stages if resolve_stage_dir(control_dir, st, fallback_to_subject=False) is not None]
     if not stages and control_dir.exists():
@@ -74,6 +85,17 @@ def _control_stages(cfg: PipelineConfig) -> list[str]:
 
 
 def _iter_subject_stage(cfg: PipelineConfig):
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "iter subject stage" dentro del módulo de procesamiento de corteza motora
+    #     combinando FreeSurfer, atlas MNI y espacio nativo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     for patient in cfg.patients:
         for stage in cfg.stages:
             yield patient, stage
@@ -82,6 +104,19 @@ def _iter_subject_stage(cfg: PipelineConfig):
 
 
 def _find_mni_transform_candidates(cfg: PipelineConfig, subject: str, stage: str) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Integra atlas o transformaciones MNI con el espacio nativo del paciente para obtener regiones
+    #     anatómicas comparables.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     roots: list[Path] = []
     roots.append(cfg.results_root() / "derivados_externos" / "fmriprep")
     roots.append(cfg.results_root() / "derivados_externos")
@@ -110,6 +145,19 @@ def _find_mni_transform_candidates(cfg: PipelineConfig, subject: str, stage: str
 
 
 def _copy_key_outputs_to_final(mask_rows: pd.DataFrame, final_dir: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask_rows: máscara binaria o etiquetada asociada a una región anatómica, funcional o de
+    #       calidad. Tipo esperado/anotado: pd.DataFrame.
+    #   - final_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "copy key outputs to final" dentro del módulo de procesamiento de corteza
+    #     motora combinando FreeSurfer, atlas MNI y espacio nativo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     safe_mkdir(final_dir)
     rows=[]
     if mask_rows is None or mask_rows.empty or "mask_path" not in mask_rows.columns:
@@ -134,6 +182,16 @@ def _copy_key_outputs_to_final(mask_rows: pd.DataFrame, final_dir: Path) -> pd.D
 
 
 def _add_asymmetry_metrics(df: pd.DataFrame) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - df: tabla de datos en formato DataFrame. Tipo esperado/anotado: pd.DataFrame.
+    # Proceso:
+    #   - Ejecuta el bloque "add asymmetry metrics" dentro del módulo de procesamiento de corteza motora
+    #     combinando FreeSurfer, atlas MNI y espacio nativo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     if df.empty or "volume_ml" not in df.columns:
         return pd.DataFrame()
     d = df.copy()
@@ -163,6 +221,16 @@ def _add_asymmetry_metrics(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def _stability_across_patients(df: pd.DataFrame) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - df: tabla de datos en formato DataFrame. Tipo esperado/anotado: pd.DataFrame.
+    # Proceso:
+    #   - Ejecuta el bloque "stability across patients" dentro del módulo de procesamiento de corteza
+    #     motora combinando FreeSurfer, atlas MNI y espacio nativo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     if df.empty or "volume_ml" not in df.columns:
         return pd.DataFrame()
     d = df.copy()
@@ -194,6 +262,16 @@ def _stability_across_patients(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def _before_after_change(df: pd.DataFrame) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - df: tabla de datos en formato DataFrame. Tipo esperado/anotado: pd.DataFrame.
+    # Proceso:
+    #   - Ejecuta el bloque "before after change" dentro del módulo de procesamiento de corteza motora
+    #     combinando FreeSurfer, atlas MNI y espacio nativo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     if df.empty or "volume_ml" not in df.columns:
         return pd.DataFrame()
     d = df.copy()
@@ -214,6 +292,19 @@ def _before_after_change(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def process_subject_stage_freesurfer_motor(cfg: PipelineConfig, subject: str, stage: str) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Usa salidas de FreeSurfer, etiquetas anatómicas y estadísticas corticales/subcorticales para
+    #     extraer métricas en espacio nativo.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     out_dir = cfg.results_root() / subject / stage / "morfometria" / "freesurfer_mni_motor"
     safe_mkdir(out_dir)
     log_file = cfg.results_root() / subject / stage / "reportes" / "freesurfer_mni_motor_log.txt"
@@ -283,6 +374,17 @@ def process_subject_stage_freesurfer_motor(cfg: PipelineConfig, subject: str, st
 
 
 def run_freesurfer_mni_motor(cfg: PipelineConfig) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Integra atlas o transformaciones MNI con el espacio nativo del paciente para obtener regiones
+    #     anatómicas comparables.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     ckpt = CheckpointManager(cfg)
     statuses=[]
     for subject, stage in _iter_subject_stage(cfg):
@@ -290,6 +392,17 @@ def run_freesurfer_mni_motor(cfg: PipelineConfig) -> pd.DataFrame:
         task_id=f"freesurfer_mni_motor/{subject}/{stage}"
         out_dir = cfg.results_root() / subject / stage / "morfometria" / "freesurfer_mni_motor"
         def _work(subject=subject, stage=stage):
+            # -----------------------------------------------------------------------------
+            # Entrada:
+            #   - subject: identificador del sujeto o paciente a procesar.
+            #   - stage: etapa clínica o temporal, por ejemplo Antes o Después.
+            # Proceso:
+            #   - Ejecuta el bloque "work" dentro del módulo de procesamiento de corteza motora
+            #     combinando FreeSurfer, atlas MNI y espacio nativo.
+            # Salida:
+            #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+            #     específica de la función.
+            # -----------------------------------------------------------------------------
             return process_subject_stage_freesurfer_motor(cfg, subject, stage)
         result, status = ckpt.run(
             task_id=task_id,

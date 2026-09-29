@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-
+Fundamento físico-matemático implementado
 -----------------------------------------
 Ejecuta la corrección de ROI cortical en espacio del paciente. El modelo
 combina
@@ -56,6 +56,17 @@ MASK_PATTERNS = ['*corteza_motora*_roi_shell.nii.gz', '*corteza_motora*.nii.gz',
 
 
 def _control_requested_stages(cfg: PipelineConfig):
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "control requested stages" dentro del módulo de corrección y control de ROI
+    #     corticales en espacio anatómico del paciente.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     control_dir = cfg.data_root() / cfg.control_name
     for stage in cfg.stages:
         if (control_dir / stage).exists():
@@ -65,6 +76,17 @@ def _control_requested_stages(cfg: PipelineConfig):
 
 
 def _iter_subject_stage(cfg: PipelineConfig):
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "iter subject stage" dentro del módulo de corrección y control de ROI
+    #     corticales en espacio anatómico del paciente.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     for patient in cfg.patients:
         for stage in cfg.stages:
             stage_dir = resolve_stage_dir(cfg.data_root() / patient, stage)
@@ -76,6 +98,17 @@ def _iter_subject_stage(cfg: PipelineConfig):
 
 
 def find_brain(stage_dir: Path | None) -> Path | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path | None.
+    # Proceso:
+    #   - Ejecuta el bloque "find brain" dentro del módulo de corrección y control de ROI corticales en
+    #     espacio anatómico del paciente.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Path | None.
+    # -----------------------------------------------------------------------------
     if stage_dir is None or not stage_dir.exists():
         return None
     candidates = []
@@ -85,6 +118,17 @@ def find_brain(stage_dir: Path | None) -> Path | None:
     if not candidates:
         return None
     def score(p: Path):
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - p: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: Path.
+        # Proceso:
+        #   - Ejecuta el bloque "score" dentro del módulo de corrección y control de ROI corticales en
+        #     espacio anatómico del paciente.
+        # Salida:
+        #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio
+        #     longitudinal.
+        # -----------------------------------------------------------------------------
         s = str(p).lower()
         val = 0
         if 'brain00mm' in s: val += 100
@@ -95,6 +139,17 @@ def find_brain(stage_dir: Path | None) -> Path | None:
 
 
 def find_masks(results_stage_dir: Path) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - results_stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas.
+    #       Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     masks = []
     for root in [results_stage_dir / 'morfometria' / 'interna', results_stage_dir / 'resonancias', results_stage_dir]:
         if not root.exists():
@@ -112,10 +167,42 @@ def find_masks(results_stage_dir: Path) -> list[Path]:
 
 
 def _script_path() -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Normaliza o resuelve rutas para evitar errores por nombres de carpetas, etapas o convenciones
+    #     del proyecto.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     return Path(__file__).resolve().parents[1] / 'tools' / 'corregir_roi_cortical_automatico.py'
 
 
 def run_one_cortical_fix(brain: Path, mask: Path, output: Path, max_mm: float = 65.0, shell_mm: float = 5.0, auto_scale: bool = False) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - brain: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: Path.
+    #   - output: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - max_mm: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    #   - shell_mm: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    #   - auto_scale: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: bool.
+    # Proceso:
+    #   - Ejecuta el bloque "run one cortical fix" dentro del módulo de corrección y control de ROI
+    #     corticales en espacio anatómico del paciente.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     safe_mkdir(output.parent)
     cmd = [sys.executable, str(_script_path()), '--brain', str(brain), '--mask', str(mask), '--output', str(output), '--max-mm', str(max_mm), '--shell-mm', str(shell_mm)]
     if auto_scale:
@@ -167,6 +254,19 @@ def run_one_cortical_fix(brain: Path, mask: Path, output: Path, max_mm: float = 
 
 
 def run_cortical_roi_corrections(cfg: PipelineConfig, auto_scale: bool = False) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - auto_scale: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: bool.
+    # Proceso:
+    #   - Ejecuta el bloque "run cortical roi corrections" dentro del módulo de corrección y control de
+    #     ROI corticales en espacio anatómico del paciente.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows = []
     for subject, stage, stage_dir in _iter_subject_stage(cfg):
         print(f"\n[CORTEZA FIX] {subject} · {stage}")
@@ -188,6 +288,21 @@ def run_cortical_roi_corrections(cfg: PipelineConfig, auto_scale: bool = False) 
                 out = out_root / f"{mask.name.replace('.nii.gz','').replace('.nii','')}_corregida_auto.nii.gz"
                 task_id = f'corteza_fix/{subject}/{stage}/{mask.name}'
                 def _work(mask=mask, out=out, brain=brain):
+                    # -----------------------------------------------------------------------------
+                    # Entrada:
+                    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o
+                    #       funcional.
+                    #   - out: parámetro de entrada usado por la función para controlar el cálculo o
+                    #       suministrar datos.
+                    #   - brain: parámetro de entrada usado por la función para controlar el cálculo o
+                    #       suministrar datos.
+                    # Proceso:
+                    #   - Ejecuta el bloque "work" dentro del módulo de corrección y control de ROI
+                    #     corticales en espacio anatómico del paciente.
+                    # Salida:
+                    #   - valor calculado, estructura de resultados, tabla, ruta o None según la
+                    #     operación específica de la función.
+                    # -----------------------------------------------------------------------------
                     return run_one_cortical_fix(brain, mask, out, auto_scale=auto_scale)
                 result, status = ckpt.run(task_id=task_id, inputs=[brain, mask, _script_path()], outputs=[out], params={'selector': 'v3_20_correccion_roi_cortical_shell_mas_atlas_prior', 'auto_scale': auto_scale}, fn=_work)
                 if status == 'skipped' and out.exists():

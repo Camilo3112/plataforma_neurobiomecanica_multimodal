@@ -57,6 +57,17 @@ SignalKind = Literal["EMG", "DIN"]
 
 
 def _norm(s: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - s: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "norm" dentro del módulo de lectura, limpieza, remuestreo, normalización y
+    #     extracción de características de señales temporales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     s = unicodedata.normalize("NFKD", str(s))
     s = "".join(ch for ch in s if not unicodedata.combining(ch))
     s = s.lower().replace("µ", "u").replace("μ", "u")
@@ -64,6 +75,17 @@ def _norm(s: str) -> str:
 
 
 def _read_csv_flexible(path: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "read csv flexible" dentro del módulo de lectura, limpieza, remuestreo,
+    #     normalización y extracción de características de señales temporales.
+    # Salida:
+    #   - datos cargados en memoria, por ejemplo imagen, tabla, señal, JSON o estructura auxiliar. Tipo
+    #     de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     if not path or not Path(path).exists():
         raise FileNotFoundError(path)
     path = Path(path)
@@ -79,6 +101,17 @@ def _read_csv_flexible(path: Path) -> pd.DataFrame:
 
 
 def _to_float_series(series: pd.Series) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - series: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: pd.Series.
+    # Proceso:
+    #   - Ejecuta el bloque "to float series" dentro del módulo de lectura, limpieza, remuestreo,
+    #     normalización y extracción de características de señales temporales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     return (
         series.astype(str)
         .str.replace("\u00a0", "", regex=False)
@@ -91,6 +124,20 @@ def _to_float_series(series: pd.Series) -> np.ndarray:
 
 
 def _find_col(df: pd.DataFrame, must_contain: list[str], alternatives: list[list[str]] | None = None) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - df: tabla de datos en formato DataFrame. Tipo esperado/anotado: pd.DataFrame.
+    #   - must_contain: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: list[str].
+    #   - alternatives: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: list[list[str]] | None.
+    # Proceso:
+    #   - Ejecuta el bloque "find col" dentro del módulo de lectura, limpieza, remuestreo, normalización
+    #     y extracción de características de señales temporales.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: str.
+    # -----------------------------------------------------------------------------
     norm_cols = {_norm(c): c for c in df.columns}
     for n, original in norm_cols.items():
         if all(token in n for token in must_contain):
@@ -104,6 +151,19 @@ def _find_col(df: pd.DataFrame, must_contain: list[str], alternatives: list[list
 
 
 def side_from_filename(path: Path, fallback: Side) -> Side:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - fallback: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Side.
+    # Proceso:
+    #   - Ejecuta el bloque "side from filename" dentro del módulo de lectura, limpieza, remuestreo,
+    #     normalización y extracción de características de señales temporales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Side.
+    # -----------------------------------------------------------------------------
     name = _norm(Path(path).stem)
     if "derecha" in name or "right" in name or re.search(r"\bder\b", name):
         return "derecha"
@@ -118,6 +178,22 @@ def load_emg_signal(path: Path, side: Side, muscle: Muscle) -> tuple[np.ndarray,
     Regla clave del proyecto: si el archivo se llama derecha_*.csv, usa solo columnas
     de vastos derechos; si se llama izquierda_*.csv, usa solo columnas de vastos izquierdos.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: Side.
+    #   - muscle: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Muscle.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Carga una señal EMG respetando la lateralidad
+    #     del archivo. Regla clave del proyecto: si el archivo se llama derecha_*.csv, usa solo columnas
+    #     de vastos derechos; si se llama izquierda_*.csv, usa solo columnas de vastos iz...
+    # Salida:
+    #   - datos cargados en memoria, por ejemplo imagen, tabla, señal, JSON o estructura auxiliar. Tipo
+    #     de retorno anotado: tuple[np.ndarray, np.ndarray, dict].
+    # -----------------------------------------------------------------------------
     df = _read_csv_flexible(Path(path)).copy()
     effective_side = side_from_filename(Path(path), side)
     side_token = "derecho" if effective_side == "derecha" else "izquierdo"
@@ -160,6 +236,19 @@ def load_emg_signal(path: Path, side: Side, muscle: Muscle) -> tuple[np.ndarray,
 
 
 def load_din_signal(path: Path, side: Side) -> tuple[np.ndarray, np.ndarray, dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: Side.
+    # Proceso:
+    #   - Ejecuta el bloque "load din signal" dentro del módulo de lectura, limpieza, remuestreo,
+    #     normalización y extracción de características de señales temporales.
+    # Salida:
+    #   - datos cargados en memoria, por ejemplo imagen, tabla, señal, JSON o estructura auxiliar. Tipo
+    #     de retorno anotado: tuple[np.ndarray, np.ndarray, dict].
+    # -----------------------------------------------------------------------------
     df = _read_csv_flexible(Path(path)).copy()
     side_en = "right" if side == "derecha" else "left"
     side_es = "derech" if side == "derecha" else "izquierd"
@@ -216,6 +305,23 @@ def load_din_signal(path: Path, side: Side) -> tuple[np.ndarray, np.ndarray, dic
 
 
 def load_signal(path: Path, kind: SignalKind, side: Side, muscle: Muscle | None = None) -> tuple[np.ndarray, np.ndarray, dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - kind: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: SignalKind.
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: Side.
+    #   - muscle: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Muscle | None.
+    # Proceso:
+    #   - Ejecuta el bloque "load signal" dentro del módulo de lectura, limpieza, remuestreo,
+    #     normalización y extracción de características de señales temporales.
+    # Salida:
+    #   - datos cargados en memoria, por ejemplo imagen, tabla, señal, JSON o estructura auxiliar. Tipo
+    #     de retorno anotado: tuple[np.ndarray, np.ndarray, dict].
+    # -----------------------------------------------------------------------------
     if kind.upper() == "EMG":
         if muscle is None:
             raise ValueError("Para EMG debes indicar muscle='lateral' o 'medial'.")
@@ -224,6 +330,17 @@ def load_signal(path: Path, kind: SignalKind, side: Side, muscle: Muscle | None 
 
 
 def detrend_and_normalize(y: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - y: señal numérica de entrada, usualmente un arreglo unidimensional de muestras temporales.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Remueve tendencia de baja frecuencia y normaliza la amplitud para evitar sesgos por offset o
+    #     escala.
+    # Salida:
+    #   - señal, arreglo o volumen transformado y listo para análisis posterior. Tipo de retorno
+    #     anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     y = np.asarray(y, dtype=float)
     y = y[np.isfinite(y)] if y.ndim else y
     y = scipy_signal.detrend(y, type="constant")
@@ -232,6 +349,23 @@ def detrend_and_normalize(y: np.ndarray) -> np.ndarray:
 
 
 def resample_to_common_time(t1: np.ndarray, y1: np.ndarray, t2: np.ndarray, y2: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - t1: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - y1: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - t2: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - y2: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Alinea señales en una base temporal común mediante interpolación para hacer comparables sus
+    #     muestras.
+    # Salida:
+    #   - señal, arreglo o volumen transformado y listo para análisis posterior. Tipo de retorno
+    #     anotado: tuple[np.ndarray, np.ndarray, np.ndarray].
+    # -----------------------------------------------------------------------------
     t1, y1, t2, y2 = map(np.asarray, (t1, y1, t2, y2))
     if len(t1) < 2 or len(t2) < 2:
         raise ValueError("Señales demasiado cortas para alinear.")
@@ -252,6 +386,20 @@ def resample_to_common_time(t1: np.ndarray, y1: np.ndarray, t2: np.ndarray, y2: 
 
 
 def align_by_xcorr(t: np.ndarray, y1: np.ndarray, y2: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, float]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - t: vector temporal o coordenada de muestreo de la señal. Tipo esperado/anotado: np.ndarray.
+    #   - y1: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - y2: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "align by xcorr" dentro del módulo de lectura, limpieza, remuestreo,
+    #     normalización y extracción de características de señales temporales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[np.ndarray, np.ndarray, np.ndarray, float].
+    # -----------------------------------------------------------------------------
     z1 = detrend_and_normalize(y1)
     z2 = detrend_and_normalize(y2)
     corr = scipy_signal.correlate(z1, z2, mode="full", method="fft")
@@ -274,6 +422,20 @@ def align_by_xcorr(t: np.ndarray, y1: np.ndarray, y2: np.ndarray) -> tuple[np.nd
 
 
 def signal_features(t: np.ndarray, y: np.ndarray, kind: SignalKind) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - t: vector temporal o coordenada de muestreo de la señal. Tipo esperado/anotado: np.ndarray.
+    #   - y: señal numérica de entrada, usualmente un arreglo unidimensional de muestras temporales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - kind: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: SignalKind.
+    # Proceso:
+    #   - Ejecuta el bloque "signal features" dentro del módulo de lectura, limpieza, remuestreo,
+    #     normalización y extracción de características de señales temporales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     t = np.asarray(t, dtype=float)
     y = np.asarray(y, dtype=float)
     if len(y) < 2:
@@ -315,6 +477,20 @@ def signal_features(t: np.ndarray, y: np.ndarray, kind: SignalKind) -> dict:
 
 
 def pair_metrics(t: np.ndarray, f: np.ndarray, g: np.ndarray) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - t: vector temporal o coordenada de muestreo de la señal. Tipo esperado/anotado: np.ndarray.
+    #   - f: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo esperado/anotado:
+    #       np.ndarray.
+    #   - g: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo esperado/anotado:
+    #       np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "pair metrics" dentro del módulo de lectura, limpieza, remuestreo,
+    #     normalización y extracción de características de señales temporales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     if len(f) < 2 or len(g) < 2:
         return {}
     zf = detrend_and_normalize(f)
@@ -337,6 +513,30 @@ def pair_metrics(t: np.ndarray, f: np.ndarray, g: np.ndarray) -> dict:
 
 
 def plot_pair(t: np.ndarray, f: np.ndarray, g: np.ndarray, label_f: str, label_g: str, title: str, out_png: Path, max_freq_hz: float = 20.0) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - t: vector temporal o coordenada de muestreo de la señal. Tipo esperado/anotado: np.ndarray.
+    #   - f: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo esperado/anotado:
+    #       np.ndarray.
+    #   - g: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo esperado/anotado:
+    #       np.ndarray.
+    #   - label_f: etiqueta o identificador anatómico/funcional usado para clasificar resultados. Tipo
+    #       esperado/anotado: str.
+    #   - label_g: etiqueta o identificador anatómico/funcional usado para clasificar resultados. Tipo
+    #       esperado/anotado: str.
+    #   - title: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - out_png: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - max_freq_hz: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Ejecuta el bloque "plot pair" dentro del módulo de lectura, limpieza, remuestreo,
+    #     normalización y extracción de características de señales temporales.
+    # Salida:
+    #   - figura, imagen o archivo gráfico guardado para inspección visual. Tipo de retorno anotado:
+    #     None.
+    # -----------------------------------------------------------------------------
     safe_mkdir(out_png.parent)
     dt = float(np.nanmedian(np.diff(t))) if len(t) > 1 else 1.0
     fs = 1.0 / max(dt, 1e-12)
@@ -417,6 +617,41 @@ def plot_pair(t: np.ndarray, f: np.ndarray, g: np.ndarray, label_f: str, label_g
 
 
 def analyze_pair(
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path_f: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - kind_f: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: SignalKind.
+    #   - side_f: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Side.
+    #   - muscle_f: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Muscle | None.
+    #   - label_f: etiqueta o identificador anatómico/funcional usado para clasificar resultados. Tipo
+    #       esperado/anotado: str.
+    #   - path_g: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - kind_g: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: SignalKind.
+    #   - side_g: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Side.
+    #   - muscle_g: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Muscle | None.
+    #   - label_g: etiqueta o identificador anatómico/funcional usado para clasificar resultados. Tipo
+    #       esperado/anotado: str.
+    #   - title: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - out_png: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - max_freq_plot_hz: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Ejecuta el bloque "analyze pair" dentro del módulo de lectura, limpieza, remuestreo,
+    #     normalización y extracción de características de señales temporales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     path_f: Path,
     kind_f: SignalKind,
     side_f: Side,

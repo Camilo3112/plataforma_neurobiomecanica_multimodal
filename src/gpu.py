@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-o
+Fundamento físico-matemático implementado
 -----------------------------------------
 Gestiona cómputo CPU/GPU para operaciones numéricas. El modelo computacional
 prioriza matrices y tensores en GPU cuando existe soporte, manteniendo
@@ -56,10 +56,32 @@ _CONFIGURED_DEVICE: int | None = None
 
 
 def _mode_from_cfg(cfg: Any | None) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: Any | None.
+    # Proceso:
+    #   - Ejecuta el bloque "mode from cfg" dentro del módulo de gestión opcional de GPU/CuPy y
+    #     selección segura entre cómputo CPU y GPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return str(getattr(cfg, "gpu", os.environ.get("SUITE_VCE_GPU", "auto"))).lower()
 
 
 def _min_elements_from_cfg(cfg: Any | None) -> int:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: Any | None.
+    # Proceso:
+    #   - Ejecuta el bloque "min elements from cfg" dentro del módulo de gestión opcional de GPU/CuPy y
+    #     selección segura entre cómputo CPU y GPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: int.
+    # -----------------------------------------------------------------------------
     try:
         return int(getattr(cfg, "gpu_min_elements", os.environ.get("SUITE_VCE_GPU_MIN_ELEMENTS", 250_000)))
     except Exception:
@@ -73,6 +95,19 @@ def _validate_cupy_runtime(cp: Any) -> None:
     falle el primer kernel con "Failed to find CUDA headers". Por eso se hace una
     prueba mínima aquí antes de declarar la GPU como disponible.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cp: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Any.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Valida que CuPy no solo importe, sino que
+    #     pueda compilar/ejecutar kernels. En Windows es frecuente que `import cupy` y
+    #     `getDeviceCount()` funcionen, pero falle el primer kernel con "Failed to find CUDA headers".
+    #     Por eso...
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     x = cp.arange(16, dtype=cp.float32)
     y = cp.sqrt(x + cp.float32(1)).sum()
     _ = float(y.get())
@@ -80,6 +115,16 @@ def _validate_cupy_runtime(cp: Any) -> None:
 
 
 def cupy_available() -> bool:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Ejecuta el bloque "cupy available" dentro del módulo de gestión opcional de GPU/CuPy y
+    #     selección segura entre cómputo CPU y GPU.
+    # Salida:
+    #   - valor booleano que indica si se cumple la condición evaluada. Tipo de retorno anotado: bool.
+    # -----------------------------------------------------------------------------
     global _CUPY, _CUPYX_NDIMAGE, _CUPY_ERROR
     if _CUPY is not None:
         return True
@@ -104,12 +149,34 @@ def cupy_available() -> bool:
 
 
 def get_cupy():
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Ejecuta el bloque "get cupy" dentro del módulo de gestión opcional de GPU/CuPy y selección
+    #     segura entre cómputo CPU y GPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     if not cupy_available():
         raise RuntimeError(_CUPY_ERROR or "CuPy no disponible")
     return _CUPY
 
 
 def get_cupyx_ndimage():
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Ejecuta el bloque "get cupyx ndimage" dentro del módulo de gestión opcional de GPU/CuPy y
+    #     selección segura entre cómputo CPU y GPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     if not cupy_available():
         raise RuntimeError(_CUPY_ERROR or "cupyx.scipy.ndimage no disponible")
     return _CUPYX_NDIMAGE
@@ -117,6 +184,17 @@ def get_cupyx_ndimage():
 
 def configure_gpu(cfg: Any | None = None) -> dict:
     """Configura la GPU si se solicitó y devuelve un resumen imprimible."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: Any | None.
+    # Proceso:
+    #   - Evalúa disponibilidad de GPU y decide si conviene usar aceleración sin comprometer
+    #     compatibilidad en CPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     global _CONFIGURED_DEVICE
     mode = _mode_from_cfg(cfg)
     if mode in {"off", "false", "0", "cpu", "no"}:
@@ -147,6 +225,17 @@ def configure_gpu(cfg: Any | None = None) -> dict:
 
 
 def gpu_info() -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Evalúa disponibilidad de GPU y decide si conviene usar aceleración sin comprometer
+    #     compatibilidad en CPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     if not cupy_available():
         return {"enabled": False, "reason": _CUPY_ERROR or "CuPy no disponible"}
     cp = get_cupy()
@@ -170,6 +259,18 @@ def gpu_info() -> dict:
 
 
 def should_use_gpu_for_shape(shape_or_array: Any, cfg: Any | None = None) -> bool:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - shape_or_array: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: Any.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: Any | None.
+    # Proceso:
+    #   - Evalúa disponibilidad de GPU y decide si conviene usar aceleración sin comprometer
+    #     compatibilidad en CPU.
+    # Salida:
+    #   - valor booleano que indica si se cumple la condición evaluada. Tipo de retorno anotado: bool.
+    # -----------------------------------------------------------------------------
     mode = _mode_from_cfg(cfg)
     if mode in {"off", "false", "0", "cpu", "no"}:
         return False
@@ -184,6 +285,17 @@ def should_use_gpu_for_shape(shape_or_array: Any, cfg: Any | None = None) -> boo
 
 
 def asnumpy(x: Any) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - x: arreglo, señal, coordenada o estructura de entrada usada como variable independiente o dato
+    #       base. Tipo esperado/anotado: Any.
+    # Proceso:
+    #   - Ejecuta el bloque "asnumpy" dentro del módulo de gestión opcional de GPU/CuPy y selección
+    #     segura entre cómputo CPU y GPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     if cupy_available():
         cp = get_cupy()
         if isinstance(x, cp.ndarray):
@@ -192,6 +304,17 @@ def asnumpy(x: Any) -> np.ndarray:
 
 
 def free_gpu_memory() -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Evalúa disponibilidad de GPU y decide si conviene usar aceleración sin comprometer
+    #     compatibilidad en CPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     if not cupy_available():
         return
     cp = get_cupy()
@@ -203,6 +326,19 @@ def free_gpu_memory() -> None:
 
 
 def robust_zscore_gpu(vol: np.ndarray, cfg: Any | None = None) -> np.ndarray | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: Any | None.
+    # Proceso:
+    #   - Evalúa disponibilidad de GPU y decide si conviene usar aceleración sin comprometer
+    #     compatibilidad en CPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray | None.
+    # -----------------------------------------------------------------------------
     if not should_use_gpu_for_shape(vol, cfg):
         return None
     cp = get_cupy()
@@ -224,6 +360,19 @@ def robust_zscore_gpu(vol: np.ndarray, cfg: Any | None = None) -> np.ndarray | N
 
 
 def minmax_gpu(vol: np.ndarray, cfg: Any | None = None) -> np.ndarray | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: Any | None.
+    # Proceso:
+    #   - Evalúa disponibilidad de GPU y decide si conviene usar aceleración sin comprometer
+    #     compatibilidad en CPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray | None.
+    # -----------------------------------------------------------------------------
     if not should_use_gpu_for_shape(vol, cfg):
         return None
     cp = get_cupy()
@@ -241,6 +390,23 @@ def minmax_gpu(vol: np.ndarray, cfg: Any | None = None) -> np.ndarray | None:
 
 
 def resize_to_shape_gpu(vol: np.ndarray, shape: tuple[int, ...], order: int = 1, cfg: Any | None = None) -> np.ndarray | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - shape: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: tuple[int, ...].
+    #   - order: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: Any | None.
+    # Proceso:
+    #   - Evalúa disponibilidad de GPU y decide si conviene usar aceleración sin comprometer
+    #     compatibilidad en CPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray | None.
+    # -----------------------------------------------------------------------------
     if not should_use_gpu_for_shape(vol, cfg):
         return None
     cp = get_cupy()
@@ -255,6 +421,21 @@ def resize_to_shape_gpu(vol: np.ndarray, shape: tuple[int, ...], order: int = 1,
 
 
 def wavelet_energy_gpu(vol: np.ndarray, scales: Iterable[float], cfg: Any | None = None) -> np.ndarray | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - scales: arreglo de escalas; cada escala actúa como un nivel de observación para analizar
+    #       detalles finos o patrones amplios. Tipo esperado/anotado: Iterable[float].
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: Any | None.
+    # Proceso:
+    #   - Evalúa disponibilidad de GPU y decide si conviene usar aceleración sin comprometer
+    #     compatibilidad en CPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray | None.
+    # -----------------------------------------------------------------------------
     if not should_use_gpu_for_shape(vol, cfg):
         return None
     cp = get_cupy()
@@ -281,6 +462,21 @@ def wavelet_energy_gpu(vol: np.ndarray, scales: Iterable[float], cfg: Any | None
 
 
 def pearson_gpu(a: np.ndarray, b: np.ndarray, cfg: Any | None = None) -> float | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - a: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - b: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: Any | None.
+    # Proceso:
+    #   - Evalúa disponibilidad de GPU y decide si conviene usar aceleración sin comprometer
+    #     compatibilidad en CPU.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: float | None.
+    # -----------------------------------------------------------------------------
     if not should_use_gpu_for_shape(a, cfg):
         return None
     cp = get_cupy()

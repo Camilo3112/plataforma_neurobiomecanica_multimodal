@@ -87,6 +87,19 @@ PHASES_16: list[PhaseSpec] = [
 
 
 def _subject_stage_dirs(cfg: PipelineConfig, patient: str, stage: str) -> tuple[Optional[Path], Optional[Path]]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "subject stage dirs" dentro del módulo de integración biomecánica de EMG y
+    #     dinamometría por paciente, lado y etapa clínica.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[Optional[Path], Optional[Path]].
+    # -----------------------------------------------------------------------------
     data_root = cfg.data_root()
     pac_dir = resolve_stage_dir(data_root / patient, stage)
     control_subject = data_root / cfg.control_name
@@ -98,6 +111,19 @@ def _subject_stage_dirs(cfg: PipelineConfig, patient: str, stage: str) -> tuple[
 
 
 def _modality_dirs(cfg: PipelineConfig, stage_dir: Optional[Path]) -> dict[str, Optional[Path]]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Optional[Path].
+    # Proceso:
+    #   - Ejecuta el bloque "modality dirs" dentro del módulo de integración biomecánica de EMG y
+    #     dinamometría por paciente, lado y etapa clínica.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict[str, Optional[Path]].
+    # -----------------------------------------------------------------------------
     if stage_dir is None:
         return {"EMG": None, "DIN": None}
     return {
@@ -107,6 +133,23 @@ def _modality_dirs(cfg: PipelineConfig, stage_dir: Optional[Path]) -> dict[str, 
 
 
 def _file_for_signal(dirs: dict[str, Optional[Path]], kind: str, side: str, test: int) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - dirs: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: dict[str, Optional[Path]].
+    #   - kind: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: str.
+    #   - test: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Ejecuta el bloque "file for signal" dentro del módulo de integración biomecánica de EMG y
+    #     dinamometría por paciente, lado y etapa clínica.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     folder = dirs.get("EMG" if kind.upper() == "EMG" else "DIN")
     if folder is None:
         return None
@@ -116,6 +159,19 @@ def _file_for_signal(dirs: dict[str, Optional[Path]], kind: str, side: str, test
 
 
 def run_biomechanics_for_patient_stage(cfg: PipelineConfig, patient: str, stage: str) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "run biomechanics for patient stage" dentro del módulo de integración
+    #     biomecánica de EMG y dinamometría por paciente, lado y etapa clínica.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     print(f"\n[BIOMECÁNICA] {patient} · {stage}")
     ckpt = CheckpointManager(cfg)
     log_file = cfg.results_root() / patient / stage / "reportes" / "biomecanica_log.txt"
@@ -150,6 +206,17 @@ def run_biomechanics_for_patient_stage(cfg: PipelineConfig, patient: str, stage:
                 task_id = f"biomecanica/{patient}/{stage}/prueba_{test}/fase_{phase.idx:02d}"
 
                 def _work():
+                    # -----------------------------------------------------------------------------
+                    # Entrada:
+                    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno
+                    #       o estado interno disponible.
+                    # Proceso:
+                    #   - Ejecuta el bloque "work" dentro del módulo de integración biomecánica de EMG y
+                    #     dinamometría por paciente, lado y etapa clínica.
+                    # Salida:
+                    #   - valor calculado, estructura de resultados, tabla, ruta o None según la
+                    #     operación específica de la función.
+                    # -----------------------------------------------------------------------------
                     metrics = analyze_pair(
                         path_f=path_f,
                         kind_f=phase.f_kind,  # type: ignore[arg-type]
@@ -214,6 +281,18 @@ def _control_stages_for_biomechanics(cfg: PipelineConfig) -> list[str]:
     Ahora se procesa sano/Antes y sano/Despues si existen, porque el protocolo
     necesita el control completo para comparación y consolidado.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Etapas reales del sano para EMG/DIN. Ahora se
+    #     procesa sano/Antes y sano/Despues si existen, porque el protocolo necesita el control completo
+    #     para comparación y consolidado.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[str].
+    # -----------------------------------------------------------------------------
     stages = []
     control_dir = cfg.data_root() / cfg.control_name
     for st in cfg.stages:
@@ -225,6 +304,17 @@ def _control_stages_for_biomechanics(cfg: PipelineConfig) -> list[str]:
 
 
 def run_biomechanics(cfg: PipelineConfig) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "run biomechanics" dentro del módulo de integración biomecánica de EMG y
+    #     dinamometría por paciente, lado y etapa clínica.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     all_df = []
     subjects_and_stages = [(p, list(cfg.stages)) for p in cfg.patients]
     subjects_and_stages.append((cfg.control_name, _control_stages_for_biomechanics(cfg)))

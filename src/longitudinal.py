@@ -73,16 +73,54 @@ from .neuroimage import (
 
 
 def _stage_dir(cfg: PipelineConfig, patient: str, stage: str) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "stage dir" dentro del módulo de comparación Antes/Después de señales,
+    #     mapas, máscaras, volúmenes y métricas multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     return resolve_stage_dir(cfg.data_root() / patient, stage)
 
 
 def _modality_dir(stage_dir: Optional[Path], names: tuple[str, ...] | list[str]) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Optional[Path].
+    #   - names: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: tuple[str, ...] | list[str].
+    # Proceso:
+    #   - Ejecuta el bloque "modality dir" dentro del módulo de comparación Antes/Después de señales,
+    #     mapas, máscaras, volúmenes y métricas multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     if stage_dir is None:
         return None
     return first_existing_dir(stage_dir, names)
 
 
 def _comparison_root(cfg: PipelineConfig, patient: str) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "comparison root" dentro del módulo de comparación Antes/Después de señales,
+    #     mapas, máscaras, volúmenes y métricas multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     return safe_mkdir(cfg.results_root() / patient / "comparacion" / "antes_vs_despues")
 
 
@@ -91,6 +129,16 @@ def _delta_metrics(metrics: dict) -> dict:
 
     En las comparaciones longitudinales f=Antes y g=Despues.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - metrics: métrica cuantitativa que se calcula, filtra o almacena. Tipo esperado/anotado: dict.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Agrega deltas simples g - f para métricas
+    #     generadas por analyze_pair. En las comparaciones longitudinales f=Antes y g=Despues.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     out = dict(metrics)
     for key, f_val in list(metrics.items()):
         if not key.startswith("f_"):
@@ -122,6 +170,24 @@ def compare_volume_before_after(
 
     Guarda cambio, diferencia absoluta, correlación global y correlación corte a corte.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - before_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - after_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - label: etiqueta anatómica, funcional o tabular asociada al dato. Tipo esperado/anotado: str.
+    #   - normalize: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     safe_mkdir(out_dir)
     label = sanitize_name(label, 80)
@@ -137,6 +203,17 @@ def compare_volume_before_after(
         after_cmp = robust_zscore(a, cfg=cfg)
     elif normalize == "minmax":
         def mm(x):
+            # -----------------------------------------------------------------------------
+            # Entrada:
+            #   - x: arreglo, señal, coordenada o estructura de entrada usada como variable
+            #       independiente o dato base.
+            # Proceso:
+            #   - Ejecuta el bloque "mm" dentro del módulo de comparación Antes/Después de señales,
+            #     mapas, máscaras, volúmenes y métricas multimodales.
+            # Salida:
+            #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+            #     específica de la función.
+            # -----------------------------------------------------------------------------
             x = np.asarray(x, dtype=np.float32)
             lo, hi = np.nanpercentile(x, [1, 99])
             return np.clip((x - lo) / (hi - lo + 1e-6), 0, 1)
@@ -189,6 +266,23 @@ def compare_volume_before_after(
 
 
 def compare_binary_mask_before_after(before_mask_path: Path, after_mask_path: Path, out_dir: Path, label: str, cfg: PipelineConfig | None = None) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - before_mask_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas.
+    #       Tipo esperado/anotado: Path.
+    #   - after_mask_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - label: etiqueta anatómica, funcional o tabular asociada al dato. Tipo esperado/anotado: str.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     safe_mkdir(out_dir)
     label = sanitize_name(label, 80)
@@ -225,6 +319,21 @@ def compare_binary_mask_before_after(before_mask_path: Path, after_mask_path: Pa
 
 
 def _compare_signals_before_after(cfg: PipelineConfig, patient: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "compare signals before after" dentro del módulo de comparación
+    #     Antes/Después de señales, mapas, máscaras, volúmenes y métricas multimodales.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     antes_dir = _stage_dir(cfg, patient, "Antes")
     despues_dir = _stage_dir(cfg, patient, "Despues")
     if antes_dir is None or despues_dir is None:
@@ -255,6 +364,26 @@ def _compare_signals_before_after(cfg: PipelineConfig, patient: str, rows: list[
                     task_id = f"comparacion/antes_vs_despues/emg/{patient}/prueba_{test}/{side}/{muscle}"
 
                     def _work_emg(p_before=p_before, p_after=p_after, side=side, muscle=muscle, out_png=out_png, label=label):
+                        # -----------------------------------------------------------------------------
+                        # Entrada:
+                        #   - p_before: parámetro de entrada usado por la función para controlar el
+                        #       cálculo o suministrar datos.
+                        #   - p_after: parámetro de entrada usado por la función para controlar el
+                        #       cálculo o suministrar datos.
+                        #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda.
+                        #   - muscle: parámetro de entrada usado por la función para controlar el
+                        #       cálculo o suministrar datos.
+                        #   - out_png: parámetro de entrada usado por la función para controlar el
+                        #       cálculo o suministrar datos.
+                        #   - label: etiqueta anatómica, funcional o tabular asociada al dato.
+                        # Proceso:
+                        #   - Ejecuta el bloque "work emg" dentro del módulo de comparación
+                        #     Antes/Después de señales, mapas, máscaras, volúmenes y métricas
+                        #     multimodales.
+                        # Salida:
+                        #   - valor calculado, estructura de resultados, tabla, ruta o None según la
+                        #     operación específica de la función.
+                        # -----------------------------------------------------------------------------
                         metrics = analyze_pair(
                             path_f=p_before,
                             kind_f="EMG",
@@ -304,6 +433,23 @@ def _compare_signals_before_after(cfg: PipelineConfig, patient: str, rows: list[
             task_id = f"comparacion/antes_vs_despues/dinamometria/{patient}/{side}"
 
             def _work_din(p_before=p_before, p_after=p_after, side=side, out_png=out_png, label=label):
+                # -----------------------------------------------------------------------------
+                # Entrada:
+                #   - p_before: parámetro de entrada usado por la función para controlar el cálculo o
+                #       suministrar datos.
+                #   - p_after: parámetro de entrada usado por la función para controlar el cálculo o
+                #       suministrar datos.
+                #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda.
+                #   - out_png: parámetro de entrada usado por la función para controlar el cálculo o
+                #       suministrar datos.
+                #   - label: etiqueta anatómica, funcional o tabular asociada al dato.
+                # Proceso:
+                #   - Ejecuta el bloque "work din" dentro del módulo de comparación Antes/Después de
+                #     señales, mapas, máscaras, volúmenes y métricas multimodales.
+                # Salida:
+                #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+                #     específica de la función.
+                # -----------------------------------------------------------------------------
                 metrics = analyze_pair(
                     path_f=p_before,
                     kind_f="DIN",
@@ -340,6 +486,21 @@ def _compare_signals_before_after(cfg: PipelineConfig, patient: str, rows: list[
 
 
 def _compare_biomech_phase_tables(cfg: PipelineConfig, patient: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Analiza la fase de señales o componentes frecuenciales para estimar sincronía, desfase o
+    #     bloqueo de fase.
+    # Salida:
+    #   - métrica de acoplamiento, sincronía o relación de fase entre señales. Tipo de retorno anotado:
+    #     None.
+    # -----------------------------------------------------------------------------
     before_csv = cfg.results_root() / patient / "Antes" / "reportes" / "biomecanica_metricas_todas_las_pruebas.csv"
     after_csv = cfg.results_root() / patient / "Despues" / "reportes" / "biomecanica_metricas_todas_las_pruebas.csv"
     if not before_csv.exists() or not after_csv.exists():
@@ -376,6 +537,21 @@ def _compare_biomech_phase_tables(cfg: PipelineConfig, patient: str, rows: list[
 
 
 def _compare_maps_before_after(cfg: PipelineConfig, patient: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "compare maps before after" dentro del módulo de comparación Antes/Después
+    #     de señales, mapas, máscaras, volúmenes y métricas multimodales.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     before_root = _ensure_maps_result(cfg, patient, "Antes", log_file)
     after_root = _ensure_maps_result(cfg, patient, "Despues", log_file)
     if not before_root or not after_root:
@@ -393,6 +569,17 @@ def _compare_maps_before_after(cfg: PipelineConfig, patient: str, rows: list[dic
         task_id = f"comparacion/antes_vs_despues/mapas/{patient}/{side}"
 
         def _work():
+            # -----------------------------------------------------------------------------
+            # Entrada:
+            #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o
+            #       estado interno disponible.
+            # Proceso:
+            #   - Ejecuta el bloque "work" dentro del módulo de comparación Antes/Después de señales,
+            #     mapas, máscaras, volúmenes y métricas multimodales.
+            # Salida:
+            #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+            #     específica de la función.
+            # -----------------------------------------------------------------------------
             metrics = compare_volume_before_after(b_candidates[0], a_candidates[0], out_dir, label, normalize="robust_zscore", cfg=cfg)
             metrics.update({"patient": patient, "comparison": "Antes_vs_Despues", "modality": "mapas", "side": side})
             save_metrics_json(metrics, metrics_json)
@@ -414,6 +601,20 @@ def _compare_maps_before_after(cfg: PipelineConfig, patient: str, rows: list[dic
 
 
 def _compare_tomography_before_after(cfg: PipelineConfig, patient: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa TAC para segmentar tejidos, estimar áreas/volúmenes y producir métricas morfométricas.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     before_root = _ensure_tomography_result(cfg, patient, "Antes", log_file)
     after_root = _ensure_tomography_result(cfg, patient, "Despues", log_file)
     if not before_root or not after_root:
@@ -432,6 +633,17 @@ def _compare_tomography_before_after(cfg: PipelineConfig, patient: str, rows: li
     task_id = f"comparacion/antes_vs_despues/tomografia/volumen/{patient}"
 
     def _work_ct():
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+        #       interno disponible.
+        # Proceso:
+        #   - Ejecuta el bloque "work ct" dentro del módulo de comparación Antes/Después de señales,
+        #     mapas, máscaras, volúmenes y métricas multimodales.
+        # Salida:
+        #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+        #     específica de la función.
+        # -----------------------------------------------------------------------------
         metrics = compare_volume_before_after(b_ct, a_ct, out_dir, label, normalize="robust_zscore", cfg=cfg)
         metrics.update({"patient": patient, "comparison": "Antes_vs_Despues", "modality": "tomografia"})
         save_metrics_json(metrics, metrics_json)
@@ -468,6 +680,21 @@ def _compare_tomography_before_after(cfg: PipelineConfig, patient: str, rows: li
         mask_task_id = f"comparacion/antes_vs_despues/tomografia/mascara/{patient}/{label_mask}"
 
         def _work_mask(b_mask=b_mask, a_mask=a_mask, label_mask=label_mask):
+            # -----------------------------------------------------------------------------
+            # Entrada:
+            #   - b_mask: máscara binaria o etiquetada asociada a una región anatómica, funcional o de
+            #       calidad.
+            #   - a_mask: máscara binaria o etiquetada asociada a una región anatómica, funcional o de
+            #       calidad.
+            #   - label_mask: máscara binaria o etiquetada asociada a una región anatómica, funcional o
+            #       de calidad.
+            # Proceso:
+            #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos
+            #     o extraer métricas regionales.
+            # Salida:
+            #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+            #     específica de la función.
+            # -----------------------------------------------------------------------------
             metrics = compare_binary_mask_before_after(b_mask, a_mask, mask_dir, label_mask, cfg=cfg)
             metrics.update({"patient": patient, "comparison": "Antes_vs_Despues", "modality": "tomografia_mascara"})
             save_metrics_json(metrics, mask_metrics_json)
@@ -539,6 +766,21 @@ def _compare_tomography_before_after(cfg: PipelineConfig, patient: str, rows: li
 
 
 def _compare_resonances_before_after(cfg: PipelineConfig, patient: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "compare resonances before after" dentro del módulo de comparación
+    #     Antes/Después de señales, mapas, máscaras, volúmenes y métricas multimodales.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     before_root = _ensure_resonance_result(cfg, patient, "Antes", log_file)
     after_root = _ensure_resonance_result(cfg, patient, "Despues", log_file)
     if not before_root or not after_root:
@@ -569,6 +811,17 @@ def _compare_resonances_before_after(cfg: PipelineConfig, patient: str, rows: li
             task_id = f"comparacion/antes_vs_despues/resonancias/{patient}/{role}/{subtype}/{side}"
 
             def _work():
+                # -----------------------------------------------------------------------------
+                # Entrada:
+                #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o
+                #       estado interno disponible.
+                # Proceso:
+                #   - Ejecuta el bloque "work" dentro del módulo de comparación Antes/Después de
+                #     señales, mapas, máscaras, volúmenes y métricas multimodales.
+                # Salida:
+                #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+                #     específica de la función.
+                # -----------------------------------------------------------------------------
                 metrics = compare_volume_before_after(b_candidates[0], a_candidates[0], out_dir, label, normalize="robust_zscore", cfg=cfg)
                 metrics.update({"patient": patient, "comparison": "Antes_vs_Despues", "modality": "resonancias", "series_role": role, "series_subtype": subtype, "side": side})
                 save_metrics_json(metrics, metrics_json)
@@ -591,12 +844,38 @@ def _compare_resonances_before_after(cfg: PipelineConfig, patient: str, rows: li
 
 
 def _find_ad_motor_cortex_csvs(root: Path) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - root: carpeta raíz desde donde se buscan datos, módulos o resultados del proyecto. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "find ad motor cortex csvs" dentro del módulo de comparación Antes/Después
+    #     de señales, mapas, máscaras, volúmenes y métricas multimodales.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     if root is None or not root.exists():
         return []
     return sorted(root.rglob('metricas_corteza_motora_ad.csv'))
 
 
 def _compare_ad_motor_cortex_before_after(cfg: PipelineConfig, patient: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "compare ad motor cortex before after" dentro del módulo de comparación
+    #     Antes/Después de señales, mapas, máscaras, volúmenes y métricas multimodales.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     before_root = _ensure_resonance_result(cfg, patient, 'Antes', log_file)
     after_root = _ensure_resonance_result(cfg, patient, 'Despues', log_file)
     if not before_root or not after_root:
@@ -646,6 +925,21 @@ def _compare_ad_motor_cortex_before_after(cfg: PipelineConfig, patient: str, row
 
 
 def _compare_external_morphometry_before_after(cfg: PipelineConfig, patient: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "compare external morphometry before after" dentro del módulo de comparación
+    #     Antes/Después de señales, mapas, máscaras, volúmenes y métricas multimodales.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     before_csv = cfg.results_root() / patient / "Antes" / "morfometria" / "resumen_morfometria_externa.csv"
     after_csv = cfg.results_root() / patient / "Despues" / "morfometria" / "resumen_morfometria_externa.csv"
     if not before_csv.exists() or not after_csv.exists():
@@ -677,6 +971,21 @@ def _compare_external_morphometry_before_after(cfg: PipelineConfig, patient: str
         log_exception(log_file, f"Comparación morfometría externa antes/después {patient}", exc)
 
 def _compare_internal_morphometry_before_after(cfg: PipelineConfig, patient: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "compare internal morphometry before after" dentro del módulo de comparación
+    #     Antes/Después de señales, mapas, máscaras, volúmenes y métricas multimodales.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     before_csv = cfg.results_root() / patient / "Antes" / "morfometria" / "resumen_morfometria_interna.csv"
     after_csv = cfg.results_root() / patient / "Despues" / "morfometria" / "resumen_morfometria_interna.csv"
     if not before_csv.exists() or not after_csv.exists():
@@ -719,6 +1028,18 @@ def run_before_after_comparisons(cfg: PipelineConfig) -> pd.DataFrame:
     - tomografia: TAC HU imagen por imagen, máscaras, volúmenes y áreas.
     - resonancias: VCE, tractografía, DTI, fMRI y T1 si existen ambos tiempos.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Comparación longitudinal Antes vs Después por
+    #     paciente. Crea resultados/<paciente>/comparacion/antes_vs_despues con: - emg: correlación
+    #     señal cruda antes/después por prueba, lado y músculo. - dinamometria: correlación de...
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     all_rows: list[dict] = []
     for patient in cfg.patients:
         print(f"\n[COMPARACIÓN ANTES VS DESPUÉS] {patient}")

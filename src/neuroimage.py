@@ -66,6 +66,17 @@ from .gpu import (
 
 
 def _require_neuro_libs():
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Ejecuta el bloque "require neuro libs" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     import pydicom  # noqa
     import nibabel as nib  # noqa
     from scipy import ndimage  # noqa
@@ -73,17 +84,52 @@ def _require_neuro_libs():
 
 
 def is_nifti(path: Path) -> bool:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Opera sobre archivos NIfTI respetando matriz afín, encabezado y espacio anatómico del
+    #     paciente.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: bool.
+    # -----------------------------------------------------------------------------
     name = path.name.lower()
     return name.endswith(".nii") or name.endswith(".nii.gz")
 
 
 def find_nifti_files(folder: Path) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - folder: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Opera sobre archivos NIfTI respetando matriz afín, encabezado y espacio anatómico del
+    #     paciente.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     if not folder or not folder.exists():
         return []
     return sorted([p for p in folder.rglob("*") if p.is_file() and is_nifti(p)])
 
 
 def _to_float(value: Any, default: float = math.nan) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - value: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Any.
+    #   - default: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Ejecuta el bloque "to float" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: float.
+    # -----------------------------------------------------------------------------
     try:
         if value is None or str(value) == "":
             return default
@@ -93,6 +139,19 @@ def _to_float(value: Any, default: float = math.nan) -> float:
 
 
 def _list_float(value: Any, default: list[float] | None = None) -> list[float]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - value: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Any.
+    #   - default: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list[float] | None.
+    # Proceso:
+    #   - Ejecuta el bloque "list float" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[float].
+    # -----------------------------------------------------------------------------
     if default is None:
         default = [1.0, 1.0]
     try:
@@ -105,6 +164,16 @@ def _list_float(value: Any, default: list[float] | None = None) -> list[float]:
 
 def _dicom_sort_key(ds):
     """Ordena por posición real cuando existe; si no, por InstanceNumber."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Inspecciona metadatos DICOM para ordenar cortes, clasificar series y seleccionar estudios
+    #     relevantes.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     if hasattr(ds, "ImagePositionPatient"):
         try:
             return float(ds.ImagePositionPatient[2])
@@ -124,10 +193,30 @@ def _dicom_sort_key(ds):
 
 
 def _dicom_file_path(ds) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Inspecciona metadatos DICOM para ordenar cortes, clasificar series y seleccionar estudios
+    #     relevantes.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return str(getattr(ds, "filename", ""))
 
 
 def _series_text(ds) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Ejecuta el bloque "series text" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return " ".join([
         str(getattr(ds, "SeriesDescription", "")),
         str(getattr(ds, "ProtocolName", "")),
@@ -145,6 +234,19 @@ def side_from_text(text: str) -> str:
     - rMOTOR_DERECHA_FWE001.nii
     - rmap_motorIzq_fwe005.nii
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - text: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Detecta lateralidad con tolerancia a nombres
+    #     reales de tus mapas. Ejemplos cubiertos: - rMotor_izquierda_Rodilla_fwe005.nii -
+    #     rMotor_rod_der_fwe005.nii - rMap_MotRodillaDer_fwe005.nii - rMap_MotRodillaIzq_fwe005.nii -
+    #     rM...
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     n = norm_key(text)
     compact = re.sub(r"[^a-z0-9]+", "", n)
 
@@ -173,6 +275,17 @@ def side_from_text(text: str) -> str:
 
 
 def side_from_name(path: Path) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "side from name" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return side_from_text(path.name)
 
 
@@ -182,6 +295,20 @@ def classify_series(desc: str, protocol: str) -> dict[str, str]:
     Basado en los nombres vistos en tus datos: T1, T2, ep2d_pace_MOTOR derecha/izquierda,
     t-Maps, DTI/difusión, FA/ADC/RD/AD/TRACEW, tractografía y tracto corticoespinal.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - desc: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    #   - protocol: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Clasifica automáticamente las series
+    #     detectadas en el manifest del resonador. Basado en los nombres vistos en tus datos: T1, T2,
+    #     ep2d_pace_MOTOR derecha/izquierda, t-Maps, DTI/difusión, FA/ADC/RD/AD/TRACEW, tractografía...
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict[str, str].
+    # -----------------------------------------------------------------------------
     raw = f"{desc} {protocol}"
     t = norm_key(raw)
     side = side_from_text(raw)
@@ -248,12 +375,36 @@ def classify_series(desc: str, protocol: str) -> dict[str, str]:
 
 
 def sanitize_name(text: str, max_len: int = 80) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - text: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    #   - max_len: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Ejecuta el bloque "sanitize name" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     name = re.sub(r"[^A-Za-z0-9_áéíóúÁÉÍÓÚñÑ-]+", "_", str(text)).strip("_")
     name = name.replace("__", "_")
     return (name[:max_len] or "serie")
 
 
 def collect_dicom_series(directory: Path) -> dict[str, list]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - directory: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Inspecciona metadatos DICOM para ordenar cortes, clasificar series y seleccionar estudios
+    #     relevantes.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict[str, list].
+    # -----------------------------------------------------------------------------
     pydicom, _, _ = _require_neuro_libs()
     groups: dict[str, list] = {}
     for f in Path(directory).rglob("*"):
@@ -281,6 +432,16 @@ def dicom_piece_to_array(ds) -> np.ndarray:
     Maneja imágenes RGB postprocesadas de tractografía/tracto corticoespinal convirtiéndolas
     a escala de grises y maneja multiframe como volumen 3D.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Inspecciona metadatos DICOM para ordenar cortes, clasificar series y seleccionar estudios
+    #     relevantes.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     arr = ds.pixel_array.astype(np.float32)
     if arr.ndim == 2:
         return arr[:, :, None]
@@ -303,6 +464,16 @@ def dicom_piece_to_array(ds) -> np.ndarray:
 
 
 def dicom_series_to_volume(ds_list: list) -> tuple[np.ndarray, np.ndarray, dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds_list: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: tuple[np.ndarray, np.ndarray, dict].
+    # -----------------------------------------------------------------------------
     if not ds_list:
         raise ValueError("Serie DICOM vacía")
     ds_list = sorted(ds_list, key=_dicom_sort_key)
@@ -375,6 +546,18 @@ def dicom_series_to_volume(ds_list: list) -> tuple[np.ndarray, np.ndarray, dict]
 
 
 def build_dicom_manifest(series: dict[str, list], out_dir: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - series: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: dict[str, list].
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Inspecciona metadatos DICOM para ordenar cortes, clasificar series y seleccionar estudios
+    #     relevantes.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows = []
     for uid, ds_list in sorted(series.items(), key=lambda kv: str(kv[0])):
         if not ds_list:
@@ -411,6 +594,17 @@ def build_dicom_manifest(series: dict[str, list], out_dir: Path) -> pd.DataFrame
 
 
 def load_nifti(path: Path) -> tuple[np.ndarray, np.ndarray, dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Opera sobre archivos NIfTI respetando matriz afín, encabezado y espacio anatómico del
+    #     paciente.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: tuple[np.ndarray, np.ndarray, dict].
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     img = nib.load(str(path))
     data = img.get_fdata(dtype=np.float32)
@@ -420,6 +614,19 @@ def load_nifti(path: Path) -> tuple[np.ndarray, np.ndarray, dict]:
 
 
 def robust_zscore(vol: np.ndarray, cfg: PipelineConfig | None = None) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Ejecuta el bloque "robust zscore" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     # GPU opcional para volúmenes grandes. Si no hay CuPy/CUDA, cae a CPU sin romper.
     gpu_out = robust_zscore_gpu(vol, cfg)
     if gpu_out is not None:
@@ -438,6 +645,23 @@ def robust_zscore(vol: np.ndarray, cfg: PipelineConfig | None = None) -> np.ndar
 
 
 def resize_to_shape(vol: np.ndarray, shape: tuple[int, ...], order: int = 1, cfg: PipelineConfig | None = None) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - shape: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: tuple[int, ...].
+    #   - order: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Ejecuta el bloque "resize to shape" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     _, _, ndimage = _require_neuro_libs()
     if tuple(vol.shape[: len(shape)]) == tuple(shape):
         return vol
@@ -455,6 +679,20 @@ def wavelet_energy_volume(vol: np.ndarray, scales: Iterable[float], cfg: Pipelin
 
     En v3.4 intenta usar GPU para volúmenes grandes mediante CuPy/cupyx.scipy.ndimage.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - scales: arreglo de escalas; cada escala actúa como un nivel de observación para analizar
+    #       detalles finos o patrones amplios. Tipo esperado/anotado: Iterable[float].
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     _, _, ndimage = _require_neuro_libs()
     data = np.asarray(vol, dtype=np.float32)
     data = np.squeeze(data)
@@ -480,12 +718,44 @@ def wavelet_energy_volume(vol: np.ndarray, scales: Iterable[float], cfg: Pipelin
 
 
 def save_nifti(data: np.ndarray, affine: np.ndarray, path: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - data: datos de entrada en memoria, tabla, arreglo o estructura compuesta. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Opera sobre archivos NIfTI respetando matriz afín, encabezado y espacio anatómico del
+    #     paciente.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     safe_mkdir(path.parent)
     nib.save(nib.Nifti1Image(np.asarray(data, dtype=np.float32), affine), str(path))
 
 
 def save_orthogonal_png(vol: np.ndarray, path: Path, title: str = "Volumen", cmap: str = "gray") -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - title: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - cmap: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "save orthogonal png" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     safe_mkdir(path.parent)
     data = np.squeeze(vol)
     if data.ndim > 3:
@@ -517,6 +787,21 @@ def save_orthogonal_png(vol: np.ndarray, path: Path, title: str = "Volumen", cma
 
 def save_topography_3d(vol: np.ndarray, path: Path, title: str = "Topografía 3D") -> None:
     """Gráfico 3D tipo topografía desde el corte axial central."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - title: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Gráfico 3D tipo topografía desde el corte
+    #     axial central.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     from scipy.ndimage import gaussian_filter
 
     safe_mkdir(path.parent)
@@ -557,6 +842,21 @@ def create_vce_heuristic_mask(shape: tuple[int, int, int], side: str, cfg: Pipel
 
     Se conserva solo como respaldo. Si existe serie 'TRACTO CORTICOESPINAL' se procesa aparte.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - shape: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: tuple[int, int, int].
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: str.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - máscara binaria o etiquetada, junto con su geometría o ruta de salida cuando corresponde. Tipo
+    #     de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     nx, ny, nz = shape
     mask = np.zeros(shape, dtype=bool)
     x0 = int(nx * 0.42) if side == "izquierda" else int(nx * 0.58)
@@ -576,6 +876,19 @@ def create_vce_heuristic_mask(shape: tuple[int, int, int], side: str, cfg: Pipel
 
 
 def high_activation_mask(vol: np.ndarray, percentile: float = 95.0) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - percentile: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     data = np.asarray(vol, dtype=np.float32)
     data = np.squeeze(data)
     if data.ndim > 3:
@@ -590,6 +903,23 @@ def high_activation_mask(vol: np.ndarray, percentile: float = 95.0) -> np.ndarra
 
 
 def vce_metrics(energy: np.ndarray, mask: np.ndarray, side: str, prefix: str = "vce_heuristica") -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - energy: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: str.
+    #   - prefix: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "vce metrics" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     if mask.shape != energy.shape:
         try:
             mask = resize_to_shape(mask.astype(float), energy.shape, order=0) > 0.5
@@ -610,6 +940,16 @@ def vce_metrics(energy: np.ndarray, mask: np.ndarray, side: str, prefix: str = "
 
 
 def _voxel_volume_ml_from_affine(affine: np.ndarray) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: float.
+    # -----------------------------------------------------------------------------
     try:
         zoom = np.abs(np.diag(np.asarray(affine, dtype=float))[:3])
         zoom = np.where(np.isfinite(zoom) & (zoom > 0), zoom, 1.0)
@@ -619,6 +959,17 @@ def _voxel_volume_ml_from_affine(affine: np.ndarray) -> float:
 
 
 def _largest_component(mask: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "largest component" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     _, _, ndimage = _require_neuro_libs()
     m = np.asarray(mask, dtype=bool)
     if not np.any(m):
@@ -639,6 +990,19 @@ def create_cortical_shell_mask(vol: np.ndarray, cfg: PipelineConfig | None = Non
     Está pensada para mapas de difusividad axial (AD) con fondo cercano a cero.
     Se usa solo como aproximación para resaltar corteza motora primaria/secundaria.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - máscara binaria o etiquetada, junto con su geometría o ruta de salida cuando corresponde. Tipo
+    #     de retorno anotado: tuple[np.ndarray, np.ndarray].
+    # -----------------------------------------------------------------------------
     _, _, ndimage = _require_neuro_libs()
     data = _as_3d(vol)
     vals = data[np.isfinite(data)]
@@ -664,6 +1028,21 @@ def motor_cortex_roi_mask(shape: tuple[int, int, int], side: str, region: str) -
 
     Esta ROI se usa como respaldo y para recortar el atlas probabilístico heurístico.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - shape: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: tuple[int, int, int].
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: str.
+    #   - region: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     nx, ny, nz = shape
     x = np.linspace(0.0, 1.0, nx, dtype=np.float32)[:, None, None]
     y = np.linspace(0.0, 1.0, ny, dtype=np.float32)[None, :, None]
@@ -689,6 +1068,25 @@ def motor_cortex_atlas_prior(shape: tuple[int, int, int], side: str, region: str
     aproximada en espacio de imagen. No sustituye un atlas real MNI, pero es más estable
     que una caja binaria simple.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - shape: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: tuple[int, int, int].
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: str.
+    #   - region: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - sigma_scale: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Atlas probabilístico heurístico en
+    #     coordenadas normalizadas. Genera una prior 0..1 para M1/M2 derecha/izquierda usando una
+    #     elipsoide/gaussiana aproximada en espacio de imagen. No sustituye un atlas real MNI, pero es
+    #     más...
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     nx, ny, nz = shape
     x = np.linspace(0.0, 1.0, nx, dtype=np.float32)[:, None, None]
     y = np.linspace(0.0, 1.0, ny, dtype=np.float32)[None, :, None]
@@ -717,6 +1115,19 @@ def motor_cortex_atlas_prior(shape: tuple[int, int, int], side: str, region: str
 
 
 def _clean_small_mask(mask: np.ndarray, min_voxels: int = 20) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - min_voxels: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     _, _, ndimage = _require_neuro_libs()
     m = np.asarray(mask, dtype=bool)
     if not np.any(m):
@@ -751,6 +1162,27 @@ def identify_motor_cortices_from_ad(
     3) combina prior + shell cortical + energía wavelet;
     4) guarda máscaras `.nii.gz` y calcula volúmenes.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ad_vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - energy_vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - base_name: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Delimita M1/M2 a partir de AD + wavelet con
+    #     guía de atlas probabilístico heurístico. Flujo: 1) obtiene máscara de cerebro y cáscara
+    #     cortical; 2) crea una prior probabilística de atlas para M1/M2 por lado; 3) combina prio...
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     _, _, ndimage = _require_neuro_libs()
     cortex_dir = out_dir / 'corteza_motora_ad'
     safe_mkdir(cortex_dir)
@@ -859,6 +1291,20 @@ def identify_motor_cortices_from_ad(
     return metrics
 
 def output_dir_for_series(out_dir: Path, meta: dict, base_name: str) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - meta: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: dict.
+    #   - base_name: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "output dir for series" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     role = meta.get("series_role", "otros")
     subtype = meta.get("series_subtype", "otros")
     side = meta.get("series_side", "desconocido")
@@ -873,6 +1319,21 @@ def output_dir_for_series(out_dir: Path, meta: dict, base_name: str) -> Path:
 
 
 def save_histogram_png(vol: np.ndarray, path: Path, title: str = "Histograma") -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - title: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "save histogram png" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     safe_mkdir(path.parent)
     data = np.asarray(vol, dtype=float).ravel()
     data = data[np.isfinite(data)]
@@ -891,6 +1352,21 @@ def save_histogram_png(vol: np.ndarray, path: Path, title: str = "Histograma") -
 
 
 def save_mip_png(vol: np.ndarray, path: Path, title: str = "MIP") -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - title: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "save mip png" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     safe_mkdir(path.parent)
     data = np.squeeze(np.asarray(vol, dtype=float))
     if data.ndim > 3:
@@ -915,6 +1391,23 @@ def temporal_stack_metrics(data3: np.ndarray, out_dir: Path, base_name: str, tr_
     Viene de la idea de los códigos originales de correlación fMRI: ACF, PSD y señal media BOLD.
     Si la serie realmente es una pila espacial, el reporte queda marcado como exploratorio.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - data3: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - base_name: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - tr_seconds: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float | None.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Aprovecha las series fMRI/t-map como stack
+    #     temporal si el último eje tiene muchos frames. Viene de la idea de los códigos originales de
+    #     correlación fMRI: ACF, PSD y señal media BOLD. Si la serie realmente es una pila esp...
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     data = np.squeeze(np.asarray(data3, dtype=np.float32))
     if data.ndim != 3 or data.shape[2] < 12:
         return {}
@@ -992,6 +1485,22 @@ def temporal_stack_metrics(data3: np.ndarray, out_dir: Path, base_name: str, tr_
 
 
 def activation_and_volume_metrics(data3: np.ndarray, affine: np.ndarray, role: str, subtype: str) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - data3: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - role: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    #   - subtype: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     data = np.squeeze(np.asarray(data3, dtype=np.float32))
     if data.ndim > 3:
         data = np.mean(data, axis=-1)
@@ -1016,6 +1525,27 @@ def activation_and_volume_metrics(data3: np.ndarray, affine: np.ndarray, role: s
     return rows
 
 def process_single_volume(
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - data: datos de entrada en memoria, tabla, arreglo o estructura compuesta. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - base_name: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - scales: arreglo de escalas; cada escala actúa como un nivel de observación para analizar
+    #       detalles finos o patrones amplios. Tipo esperado/anotado: Iterable[float].
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - meta: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Optional[dict].
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     data: np.ndarray,
     affine: np.ndarray,
     out_dir: Path,
@@ -1094,6 +1624,18 @@ def is_probable_functional_map_file(path: Path) -> bool:
     - Resultados funcional/MAPAS/MAPAS/rMOTOR_DERECHA_FWE001.nii
     - ResultadosFuncional/Resultados/Resultados/mapas/rmap_motorIzq_fwe005.nii
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Filtra NIfTI de mapas funcionales aunque las
+    #     carpetas/nombres estén desordenados. Se diseñó para las rutas reales reportadas: -
+    #     ResultadosFuncional/MAPAS/rMotor_izquierda_Rodilla_fwe005.nii -
+    #     ResultadosFuncional/MAPAS/rM...
+    # Salida:
+    #   - valor booleano que indica si se cumple la condición evaluada. Tipo de retorno anotado: bool.
+    # -----------------------------------------------------------------------------
     if not is_nifti(path):
         return False
     full = norm_key(str(path))
@@ -1118,6 +1660,19 @@ def find_map_nifti_files(stage_dir: Optional[Path], cfg: PipelineConfig | None =
     No depende de que la carpeta se llame exactamente ResultadosFuncional. Soporta:
     ResultadosFuncional, Resultados funcional, Resultados/Resultados/mapas, MAPAS/MAPAS, etc.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Optional[Path].
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Opera sobre archivos NIfTI respetando matriz afín, encabezado y espacio anatómico del
+    #     paciente.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     if stage_dir is None or not stage_dir.exists():
         return []
     niftis = find_nifti_files(stage_dir)
@@ -1134,6 +1689,17 @@ def find_map_nifti_files(stage_dir: Optional[Path], cfg: PipelineConfig | None =
 
 
 def common_parent(paths: list[Path]) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - paths: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: list[Path].
+    # Proceso:
+    #   - Ejecuta el bloque "common parent" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     if not paths:
         return None
     if len(paths) == 1:
@@ -1145,6 +1711,20 @@ def common_parent(paths: list[Path]) -> Optional[Path]:
         return paths[0].parent
 
 def process_maps_folder(cfg: PipelineConfig, maps_dir: Path, out_dir: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - maps_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "process maps folder" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     safe_mkdir(out_dir)
     ckpt = CheckpointManager(cfg)
     rows = []
@@ -1186,6 +1766,17 @@ def process_maps_folder(cfg: PipelineConfig, maps_dir: Path, out_dir: Path) -> p
             task_id = f"mapas/{sanitize_name(str(nii), 120)}"
 
             def _work():
+                # -----------------------------------------------------------------------------
+                # Entrada:
+                #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o
+                #       estado interno disponible.
+                # Proceso:
+                #   - Ejecuta el bloque "work" dentro del módulo de utilidades generales de neuroimagen,
+                #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+                # Salida:
+                #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+                #     específica de la función.
+                # -----------------------------------------------------------------------------
                 metrics = process_single_volume(data, affine, target_dir, base, cfg.map_wavelet_scales, cfg, meta)
                 metrics.update({"source": str(nii), "side": side, "modality": "mapas", **meta})
                 save_metrics_json(metrics, metrics_json)
@@ -1210,6 +1801,19 @@ def process_maps_folder(cfg: PipelineConfig, maps_dir: Path, out_dir: Path) -> p
     return df
 
 def find_maps_dir(stage_dir: Optional[Path], cfg: PipelineConfig) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Optional[Path].
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "find maps dir" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     if stage_dir is None or not stage_dir.exists():
         return None
 
@@ -1244,6 +1848,20 @@ def find_maps_dir(stage_dir: Optional[Path], cfg: PipelineConfig) -> Optional[Pa
     return None
 
 def process_resonance_folder(cfg: PipelineConfig, resonance_dir: Path, out_dir: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - resonance_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "process resonance folder" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     safe_mkdir(out_dir)
     ckpt = CheckpointManager(cfg)
     rows = []
@@ -1259,6 +1877,17 @@ def process_resonance_folder(cfg: PipelineConfig, resonance_dir: Path, out_dir: 
             task_id = f"resonancias/nifti/{sanitize_name(str(nii), 150)}"
 
             def _work():
+                # -----------------------------------------------------------------------------
+                # Entrada:
+                #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o
+                #       estado interno disponible.
+                # Proceso:
+                #   - Ejecuta el bloque "work" dentro del módulo de utilidades generales de neuroimagen,
+                #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+                # Salida:
+                #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+                #     específica de la función.
+                # -----------------------------------------------------------------------------
                 metrics = process_single_volume(data, affine, target_dir, base, cfg.resonance_wavelet_scales, cfg, meta)
                 metrics.update(meta | {"source": str(nii), "source_kind": "nifti", "output_dir": str(target_dir)})
                 save_metrics_json(metrics, metrics_json)
@@ -1303,6 +1932,17 @@ def process_resonance_folder(cfg: PipelineConfig, resonance_dir: Path, out_dir: 
             task_id = f"resonancias/dicom/{uid}"
 
             def _work():
+                # -----------------------------------------------------------------------------
+                # Entrada:
+                #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o
+                #       estado interno disponible.
+                # Proceso:
+                #   - Ejecuta el bloque "work" dentro del módulo de utilidades generales de neuroimagen,
+                #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+                # Salida:
+                #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+                #     específica de la función.
+                # -----------------------------------------------------------------------------
                 vol, affine, meta = dicom_series_to_volume(ds_list)
                 # Recalcula por si el primer DICOM no tenía todos los campos.
                 target = output_dir_for_series(out_dir, meta, base)
@@ -1374,6 +2014,20 @@ def process_resonance_folder(cfg: PipelineConfig, resonance_dir: Path, out_dir: 
     return df
 
 def compare_patient_vs_control_volume(
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - patient_energy_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas.
+    #       Tipo esperado/anotado: Path.
+    #   - control_energy_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas.
+    #       Tipo esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - label: etiqueta anatómica, funcional o tabular asociada al dato. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     patient_energy_path: Path,
     control_energy_path: Path,
     out_dir: Path,
@@ -1406,6 +2060,19 @@ def compare_patient_vs_control_volume(
 
 
 def _subject_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "subject stage dir" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     subject_dir = cfg.data_root() / subject
     if subject == cfg.control_name:
         # El sano suele tener solo Antes. Para pedir Despues no debemos caer a la raíz
@@ -1426,6 +2093,18 @@ def _control_requested_stages(cfg: PipelineConfig) -> tuple[str, ...]:
     Si solo existe sano/Antes, no duplicamos ese procesamiento como sano/Despues.
     Si existe sano/Despues, se procesa también y se usa para correlaciones post.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Etapas reales del sano que deben procesarse
+    #     para imágenes. Si solo existe sano/Antes, no duplicamos ese procesamiento como sano/Despues.
+    #     Si existe sano/Despues, se procesa también y se usa para correlaciones post.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[str, ...].
+    # -----------------------------------------------------------------------------
     control_dir = cfg.data_root() / cfg.control_name
     stages = []
     if resolve_stage_dir(control_dir, "Antes", fallback_to_subject=False) is not None:
@@ -1442,6 +2121,18 @@ def _iter_imaging_subject_stage(cfg: PipelineConfig):
 
     Los pacientes usan todas las etapas. El sano usa sus etapas reales; normalmente Antes.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Pacientes + sano para mapas/resonancias
+    #     diagnósticas/correlaciones. Los pacientes usan todas las etapas. El sano usa sus etapas
+    #     reales; normalmente Antes.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     for patient in cfg.patients:
         for stage in cfg.stages:
             yield patient, stage, _subject_stage_dir(cfg, patient, stage)
@@ -1454,6 +2145,20 @@ def _control_result_stage(cfg: PipelineConfig, stage: str, modality: str) -> Pat
 
     modality: mapas, tomografia o resonancias.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - modality: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Devuelve carpeta de resultados del sano para
+    #     una etapa o cae a sano/Antes. modality: mapas, tomografia o resonancias.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path | None.
+    # -----------------------------------------------------------------------------
     primary = cfg.results_root() / cfg.control_name / stage / modality
     if primary.exists() and any(primary.rglob("*")):
         return primary
@@ -1464,6 +2169,20 @@ def _control_result_stage(cfg: PipelineConfig, stage: str, modality: str) -> Pat
 
 
 def _process_control_if_needed(cfg: PipelineConfig, stage: str, log_file: Path) -> Path | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "process control if needed" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: Path | None.
+    # -----------------------------------------------------------------------------
     control_stage_dir = _subject_stage_dir(cfg, cfg.control_name, stage)
     if not control_stage_dir:
         append_log(log_file, f"No encontré carpeta del control sano para etapa {stage}")
@@ -1485,6 +2204,23 @@ def _process_control_if_needed(cfg: PipelineConfig, stage: str, log_file: Path) 
 
 
 def _find_best_energy_by_role(root: Path, role: str, subtype: str = "", side: str = "") -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - root: carpeta raíz desde donde se buscan datos, módulos o resultados del proyecto. Tipo
+    #       esperado/anotado: Path.
+    #   - role: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    #   - subtype: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "find best energy by role" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     if not root.exists():
         return []
     candidates = sorted(root.rglob("*_wavelet_energy.nii.gz"))
@@ -1502,6 +2238,17 @@ def _find_best_energy_by_role(root: Path, role: str, subtype: str = "", side: st
 
 
 def run_maps(cfg: PipelineConfig) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "run maps" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows = []
     for patient, stage, stage_dir in _iter_imaging_subject_stage(cfg):
         print(f"\n[MAPAS] {patient} · {stage}")
@@ -1532,6 +2279,17 @@ def run_maps(cfg: PipelineConfig) -> pd.DataFrame:
 
 
 def run_resonances(cfg: PipelineConfig) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "run resonances" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows = []
     for patient, stage, stage_dir in _iter_imaging_subject_stage(cfg):
         print(f"\n[RESONANCIAS] {patient} · {stage}")
@@ -1557,6 +2315,17 @@ def run_resonances(cfg: PipelineConfig) -> pd.DataFrame:
 
 def run_resonance_diagnostic(cfg: PipelineConfig) -> pd.DataFrame:
     """Genera manifest de resonancias por paciente/etapa sin procesar PixelData completo."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Genera manifest de resonancias por
+    #     paciente/etapa sin procesar PixelData completo.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows = []
     for subject in list(cfg.patients) + [cfg.control_name]:
         for stage in cfg.stages:
@@ -1581,6 +2350,17 @@ def run_resonance_diagnostic(cfg: PipelineConfig) -> pd.DataFrame:
 
 
 def _as_3d(vol: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "as 3d" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     data = np.squeeze(np.asarray(vol, dtype=np.float32))
     if data.ndim > 3:
         data = np.nanmean(data, axis=-1)
@@ -1590,6 +2370,21 @@ def _as_3d(vol: np.ndarray) -> np.ndarray:
 
 
 def _safe_pearson(a: np.ndarray, b: np.ndarray, cfg: PipelineConfig | None = None) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - a: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - b: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Ejecuta el bloque "safe pearson" dentro del módulo de utilidades generales de neuroimagen,
+    #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: float.
+    # -----------------------------------------------------------------------------
     gpu_val = pearson_gpu(a, b, cfg)
     if gpu_val is not None:
         return gpu_val
@@ -1607,6 +2402,19 @@ def _safe_pearson(a: np.ndarray, b: np.ndarray, cfg: PipelineConfig | None = Non
 
 
 def _slice_similarity_rows(pz: np.ndarray, cz: np.ndarray) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - pz: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - cz: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "slice similarity rows" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows = []
     try:
         from skimage.metrics import structural_similarity as ssim
@@ -1636,6 +2444,20 @@ def _slice_similarity_rows(pz: np.ndarray, cz: np.ndarray) -> pd.DataFrame:
 
 
 def _plot_slice_correlation(df: pd.DataFrame, out_png: Path, title: str) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - df: tabla de datos en formato DataFrame. Tipo esperado/anotado: pd.DataFrame.
+    #   - out_png: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - title: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Calcula similitud o correlación entre señales, volúmenes o regiones para cuantificar
+    #     concordancia Antes/Después.
+    # Salida:
+    #   - figura, imagen o archivo gráfico guardado para inspección visual. Tipo de retorno anotado:
+    #     None.
+    # -----------------------------------------------------------------------------
     if df.empty:
         return
     safe_mkdir(out_png.parent)
@@ -1666,6 +2488,24 @@ def compare_image_to_control_volume(
     Esta función aprovecha la idea del archivo de correlaciones original: correlación espacial
     volumen-a-volumen y comparación por cortes. Sirve para TAC, mapas funcionales y resonancias.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - patient_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - control_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - label: etiqueta anatómica, funcional o tabular asociada al dato. Tipo esperado/anotado: str.
+    #   - normalize: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     safe_mkdir(out_dir)
     label = sanitize_name(label, 80)
@@ -1680,6 +2520,17 @@ def compare_image_to_control_volume(
         c_cmp = robust_zscore(c_resized, cfg=cfg)
     elif normalize == "minmax":
         def mm(x):
+            # -----------------------------------------------------------------------------
+            # Entrada:
+            #   - x: arreglo, señal, coordenada o estructura de entrada usada como variable
+            #       independiente o dato base.
+            # Proceso:
+            #   - Ejecuta el bloque "mm" dentro del módulo de utilidades generales de neuroimagen,
+            #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+            # Salida:
+            #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+            #     específica de la función.
+            # -----------------------------------------------------------------------------
             gpu_out = minmax_gpu(x, cfg)
             if gpu_out is not None:
                 return gpu_out
@@ -1727,6 +2578,23 @@ def compare_image_to_control_volume(
 
 
 def compare_binary_mask_to_control(patient_mask_path: Path, control_mask_path: Path, out_dir: Path, label: str, cfg: PipelineConfig | None = None) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - patient_mask_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas.
+    #       Tipo esperado/anotado: Path.
+    #   - control_mask_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas.
+    #       Tipo esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - label: etiqueta anatómica, funcional o tabular asociada al dato. Tipo esperado/anotado: str.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     safe_mkdir(out_dir)
     label = sanitize_name(label, 80)
@@ -1761,6 +2629,21 @@ def compare_binary_mask_to_control(patient_mask_path: Path, control_mask_path: P
 
 
 def _ensure_maps_result(cfg: PipelineConfig, subject: str, stage: str, log_file: Path) -> Path | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "ensure maps result" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path | None.
+    # -----------------------------------------------------------------------------
     out_dir = cfg.results_root() / subject / stage / "mapas"
     if list(out_dir.rglob("*_wavelet_energy.nii.gz")):
         return out_dir
@@ -1777,6 +2660,20 @@ def _ensure_maps_result(cfg: PipelineConfig, subject: str, stage: str, log_file:
 
 
 def _ensure_tomography_result(cfg: PipelineConfig, subject: str, stage: str, log_file: Path) -> Path | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa TAC para segmentar tejidos, estimar áreas/volúmenes y producir métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path | None.
+    # -----------------------------------------------------------------------------
     out_dir = cfg.results_root() / subject / stage / "tomografia"
     if (out_dir / "tac_hu_original.nii.gz").exists():
         return out_dir
@@ -1795,6 +2692,21 @@ def _ensure_tomography_result(cfg: PipelineConfig, subject: str, stage: str, log
 
 
 def _ensure_resonance_result(cfg: PipelineConfig, subject: str, stage: str, log_file: Path) -> Path | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "ensure resonance result" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path | None.
+    # -----------------------------------------------------------------------------
     out_dir = cfg.results_root() / subject / stage / "resonancias"
     if list(out_dir.rglob("*_wavelet_energy.nii.gz")):
         return out_dir
@@ -1811,6 +2723,20 @@ def _ensure_resonance_result(cfg: PipelineConfig, subject: str, stage: str, log_
 
 
 def _control_stage_for_results(cfg: PipelineConfig, stage: str, modality: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - modality: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "control stage for results" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     # Si existe sano/Despues con salidas, se usa para Despues. Si no, sano/Antes.
     requested = cfg.results_root() / cfg.control_name / stage / modality
     if requested.exists() and any(requested.rglob("*")):
@@ -1819,6 +2745,21 @@ def _control_stage_for_results(cfg: PipelineConfig, stage: str, modality: str) -
 
 
 def _map_candidates_by_side(root: Path, side: str, prefer_energy: bool = True) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - root: carpeta raíz desde donde se buscan datos, módulos o resultados del proyecto. Tipo
+    #       esperado/anotado: Path.
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: str.
+    #   - prefer_energy: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: bool.
+    # Proceso:
+    #   - Ejecuta el bloque "map candidates by side" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     if root is None or not root.exists():
         return []
     suffix = "*_wavelet_energy.nii.gz" if prefer_energy else "*_volumen.nii.gz"
@@ -1834,6 +2775,22 @@ def _map_candidates_by_side(root: Path, side: str, prefer_energy: bool = True) -
 
 
 def _compare_maps_for_patient_stage(cfg: PipelineConfig, patient: str, stage: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "compare maps for patient stage" dentro del módulo de utilidades generales
+    #     de neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     patient_root = _ensure_maps_result(cfg, patient, stage, log_file)
     control_stage = _control_stage_for_results(cfg, stage, "mapas")
     control_root = _ensure_maps_result(cfg, cfg.control_name, control_stage, log_file)
@@ -1852,6 +2809,17 @@ def _compare_maps_for_patient_stage(cfg: PipelineConfig, patient: str, stage: st
         task_id = f"correlaciones/mapas/{patient}/{stage}/{side}"
 
         def _work():
+            # -----------------------------------------------------------------------------
+            # Entrada:
+            #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o
+            #       estado interno disponible.
+            # Proceso:
+            #   - Ejecuta el bloque "work" dentro del módulo de utilidades generales de neuroimagen,
+            #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+            # Salida:
+            #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+            #     específica de la función.
+            # -----------------------------------------------------------------------------
             metrics = compare_image_to_control_volume(p_candidates[0], c_candidates[0], corr_dir, label, normalize="robust_zscore", cfg=cfg)
             metrics.update({"patient": patient, "stage": stage, "modality": "mapas", "side": side, "control_stage": control_stage})
             save_metrics_json(metrics, metrics_json)
@@ -1874,6 +2842,21 @@ def _compare_maps_for_patient_stage(cfg: PipelineConfig, patient: str, stage: st
 
 
 def _compare_tomography_for_patient_stage(cfg: PipelineConfig, patient: str, stage: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa TAC para segmentar tejidos, estimar áreas/volúmenes y producir métricas morfométricas.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     patient_root = _ensure_tomography_result(cfg, patient, stage, log_file)
     control_stage = _control_stage_for_results(cfg, stage, "tomografia")
     control_root = _ensure_tomography_result(cfg, cfg.control_name, control_stage, log_file)
@@ -1894,6 +2877,17 @@ def _compare_tomography_for_patient_stage(cfg: PipelineConfig, patient: str, sta
     task_id = f"correlaciones/tomografia/volumen/{patient}/{stage}"
 
     def _work_ct():
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+        #       interno disponible.
+        # Proceso:
+        #   - Ejecuta el bloque "work ct" dentro del módulo de utilidades generales de neuroimagen,
+        #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+        # Salida:
+        #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+        #     específica de la función.
+        # -----------------------------------------------------------------------------
         metrics = compare_image_to_control_volume(p_ct, c_ct, corr_dir, label, normalize="robust_zscore", cfg=cfg)
         metrics.update({"patient": patient, "stage": stage, "modality": "tomografia", "control_stage": control_stage})
         save_metrics_json(metrics, metrics_json)
@@ -1932,6 +2926,21 @@ def _compare_tomography_for_patient_stage(cfg: PipelineConfig, patient: str, sta
         mask_task_id = f"correlaciones/tomografia/mascara/{patient}/{stage}/{label_mask}"
 
         def _work_mask(p_mask=p_mask, c_mask=c_mask, label_mask=label_mask):
+            # -----------------------------------------------------------------------------
+            # Entrada:
+            #   - p_mask: máscara binaria o etiquetada asociada a una región anatómica, funcional o de
+            #       calidad.
+            #   - c_mask: máscara binaria o etiquetada asociada a una región anatómica, funcional o de
+            #       calidad.
+            #   - label_mask: máscara binaria o etiquetada asociada a una región anatómica, funcional o
+            #       de calidad.
+            # Proceso:
+            #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos
+            #     o extraer métricas regionales.
+            # Salida:
+            #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+            #     específica de la función.
+            # -----------------------------------------------------------------------------
             metrics = compare_binary_mask_to_control(p_mask, c_mask, mask_dir, label_mask, cfg=cfg)
             metrics.update({"patient": patient, "stage": stage, "modality": "tomografia_mascara", "control_stage": control_stage})
             save_metrics_json(metrics, mask_metrics_json)
@@ -2002,6 +3011,22 @@ def _compare_tomography_for_patient_stage(cfg: PipelineConfig, patient: str, sta
 
 
 def _compare_resonances_for_patient_stage(cfg: PipelineConfig, patient: str, stage: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "compare resonances for patient stage" dentro del módulo de utilidades
+    #     generales de neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     patient_root = _ensure_resonance_result(cfg, patient, stage, log_file)
     control_stage = _control_stage_for_results(cfg, stage, "resonancias")
     control_root = _ensure_resonance_result(cfg, cfg.control_name, control_stage, log_file)
@@ -2034,6 +3059,17 @@ def _compare_resonances_for_patient_stage(cfg: PipelineConfig, patient: str, sta
             task_id = f"correlaciones/resonancias/{patient}/{stage}/{role}/{subtype}/{side}"
 
             def _work():
+                # -----------------------------------------------------------------------------
+                # Entrada:
+                #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o
+                #       estado interno disponible.
+                # Proceso:
+                #   - Ejecuta el bloque "work" dentro del módulo de utilidades generales de neuroimagen,
+                #     DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+                # Salida:
+                #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+                #     específica de la función.
+                # -----------------------------------------------------------------------------
                 metrics = compare_image_to_control_volume(p_candidates[0], c_candidates[0], corr_dir, label, normalize="robust_zscore", cfg=cfg)
                 metrics.update({"patient": patient, "stage": stage, "modality": "resonancias", "series_role": role, "series_subtype": subtype, "side": side, "control_stage": control_stage})
                 save_metrics_json(metrics, metrics_json)
@@ -2056,12 +3092,39 @@ def _compare_resonances_for_patient_stage(cfg: PipelineConfig, patient: str, sta
 
 
 def _find_ad_motor_cortex_csvs(root: Path) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - root: carpeta raíz desde donde se buscan datos, módulos o resultados del proyecto. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "find ad motor cortex csvs" dentro del módulo de utilidades generales de
+    #     neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     if root is None or not root.exists():
         return []
     return sorted(root.rglob('metricas_corteza_motora_ad.csv'))
 
 
 def _compare_ad_motor_cortex_vs_control(cfg: PipelineConfig, patient: str, stage: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "compare ad motor cortex vs control" dentro del módulo de utilidades
+    #     generales de neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     patient_root = _ensure_resonance_result(cfg, patient, stage, log_file)
     control_stage = _control_stage_for_results(cfg, stage, 'resonancias')
     control_root = _ensure_resonance_result(cfg, cfg.control_name, control_stage, log_file)
@@ -2100,6 +3163,22 @@ def _compare_ad_motor_cortex_vs_control(cfg: PipelineConfig, patient: str, stage
 
 
 def _compare_internal_morphometry_vs_control(cfg: PipelineConfig, patient: str, stage: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "compare internal morphometry vs control" dentro del módulo de utilidades
+    #     generales de neuroimagen, DICOM/NIfTI, series, metadatos, máscaras, registro y mapas.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     p_csv = cfg.results_root() / patient / stage / "morfometria" / "resumen_morfometria_interna.csv"
     control_stage = _control_stage_for_results(cfg, stage, "morfometria")
     c_csv = cfg.results_root() / cfg.control_name / control_stage / "morfometria" / "resumen_morfometria_interna.csv"
@@ -2141,6 +3220,16 @@ def run_volume_correlations(cfg: PipelineConfig) -> pd.DataFrame:
 
     Si las salidas del sano aún no existen, las calcula antes de correlacionar.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows: list[dict] = []
     for patient in cfg.patients:
         for stage in cfg.stages:

@@ -10,7 +10,7 @@ Descripción
 -----------
 Ejecuta FreeSurfer BrainstemSubstructures y transforma etiquetas al T1 nativo.
 
-Fundamento
+Fundamento físico-matemático implementado
 -----------------------------------------
 Segmenta subestructuras del tronco encefálico usando etiquetas anatómicas de
 FreeSurfer. El modelo espacial conserva la correspondencia voxel-mundo con
@@ -74,12 +74,38 @@ class BrainstemSegmentationResult:
 
 def step(message: str) -> None:
     """Imprime una etapa con marca temporal para seguimiento en consola."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - message: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Imprime una etapa con marca temporal para
+    #     seguimiento en consola.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     print("", flush=True)
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {message}", flush=True)
 
 
 def _run(cmd: list[str], *, env: dict[str, str], cwd: Path | None = None) -> int:
     """Ejecuta un subproceso mostrando stdout/stderr en tiempo real."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cmd: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: list[str].
+    #   - env: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: dict[str, str].
+    #   - cwd: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Path | None.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Ejecuta un subproceso mostrando stdout/stderr
+    #     en tiempo real.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: int.
+    # -----------------------------------------------------------------------------
     print("", flush=True)
     print("─" * 90, flush=True)
     print("COMANDO:", " ".join(map(str, cmd)), flush=True)
@@ -106,6 +132,19 @@ def _run(cmd: list[str], *, env: dict[str, str], cwd: Path | None = None) -> int
 
 def _which(command: str, env: dict[str, str]) -> str | None:
     """Busca un binario usando el PATH del entorno recibido."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - command: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - env: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: dict[str, str].
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Busca un binario usando el PATH del entorno
+    #     recibido.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str | None.
+    # -----------------------------------------------------------------------------
     path = shutil.which(command, path=env.get("PATH"))
     return path
 
@@ -120,6 +159,17 @@ def _which(command: str, env: dict[str, str]) -> str | None:
 
 def find_freesurfer_home() -> Path | None:
     """Encuentra FREESURFER_HOME priorizando la instalación del usuario."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Usa salidas de FreeSurfer, etiquetas anatómicas y estadísticas corticales/subcorticales para
+    #     extraer métricas en espacio nativo.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Path | None.
+    # -----------------------------------------------------------------------------
     candidates = []
     if os.environ.get("FREESURFER_HOME"):
         candidates.append(Path(os.environ["FREESURFER_HOME"]))
@@ -152,6 +202,23 @@ def build_freesurfer_env(
     antepone `FREESURFER_HOME/bin` al PATH. Esto mantiene el flujo ejecutable con
     `python main.py`.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - project_root: carpeta raíz del proyecto clínico/experimental; contiene datos, resultados y
+    #       recursos comunes. Tipo esperado/anotado: Path.
+    #   - license_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - subjects_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - threads: umbral numérico que controla selección, binarización o criterio de aceptación. Tipo
+    #       esperado/anotado: int.
+    # Proceso:
+    #   - Usa salidas de FreeSurfer, etiquetas anatómicas y estadísticas corticales/subcorticales para
+    #     extraer métricas en espacio nativo.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: dict[str, str].
+    # -----------------------------------------------------------------------------
     fs_home = find_freesurfer_home()
     if fs_home is None:
         raise RuntimeError("No se encontró FreeSurfer. Define FREESURFER_HOME o instala FreeSurfer.")
@@ -173,6 +240,17 @@ def build_freesurfer_env(
 
 def assert_freesurfer_commands(env: dict[str, str]) -> None:
     """Valida comandos mínimos antes de iniciar procesos largos."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - env: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: dict[str, str].
+    # Proceso:
+    #   - Usa salidas de FreeSurfer, etiquetas anatómicas y estadísticas corticales/subcorticales para
+    #     extraer métricas en espacio nativo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     required = ["recon-all", "mri_vol2vol", "mri_binarize", "mri_info"]
     missing = [cmd for cmd in required if _which(cmd, env) is None]
     if missing:
@@ -201,6 +279,27 @@ def ensure_recon_all(
     Se copia el rT1/rAnatomico a una ruta sin espacios para reducir fallos de
     herramientas internas y se exige `aparc+aseg.mgz` antes de continuar.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - t1_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - subject_id: identificador de paciente/sujeto o carpeta asociada al sujeto. Tipo
+    #       esperado/anotado: str.
+    #   - subjects_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - stage_root: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - env: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: dict[str, str].
+    #   - threads: umbral numérico que controla selección, binarización o criterio de aceptación. Tipo
+    #       esperado/anotado: int.
+    # Proceso:
+    #   - Verifica o ejecuta el procesamiento anatómico FreeSurfer necesario para obtener segmentaciones
+    #     corticales y subcorticales.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: tuple[Path, Path, Path, Path, Path, Path].
+    # -----------------------------------------------------------------------------
     local_t1 = stage_root / subject_id / "rT1.nii"
     local_t1.parent.mkdir(parents=True, exist_ok=True)
     if not local_t1.exists() or not _same_file_bytes(t1_path, local_t1):
@@ -254,6 +353,19 @@ def ensure_recon_all(
 
 def _same_file_bytes(a: Path, b: Path) -> bool:
     """Comparación conservadora para decidir si se debe actualizar el T1 local."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - a: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Path.
+    #   - b: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Comparación conservadora para decidir si se
+    #     debe actualizar el T1 local.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: bool.
+    # -----------------------------------------------------------------------------
     try:
         return a.stat().st_size == b.stat().st_size and a.read_bytes() == b.read_bytes()
     except Exception:
@@ -270,6 +382,17 @@ def _same_file_bytes(a: Path, b: Path) -> bool:
 
 def _find_brainstem_segmentation(mri_dir: Path) -> Path | None:
     """Busca la segmentación brainstemSsLabels más reciente del sujeto."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mri_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Localiza, valida o transforma la segmentación del tronco encefálico y sus subestructuras
+    #     anatómicas.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Path | None.
+    # -----------------------------------------------------------------------------
     for pattern in ["brainstemSsLabels*.FSvoxelSpace.mgz", "brainstemSsLabels*.mgz"]:
         matches = sorted(mri_dir.glob(pattern))
         if matches:
@@ -286,6 +409,25 @@ def ensure_brainstem_substructures(
     threads: int,
 ) -> Path:
     """Ejecuta segment_subregions o segmentBS.sh hasta crear brainstemSsLabels."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - subject_id: identificador de paciente/sujeto o carpeta asociada al sujeto. Tipo
+    #       esperado/anotado: str.
+    #   - subjects_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - mri_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - env: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: dict[str, str].
+    #   - threads: umbral numérico que controla selección, binarización o criterio de aceptación. Tipo
+    #       esperado/anotado: int.
+    # Proceso:
+    #   - Localiza, valida o transforma la segmentación del tronco encefálico y sus subestructuras
+    #     anatómicas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     step("Segmentando mesencéfalo, puente, bulbo y SCP desde FreeSurfer BrainstemSubstructures")
     seg = _find_brainstem_segmentation(mri_dir)
     if seg:
@@ -328,6 +470,31 @@ def export_brainstem_to_t1(
     env: dict[str, str],
 ) -> Path:
     """Convierte etiquetas FreeSurfer a NIfTI en espacio del rT1/rAnatomico."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - seg_mgz: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - rawavg: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - local_t1: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - original_t1: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - raw_output_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - validated_output_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas.
+    #       Tipo esperado/anotado: Path.
+    #   - validator_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - env: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: dict[str, str].
+    # Proceso:
+    #   - Localiza, valida o transforma la segmentación del tronco encefálico y sus subestructuras
+    #     anatómicas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     raw_output_dir.mkdir(parents=True, exist_ok=True)
     validated_output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -394,6 +561,31 @@ def run_brainstem_segmentation(
     validator_path: Path | None = None,
 ) -> BrainstemSegmentationResult:
     """Ejecuta el flujo completo recon-all → brainstem → máscaras T1."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - project_root: carpeta raíz del proyecto clínico/experimental; contiene datos, resultados y
+    #       recursos comunes. Tipo esperado/anotado: Path.
+    #   - t1_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - license_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - subject_id: identificador de paciente/sujeto o carpeta asociada al sujeto. Tipo
+    #       esperado/anotado: str.
+    #   - out_base: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - threads: umbral numérico que controla selección, binarización o criterio de aceptación. Tipo
+    #       esperado/anotado: int.
+    #   - subjects_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path | None.
+    #   - validator_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path | None.
+    # Proceso:
+    #   - Localiza, valida o transforma la segmentación del tronco encefálico y sus subestructuras
+    #     anatómicas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: BrainstemSegmentationResult.
+    # -----------------------------------------------------------------------------
     project_root = Path(project_root)
     t1_path = Path(t1_path)
     license_path = Path(license_path)
@@ -467,6 +659,17 @@ def run_brainstem_segmentation(
 
 
 def _build_arg_parser() -> argparse.ArgumentParser:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Ejecuta el bloque "build arg parser" dentro del módulo de preparación anatómica con
+    #     FreeSurfer, recon-all, aparc+aseg y segmentación de tronco encefálico.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: argparse.ArgumentParser.
+    # -----------------------------------------------------------------------------
     parser = argparse.ArgumentParser(description="Segmentación FreeSurfer del tronco cerebral en Linux, sin scripts .sh.")
     parser.add_argument("--project-root", default="/home/humath/Escritorio")
     parser.add_argument("--t1-path", required=True)
@@ -479,6 +682,17 @@ def _build_arg_parser() -> argparse.ArgumentParser:
 
 
 def main() -> int:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Ejecuta el bloque "main" dentro del módulo de preparación anatómica con FreeSurfer, recon-all,
+    #     aparc+aseg y segmentación de tronco encefálico.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: int.
+    # -----------------------------------------------------------------------------
     args = _build_arg_parser().parse_args()
     run_brainstem_segmentation(
         project_root=Path(args.project_root),

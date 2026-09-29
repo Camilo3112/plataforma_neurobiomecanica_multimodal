@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-
+Fundamento físico-matemático implementado
 -----------------------------------------
 Orquesta el análisis TAC avanzado por paciente. Conserva metadatos DICOM,
 selecciona
@@ -52,6 +52,17 @@ from .checkpoint import CheckpointManager
 
 
 def _control_requested_stages(cfg: PipelineConfig):
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "control requested stages" dentro del módulo de ejecución y resumen del
+    #     módulo avanzado de tomografía y tejido adiposo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     control_dir = cfg.data_root() / cfg.control_name
     for stage in cfg.stages:
         if (control_dir / stage).exists():
@@ -61,6 +72,17 @@ def _control_requested_stages(cfg: PipelineConfig):
 
 
 def _iter_subject_stage(cfg: PipelineConfig):
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "iter subject stage" dentro del módulo de ejecución y resumen del módulo
+    #     avanzado de tomografía y tejido adiposo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     for patient in cfg.patients:
         for stage in cfg.stages:
             stage_dir = resolve_stage_dir(cfg.data_root() / patient, stage)
@@ -72,6 +94,17 @@ def _iter_subject_stage(cfg: PipelineConfig):
 
 
 def _parse_float(text: str):
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - text: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "parse float" dentro del módulo de ejecución y resumen del módulo avanzado
+    #     de tomografía y tejido adiposo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     m = re.search(r"[-+]?\d+(?:[\.,]\d+)?", str(text))
     if not m:
         return None
@@ -82,6 +115,18 @@ def _parse_float(text: str):
 
 
 def parse_advanced_tomography_report(report_path: Path, patient: str, stage: str) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - report_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Procesa TAC para segmentar tejidos, estimar áreas/volúmenes y producir métricas morfométricas.
+    # Salida:
+    #   - archivo de reporte, tabla Excel/CSV/Markdown o ruta donde quedó guardado el resumen. Tipo de
+    #     retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     if not report_path.exists():
         return pd.DataFrame()
     text = report_path.read_text(encoding='utf-8', errors='ignore')
@@ -173,6 +218,19 @@ def parse_advanced_tomography_report(report_path: Path, patient: str, stage: str
 
 
 def summarize_intramuscular_area_csv(csv_path: Path, patient: str, stage: str) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - csv_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "summarize intramuscular area csv" dentro del módulo de ejecución y resumen
+    #     del módulo avanzado de tomografía y tejido adiposo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     if not csv_path.exists():
         return pd.DataFrame()
     try:
@@ -210,6 +268,19 @@ def summarize_intramuscular_area_csv(csv_path: Path, patient: str, stage: str) -
 
 
 def read_adipose_metrics_csv(csv_path: Path, patient: str, stage: str) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - csv_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Extrae o resume métricas asociadas a tejido adiposo, grasa intramuscular o composición
+    #     tisular.
+    # Salida:
+    #   - datos cargados en memoria, por ejemplo imagen, tabla, señal, JSON o estructura auxiliar. Tipo
+    #     de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     if not csv_path.exists():
         return pd.DataFrame()
     try:
@@ -229,6 +300,18 @@ def read_adipose_metrics_csv(csv_path: Path, patient: str, stage: str) -> pd.Dat
 
 
 def build_adipose_file_manifest(out_dir: Path, patient: str, stage: str) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Extrae o resume métricas asociadas a tejido adiposo, grasa intramuscular o composición
+    #     tisular.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     expected = [
         ('labelmap_composicion_corte_medio', 'Composicion_Corporal_CorteMedio.nii'),
         ('overlay_composicion_corte_medio', 'TAC_Composicion_Corporal_CorteMedio.nii'),
@@ -259,10 +342,36 @@ def build_adipose_file_manifest(out_dir: Path, patient: str, stage: str) -> pd.D
     return pd.DataFrame(rows)
 
 def _script_path() -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Normaliza o resuelve rutas para evitar errores por nombres de carpetas, etapas o convenciones
+    #     del proyecto.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     return Path(__file__).resolve().parents[1] / 'tools' / 'tomografia_avanzada_core.py'
 
 
 def process_advanced_tomography_folder(cfg: PipelineConfig, tac_dir: Path, out_dir: Path, patient: str, stage: str) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - tac_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Procesa TAC para segmentar tejidos, estimar áreas/volúmenes y producir métricas morfométricas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     safe_mkdir(out_dir)
     env = os.environ.copy()
     env['VCE_TAC_INPUT_DIR'] = str(tac_dir)
@@ -297,6 +406,16 @@ def process_advanced_tomography_folder(cfg: PipelineConfig, tac_dir: Path, out_d
 
 
 def run_advanced_tomography(cfg: PipelineConfig) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Procesa TAC para segmentar tejidos, estimar áreas/volúmenes y producir métricas morfométricas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     all_rows = []
     for patient, stage, stage_dir in _iter_subject_stage(cfg):
         print(f"\n[TOMOGRAFÍA AVANZADA] {patient} · {stage}")
@@ -311,6 +430,17 @@ def run_advanced_tomography(cfg: PipelineConfig) -> pd.DataFrame:
             task_id = f'tomografia_avanzada/{patient}/{stage}'
             ckpt = CheckpointManager(cfg)
             def _work():
+                # -----------------------------------------------------------------------------
+                # Entrada:
+                #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o
+                #       estado interno disponible.
+                # Proceso:
+                #   - Ejecuta el bloque "work" dentro del módulo de ejecución y resumen del módulo
+                #     avanzado de tomografía y tejido adiposo.
+                # Salida:
+                #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+                #     específica de la función.
+                # -----------------------------------------------------------------------------
                 return process_advanced_tomography_folder(cfg, tac_dir, out_dir, patient, stage)
             df_result, status = ckpt.run(
                 task_id=task_id,

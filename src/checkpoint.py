@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento
+Fundamento físico-matemático implementado
 -----------------------------------------
 Controla reanudación mediante estados discretos. El pipeline se representa
 como
@@ -49,6 +49,17 @@ from .io_utils import safe_mkdir, save_json
 
 
 def _json_default(obj: Any):
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - obj: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Any.
+    # Proceso:
+    #   - Serializa o lee estructuras JSON para preservar metadatos, métricas y trazabilidad del
+    #     procesamiento.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     if isinstance(obj, Path):
         return str(obj)
     try:
@@ -63,11 +74,33 @@ def _json_default(obj: Any):
 
 
 def _stable_hash(data: Any) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - data: datos de entrada en memoria, tabla, arreglo o estructura compuesta. Tipo
+    #       esperado/anotado: Any.
+    # Proceso:
+    #   - Ejecuta el bloque "stable hash" dentro del módulo de control de ejecución reproducible
+    #     mediante huellas digitales, estados y métricas serializadas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     payload = json.dumps(data, sort_keys=True, ensure_ascii=False, default=_json_default)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:24]
 
 
 def file_fingerprint(path: Path) -> dict[str, Any]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "file fingerprint" dentro del módulo de control de ejecución reproducible
+    #     mediante huellas digitales, estados y métricas serializadas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict[str, Any].
+    # -----------------------------------------------------------------------------
     path = Path(path)
     if not path.exists():
         return {"path": str(path), "exists": False}
@@ -89,6 +122,20 @@ def folder_fingerprint(path: Path, max_files: int = 20000) -> dict[str, Any]:
     No lee píxeles ni contenido pesado; usa nombres, tamaños y mtimes.
     Sirve para saber si una serie cambió y decidir si se salta o se repite.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - max_files: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Firma liviana de carpeta. No lee píxeles ni
+    #     contenido pesado; usa nombres, tamaños y mtimes. Sirve para saber si una serie cambió y
+    #     decidir si se salta o se repite.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict[str, Any].
+    # -----------------------------------------------------------------------------
     path = Path(path)
     if not path.exists():
         return {"path": str(path), "exists": False}
@@ -131,6 +178,19 @@ class CheckpointManager:
     """
 
     def __init__(self, cfg):
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+        #       parámetros del módulo.
+        # Proceso:
+        #   - Ejecuta el bloque "init" dentro del módulo de control de ejecución reproducible mediante
+        #     huellas digitales, estados y métricas serializadas.
+        # Salida:
+        #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+        #     específica de la función.
+        # -----------------------------------------------------------------------------
         self.cfg = cfg
         self.root = safe_mkdir(cfg.results_root() / "_estado_pipeline")
         self.path = self.root / "checkpoints.json"
@@ -138,6 +198,17 @@ class CheckpointManager:
         self.state: dict[str, Any] = self._load()
 
     def _load(self) -> dict[str, Any]:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        # Proceso:
+        #   - Ejecuta el bloque "load" dentro del módulo de control de ejecución reproducible mediante
+        #     huellas digitales, estados y métricas serializadas.
+        # Salida:
+        #   - datos cargados en memoria, por ejemplo imagen, tabla, señal, JSON o estructura auxiliar.
+        #     Tipo de retorno anotado: dict[str, Any].
+        # -----------------------------------------------------------------------------
         if self.path.exists():
             try:
                 return json.loads(self.path.read_text(encoding="utf-8"))
@@ -150,18 +221,57 @@ class CheckpointManager:
         return {"version": 3, "tasks": {}}
 
     def save(self) -> None:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        # Proceso:
+        #   - Ejecuta el bloque "save" dentro del módulo de control de ejecución reproducible mediante
+        #     huellas digitales, estados y métricas serializadas.
+        # Salida:
+        #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita
+        #     mediante ausencia de error. Tipo de retorno anotado: None.
+        # -----------------------------------------------------------------------------
         safe_mkdir(self.path.parent)
         tmp = self.path.with_suffix(".tmp")
         tmp.write_text(json.dumps(self.state, ensure_ascii=False, indent=2, default=_json_default), encoding="utf-8")
         os.replace(tmp, self.path)
 
     def log(self, message: str) -> None:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        #   - message: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: str.
+        # Proceso:
+        #   - Ejecuta el bloque "log" dentro del módulo de control de ejecución reproducible mediante
+        #     huellas digitales, estados y métricas serializadas.
+        # Salida:
+        #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita
+        #     mediante ausencia de error. Tipo de retorno anotado: None.
+        # -----------------------------------------------------------------------------
         safe_mkdir(self.log_path.parent)
         stamp = time.strftime("%Y-%m-%d %H:%M:%S")
         with open(self.log_path, "a", encoding="utf-8") as f:
             f.write(f"[{stamp}] {message}\n")
 
     def signature(self, inputs: Iterable[Path] | None = None, params: dict[str, Any] | None = None) -> str:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        #   - inputs: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: Iterable[Path] | None.
+        #   - params: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: dict[str, Any] | None.
+        # Proceso:
+        #   - Ejecuta el bloque "signature" dentro del módulo de control de ejecución reproducible
+        #     mediante huellas digitales, estados y métricas serializadas.
+        # Salida:
+        #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+        #     específica de la función. Tipo de retorno anotado: str.
+        # -----------------------------------------------------------------------------
         fps = []
         for p in inputs or []:
             p = Path(p)
@@ -172,6 +282,23 @@ class CheckpointManager:
         return _stable_hash({"inputs": fps, "params": params or {}})
 
     def is_done(self, task_id: str, signature: str, outputs: Iterable[Path] | None = None) -> bool:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        #   - task_id: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: str.
+        #   - signature: parámetro de entrada usado por la función para controlar el cálculo o
+        #       suministrar datos. Tipo esperado/anotado: str.
+        #   - outputs: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: Iterable[Path] | None.
+        # Proceso:
+        #   - Ejecuta el bloque "is done" dentro del módulo de control de ejecución reproducible
+        #     mediante huellas digitales, estados y métricas serializadas.
+        # Salida:
+        #   - valor booleano que indica si se cumple la condición evaluada. Tipo de retorno anotado:
+        #     bool.
+        # -----------------------------------------------------------------------------
         if getattr(self.cfg, "force", False) or not getattr(self.cfg, "resume", True):
             return False
         task = self.state.get("tasks", {}).get(task_id)
@@ -183,6 +310,23 @@ class CheckpointManager:
         return True
 
     def start(self, task_id: str, signature: str, meta: dict[str, Any] | None = None) -> None:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        #   - task_id: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: str.
+        #   - signature: parámetro de entrada usado por la función para controlar el cálculo o
+        #       suministrar datos. Tipo esperado/anotado: str.
+        #   - meta: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: dict[str, Any] | None.
+        # Proceso:
+        #   - Ejecuta el bloque "start" dentro del módulo de control de ejecución reproducible mediante
+        #     huellas digitales, estados y métricas serializadas.
+        # Salida:
+        #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+        #     específica de la función. Tipo de retorno anotado: None.
+        # -----------------------------------------------------------------------------
         self.state.setdefault("tasks", {})[task_id] = {
             "status": "running",
             "signature": signature,
@@ -193,6 +337,23 @@ class CheckpointManager:
         self.log(f"START {task_id}")
 
     def done(self, task_id: str, outputs: Iterable[Path] | None = None, result_summary: dict[str, Any] | None = None) -> None:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        #   - task_id: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: str.
+        #   - outputs: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: Iterable[Path] | None.
+        #   - result_summary: parámetro de entrada usado por la función para controlar el cálculo o
+        #       suministrar datos. Tipo esperado/anotado: dict[str, Any] | None.
+        # Proceso:
+        #   - Ejecuta el bloque "done" dentro del módulo de control de ejecución reproducible mediante
+        #     huellas digitales, estados y métricas serializadas.
+        # Salida:
+        #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+        #     específica de la función. Tipo de retorno anotado: None.
+        # -----------------------------------------------------------------------------
         task = self.state.setdefault("tasks", {}).setdefault(task_id, {})
         task.update({
             "status": "done",
@@ -204,6 +365,21 @@ class CheckpointManager:
         self.log(f"DONE {task_id}")
 
     def fail(self, task_id: str, exc: BaseException) -> None:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        #   - task_id: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: str.
+        #   - exc: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: BaseException.
+        # Proceso:
+        #   - Ejecuta el bloque "fail" dentro del módulo de control de ejecución reproducible mediante
+        #     huellas digitales, estados y métricas serializadas.
+        # Salida:
+        #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+        #     específica de la función. Tipo de retorno anotado: None.
+        # -----------------------------------------------------------------------------
         task = self.state.setdefault("tasks", {}).setdefault(task_id, {})
         task.update({
             "status": "failed",
@@ -215,6 +391,27 @@ class CheckpointManager:
         self.log(f"FAIL {task_id}: {exc}")
 
     def run(self, task_id: str, inputs: Iterable[Path] | None, outputs: Iterable[Path] | None, params: dict[str, Any], fn: Callable[[], Any]):
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - self: instancia actual del objeto; permite acceder a estado interno, rutas, métricas o
+        #       configuración acumulada.
+        #   - task_id: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: str.
+        #   - inputs: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: Iterable[Path] | None.
+        #   - outputs: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: Iterable[Path] | None.
+        #   - params: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: dict[str, Any].
+        #   - fn: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: Callable[[], Any].
+        # Proceso:
+        #   - Ejecuta el bloque "run" dentro del módulo de control de ejecución reproducible mediante
+        #     huellas digitales, estados y métricas serializadas.
+        # Salida:
+        #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+        #     módulo.
+        # -----------------------------------------------------------------------------
         sig = self.signature(inputs=inputs, params=params)
         outputs = list(outputs or [])
         if self.is_done(task_id, sig, outputs):
@@ -246,6 +443,17 @@ class CheckpointManager:
 
 
 def load_json_if_exists(path: Path) -> dict[str, Any] | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Serializa o lee estructuras JSON para preservar metadatos, métricas y trazabilidad del
+    #     procesamiento.
+    # Salida:
+    #   - datos cargados en memoria, por ejemplo imagen, tabla, señal, JSON o estructura auxiliar. Tipo
+    #     de retorno anotado: dict[str, Any] | None.
+    # -----------------------------------------------------------------------------
     path = Path(path)
     if not path.exists():
         return None
@@ -256,5 +464,18 @@ def load_json_if_exists(path: Path) -> dict[str, Any] | None:
 
 
 def save_metrics_json(data: dict[str, Any], path: Path) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - data: datos de entrada en memoria, tabla, arreglo o estructura compuesta. Tipo
+    #       esperado/anotado: dict[str, Any].
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Serializa o lee estructuras JSON para preservar metadatos, métricas y trazabilidad del
+    #     procesamiento.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     save_json(data, path)
     return path

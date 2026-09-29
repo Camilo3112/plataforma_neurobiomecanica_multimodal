@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-
+Fundamento físico-matemático implementado
 -----------------------------------------
 Calcula derivadas y cambios reales entre mediciones del paciente. El operador
 principal es la diferencia discreta Δx entre etapas y dominios, con
@@ -58,6 +58,19 @@ from .neuroimage import (
 
 
 def _subject_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "subject stage dir" dentro del módulo de derivación de estructuras
+    #     BIDS/FreeSurfer y selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     subject_dir = cfg.data_root() / subject
     if subject == cfg.control_name:
         exact = resolve_stage_dir(subject_dir, stage, fallback_to_subject=False)
@@ -71,6 +84,19 @@ def _subject_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Optiona
 
 
 def _first_existing_resonance_dir(stage_dir: Optional[Path], cfg: PipelineConfig) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Optional[Path].
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "first existing resonance dir" dentro del módulo de derivación de
+    #     estructuras BIDS/FreeSurfer y selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     if stage_dir is None or not stage_dir.exists():
         return None
     for name in cfg.resonance_dirnames:
@@ -89,6 +115,16 @@ def _first_existing_resonance_dir(stage_dir: Optional[Path], cfg: PipelineConfig
 
 
 def bids_subject_label(subject: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "bids subject label" dentro del módulo de derivación de estructuras
+    #     BIDS/FreeSurfer y selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     n = norm_key(subject)
     n = n.replace("paciente ", "paciente")
     n = re.sub(r"[^a-z0-9]+", "", n)
@@ -96,28 +132,90 @@ def bids_subject_label(subject: str) -> str:
 
 
 def bids_session_label(stage: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "bids session label" dentro del módulo de derivación de estructuras
+    #     BIDS/FreeSurfer y selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     n = norm_key(stage).replace("después", "despues").replace("despues", "despues")
     n = re.sub(r"[^a-z0-9]+", "", n)
     return n or "sesion"
 
 
 def fs_subject_label(subject: str, stage: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "fs subject label" dentro del módulo de derivación de estructuras
+    #     BIDS/FreeSurfer y selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return f"{bids_subject_label(subject)}_{bids_session_label(stage)}"
 
 
 def _dicom_file_path(ds) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Inspecciona metadatos DICOM para ordenar cortes, clasificar series y seleccionar estudios
+    #     relevantes.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return str(getattr(ds, "filename", ""))
 
 
 def _series_desc(ds) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Ejecuta el bloque "series desc" dentro del módulo de derivación de estructuras BIDS/FreeSurfer
+    #     y selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return str(getattr(ds, "SeriesDescription", ""))
 
 
 def _series_protocol(ds) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Ejecuta el bloque "series protocol" dentro del módulo de derivación de estructuras
+    #     BIDS/FreeSurfer y selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return str(getattr(ds, "ProtocolName", ""))
 
 
 def _series_score_for_t1(ds_list: list) -> tuple[int, int, int]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds_list: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list.
+    # Proceso:
+    #   - Ejecuta el bloque "series score for t1" dentro del módulo de derivación de estructuras
+    #     BIDS/FreeSurfer y selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[int, int, int].
+    # -----------------------------------------------------------------------------
     if not ds_list:
         return (0, 0, 0)
     ds = ds_list[0]
@@ -129,6 +227,17 @@ def _series_score_for_t1(ds_list: list) -> tuple[int, int, int]:
 
 
 def _series_score_for_bold(ds_list: list) -> tuple[int, int, int]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds_list: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list.
+    # Proceso:
+    #   - Ejecuta el bloque "series score for bold" dentro del módulo de derivación de estructuras
+    #     BIDS/FreeSurfer y selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[int, int, int].
+    # -----------------------------------------------------------------------------
     if not ds_list:
         return (0, 0, 0)
     ds = ds_list[0]
@@ -148,6 +257,20 @@ def build_real_derivatives_workspace(cfg: PipelineConfig, convert_t1: bool = Tru
     - crea scripts Linux para recon-all nativo;
     - crea script opcional para fMRIPrep bare-metal si existe.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - convert_t1: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: bool.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Prepara BIDS mínimo y scripts para generar
+    #     derivados reales sin Docker y sin MATLAB. Esta función: - localiza la mejor serie T1 por
+    #     sujeto/etapa; - exporta un T1w NIfTI mínimo para FreeSurfer nativo; - crea scripts Linux...
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     base = cfg.results_root() / "derivados_externos"
     bids = base / "bids"
     fs_out = base / "freesurfer"
@@ -279,10 +402,32 @@ def build_real_derivatives_workspace(cfg: PipelineConfig, convert_t1: bool = Tru
 
 
 def _win(path: Path) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "win" dentro del módulo de derivación de estructuras BIDS/FreeSurfer y
+    #     selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return str(path).replace("/", "\\")
 
 
 def _sh(path: Path) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "sh" dentro del módulo de derivación de estructuras BIDS/FreeSurfer y
+    #     selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return str(path)
 
 
@@ -295,6 +440,24 @@ def _write_derivative_scripts(cfg: PipelineConfig, base: Path, t1_df: pd.DataFra
     - fMRIPrep bare-metal opcional si el comando existe;
     - integración posterior a la suite.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - base: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Path.
+    #   - t1_df: tabla DataFrame con señales, métricas o resultados intermedios. Tipo esperado/anotado:
+    #       pd.DataFrame.
+    #   - bold_df: tabla DataFrame con señales, métricas o resultados intermedios. Tipo
+    #       esperado/anotado: pd.DataFrame.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Crea scripts para Linux sin Docker y sin
+    #     MATLAB. Esta versión prepara: - FreeSurfer nativo con recon-all; - dcm2niix opcional para
+    #     BOLD; - fMRIPrep bare-metal opcional si el comando existe; - integración posterior a la s...
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     bids = base / "bids"
     fs_out = base / "freesurfer"
     fmriprep_out = base / "fmriprep"
@@ -452,4 +615,15 @@ La morfometría fuerte sale de FreeSurfer nativo. Si fMRIPrep no está disponibl
     (base / "README_DERIVADOS_REALES.md").write_text(readme, encoding="utf-8")
 
 def run_real_derivatives_preparation(cfg: PipelineConfig) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "run real derivatives preparation" dentro del módulo de derivación de
+    #     estructuras BIDS/FreeSurfer y selección de series anatómicas/funcionales reales.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     return build_real_derivatives_workspace(cfg, convert_t1=True)

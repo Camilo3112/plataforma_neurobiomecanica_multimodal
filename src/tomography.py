@@ -61,6 +61,17 @@ MUSCLES_CONFIG = {
 
 
 def _require_medical_libs():
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Ejecuta el bloque "require medical libs" dentro del módulo de procesamiento de TAC/DICOM,
+    #     selección de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     import pydicom  # noqa
     import nibabel as nib  # noqa
     from scipy.ndimage import center_of_mass, map_coordinates, binary_opening  # noqa
@@ -73,6 +84,16 @@ def _require_medical_libs():
 
 def _dicom_sort_key(ds):
     """Ordena cortes por posición anatómica cuando existe, con fallback robusto."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Inspecciona metadatos DICOM para ordenar cortes, clasificar series y seleccionar estudios
+    #     relevantes.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     if hasattr(ds, "ImagePositionPatient"):
         try:
             return float(ds.ImagePositionPatient[2])
@@ -92,6 +113,19 @@ def _dicom_sort_key(ds):
 
 
 def _safe_float(value, default: float = 1.0) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - value: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos.
+    #   - default: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Ejecuta el bloque "safe float" dentro del módulo de procesamiento de TAC/DICOM, selección de
+    #     series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: float.
+    # -----------------------------------------------------------------------------
     try:
         return float(value)
     except Exception:
@@ -99,6 +133,17 @@ def _safe_float(value, default: float = 1.0) -> float:
 
 
 def _safe_str(value) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - value: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos.
+    # Proceso:
+    #   - Ejecuta el bloque "safe str" dentro del módulo de procesamiento de TAC/DICOM, selección de
+    #     series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     try:
         return str(value)
     except Exception:
@@ -107,6 +152,17 @@ def _safe_str(value) -> str:
 
 def _series_uid_for(ds, file: Path) -> str:
     """UID estable. Si el DICOM no trae SeriesInstanceUID, usa la carpeta."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #   - file: archivo de entrada o salida usado por el módulo. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: UID estable. Si el DICOM no trae
+    #     SeriesInstanceUID, usa la carpeta.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     uid = _safe_str(getattr(ds, "SeriesInstanceUID", "")).strip()
     if uid:
         return uid
@@ -114,6 +170,16 @@ def _series_uid_for(ds, file: Path) -> str:
 
 
 def _shape_of(ds) -> tuple[int, int] | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Ejecuta el bloque "shape of" dentro del módulo de procesamiento de TAC/DICOM, selección de
+    #     series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[int, int] | None.
+    # -----------------------------------------------------------------------------
     try:
         return int(ds.Rows), int(ds.Columns)
     except Exception:
@@ -121,6 +187,15 @@ def _shape_of(ds) -> tuple[int, int] | None:
 
 
 def _is_probably_localizer(ds) -> bool:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Ejecuta el bloque "is probably localizer" dentro del módulo de procesamiento de TAC/DICOM,
+    #     selección de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor booleano que indica si se cumple la condición evaluada. Tipo de retorno anotado: bool.
+    # -----------------------------------------------------------------------------
     text = " ".join([
         _safe_str(getattr(ds, "SeriesDescription", "")),
         _safe_str(getattr(ds, "ProtocolName", "")),
@@ -141,6 +216,17 @@ def _collect_dicom_slices(directory: Path):
     con tamaños diferentes. Por eso primero agrupamos por SeriesInstanceUID y
     luego escogemos una sola serie axial consistente.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - directory: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Inspecciona metadatos DICOM para ordenar cortes, clasificar series y seleccionar estudios
+    #     relevantes.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     pydicom, _ = _require_medical_libs()
     groups: dict[str, list] = {}
     read_errors = []
@@ -164,6 +250,17 @@ def _collect_dicom_slices(directory: Path):
 
 
 def _candidate_rows(groups: dict[str, list]) -> list[dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - groups: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: dict[str, list].
+    # Proceso:
+    #   - Ejecuta el bloque "candidate rows" dentro del módulo de procesamiento de TAC/DICOM, selección
+    #     de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[dict].
+    # -----------------------------------------------------------------------------
     rows = []
     for uid, items in groups.items():
         if not items:
@@ -211,6 +308,17 @@ def _candidate_rows(groups: dict[str, list]) -> list[dict]:
 
 
 def _select_best_ct_series(groups: dict[str, list]):
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - groups: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: dict[str, list].
+    # Proceso:
+    #   - Ejecuta el bloque "select best ct series" dentro del módulo de procesamiento de TAC/DICOM,
+    #     selección de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     candidates = _candidate_rows(groups)
     if not candidates:
         raise ValueError("Encontré DICOMs, pero ninguna serie tenía matriz de imagen válida.")
@@ -225,6 +333,18 @@ def _deduplicate_and_sort_slices(slices: list) -> list:
 
     No mezcla series. Solo limpia repeticiones dentro de la serie escogida.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - slices: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Ordena y elimina duplicados exactos de
+    #     SOPInstanceUID/posición. No mezcla series. Solo limpia repeticiones dentro de la serie
+    #     escogida.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list.
+    # -----------------------------------------------------------------------------
     unique = {}
     for ds in slices:
         sop = _safe_str(getattr(ds, "SOPInstanceUID", "")).strip()
@@ -239,6 +359,16 @@ def _deduplicate_and_sort_slices(slices: list) -> list:
 
 
 def _get_pixel_spacing(ds) -> list[float]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ds: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Ejecuta el bloque "get pixel spacing" dentro del módulo de procesamiento de TAC/DICOM,
+    #     selección de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[float].
+    # -----------------------------------------------------------------------------
     try:
         ps = getattr(ds, "PixelSpacing", [1.0, 1.0])
         return [float(ps[0]), float(ps[1])]
@@ -247,6 +377,17 @@ def _get_pixel_spacing(ds) -> list[float]:
 
 
 def _estimate_z_spacing(slices: list) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - slices: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list.
+    # Proceso:
+    #   - Ejecuta el bloque "estimate z spacing" dentro del módulo de procesamiento de TAC/DICOM,
+    #     selección de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: float.
+    # -----------------------------------------------------------------------------
     vals = []
     for ds in slices:
         if hasattr(ds, "ImagePositionPatient"):
@@ -273,6 +414,17 @@ def _estimate_z_spacing(slices: list) -> float:
 
 
 def load_dicom_series(directory: Path) -> tuple[np.ndarray, list[float], float, dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - directory: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Inspecciona metadatos DICOM para ordenar cortes, clasificar series y seleccionar estudios
+    #     relevantes.
+    # Salida:
+    #   - datos cargados en memoria, por ejemplo imagen, tabla, señal, JSON o estructura auxiliar. Tipo
+    #     de retorno anotado: tuple[np.ndarray, list[float], float, dict].
+    # -----------------------------------------------------------------------------
     groups, read_errors = _collect_dicom_slices(directory)
     if not groups:
         raise ValueError(f"No encontré DICOMs válidos con PixelData en {directory}")
@@ -341,6 +493,19 @@ def load_dicom_series(directory: Path) -> tuple[np.ndarray, list[float], float, 
     return image_hu, pixel_spacing, float(z_spacing), meta
 
 def auto_detect_z_limits(image_hu: np.ndarray, cfg: PipelineConfig) -> tuple[int, int]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - image_hu: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "auto detect z limits" dentro del módulo de procesamiento de TAC/DICOM,
+    #     selección de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[int, int].
+    # -----------------------------------------------------------------------------
     from scipy.ndimage import binary_opening
     from scipy.ndimage import label as scipy_label
 
@@ -388,6 +553,20 @@ def _cwt_like_power_1d(signal_1d: np.ndarray, scales: np.ndarray) -> np.ndarray:
 
     Evita depender de scipy.signal.cwt/ricker, que cambia según la versión de SciPy.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - signal_1d: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - scales: arreglo de escalas; cada escala actúa como un nivel de observación para analizar
+    #       detalles finos o patrones amplios. Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Normaliza la señal, aplica un filtro Laplaciano de Gaussiana tipo sombrero mexicano en varias
+    #     escalas y calcula energía multiescala para construir un escalograma.
+    # Salida:
+    #   - matriz 2D de energía multiescala con forma aproximada número de escalas × número de muestras
+    #     de la señal; cada fila representa una escala y cada columna un punto temporal. Tipo de retorno
+    #     anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     from scipy.ndimage import gaussian_laplace
     sig = np.asarray(signal_1d, dtype=float)
     coeffs = []
@@ -397,6 +576,21 @@ def _cwt_like_power_1d(signal_1d: np.ndarray, scales: np.ndarray) -> np.ndarray:
 
 
 def find_fascia_1d(signal_1d: np.ndarray, mm_per_pixel: float, cfg: PipelineConfig) -> int:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - signal_1d: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - mm_per_pixel: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: float.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "find fascia 1d" dentro del módulo de procesamiento de TAC/DICOM, selección
+    #     de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: int.
+    # -----------------------------------------------------------------------------
     from scipy.ndimage import gaussian_filter1d
     from scipy.signal import find_peaks
 
@@ -415,6 +609,21 @@ def find_fascia_1d(signal_1d: np.ndarray, mm_per_pixel: float, cfg: PipelineConf
 
 
 def get_femur_centroid(image_slice_hu: np.ndarray, roi_side: str, cfg: PipelineConfig):
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - image_slice_hu: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - roi_side: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "get femur centroid" dentro del módulo de procesamiento de TAC/DICOM,
+    #     selección de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     from scipy.ndimage import center_of_mass
     from scipy.ndimage import label as scipy_label
 
@@ -433,6 +642,21 @@ def get_femur_centroid(image_slice_hu: np.ndarray, roi_side: str, cfg: PipelineC
 
 
 def process_multi_muscle_slice(image_slice_hu: np.ndarray, pixel_spacing: list[float], cfg: PipelineConfig) -> dict[str, np.ndarray]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - image_slice_hu: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - pixel_spacing: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: list[float].
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "process multi muscle slice" dentro del módulo de procesamiento de
+    #     TAC/DICOM, selección de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: dict[str, np.ndarray].
+    # -----------------------------------------------------------------------------
     from scipy.ndimage import map_coordinates
     from skimage.draw import polygon
 
@@ -471,6 +695,25 @@ def process_multi_muscle_slice(image_slice_hu: np.ndarray, pixel_spacing: list[f
 
 
 def segment_all_muscles(image_hu: np.ndarray, pixel_spacing: list[float], z_start: int, z_end: int, cfg: PipelineConfig) -> dict[str, np.ndarray]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - image_hu: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - pixel_spacing: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: list[float].
+    #   - z_start: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    #   - z_end: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "segment all muscles" dentro del módulo de procesamiento de TAC/DICOM,
+    #     selección de series, segmentación tisular y métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict[str, np.ndarray].
+    # -----------------------------------------------------------------------------
     masks = {name: np.zeros_like(image_hu, dtype=bool) for name in MUSCLES_CONFIG}
     for z in range(z_start, z_end):
         slice_masks = process_multi_muscle_slice(image_hu[:, :, z], pixel_spacing, cfg)
@@ -480,6 +723,27 @@ def segment_all_muscles(image_hu: np.ndarray, pixel_spacing: list[float], z_star
 
 
 def export_tomography_results(
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - image_hu: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - masks: máscara binaria o etiquetada asociada a una región anatómica, funcional o de calidad.
+    #       Tipo esperado/anotado: dict[str, np.ndarray].
+    #   - pixel_spacing: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: list[float].
+    #   - slice_thickness: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: float.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - z_start: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    #   - z_end: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Procesa TAC para segmentar tejidos, estimar áreas/volúmenes y producir métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     image_hu: np.ndarray,
     masks: dict[str, np.ndarray],
     pixel_spacing: list[float],
@@ -585,6 +849,19 @@ def export_tomography_results(
 
 
 def process_tomography_folder(cfg: PipelineConfig, input_dir: Path, out_dir: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - input_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa TAC para segmentar tejidos, estimar áreas/volúmenes y producir métricas morfométricas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     image_hu, pixel_spacing, z_spacing, meta = load_dicom_series(input_dir)
     z0, z1 = auto_detect_z_limits(image_hu, cfg)
     masks = segment_all_muscles(image_hu, pixel_spacing, z0, z1, cfg)
@@ -616,6 +893,18 @@ def _control_requested_stages(cfg: PipelineConfig) -> tuple[str, ...]:
     Si el sano solo tiene Antes, no repetimos el mismo procesamiento como Despues.
     Si existe sano/Despues, lo incluimos automáticamente.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Etapas a procesar para el sano. Si el sano
+    #     solo tiene Antes, no repetimos el mismo procesamiento como Despues. Si existe sano/Despues, lo
+    #     incluimos automáticamente.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[str, ...].
+    # -----------------------------------------------------------------------------
     control_dir = cfg.data_root() / cfg.control_name
     out = []
     if resolve_stage_dir(control_dir, "Antes") is not None:
@@ -633,6 +922,16 @@ def _iter_tomography_subject_stage(cfg: PipelineConfig):
     Para pacientes se respeta Antes/Despues. Para sano se procesa Antes y, si existe,
     Despues. Esto evita dejar vacía la carpeta de control y permite correlaciones.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Procesa TAC para segmentar tejidos, estimar áreas/volúmenes y producir métricas morfométricas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función.
+    # -----------------------------------------------------------------------------
     for patient in cfg.patients:
         for stage in cfg.stages:
             stage_dir = resolve_stage_dir(cfg.data_root() / patient, stage)
@@ -643,6 +942,16 @@ def _iter_tomography_subject_stage(cfg: PipelineConfig):
         yield cfg.control_name, stage, stage_dir
 
 def run_tomography(cfg: PipelineConfig) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Procesa TAC para segmentar tejidos, estimar áreas/volúmenes y producir métricas morfométricas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     all_rows = []
     for patient, stage, stage_dir in _iter_tomography_subject_stage(cfg):
         print(f"\n[TOMOGRAFÍA] {patient} · {stage}")
@@ -658,6 +967,17 @@ def run_tomography(cfg: PipelineConfig) -> pd.DataFrame:
             ckpt = CheckpointManager(cfg)
 
             def _work():
+                # -----------------------------------------------------------------------------
+                # Entrada:
+                #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o
+                #       estado interno disponible.
+                # Proceso:
+                #   - Ejecuta el bloque "work" dentro del módulo de procesamiento de TAC/DICOM,
+                #     selección de series, segmentación tisular y métricas morfométricas.
+                # Salida:
+                #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+                #     específica de la función.
+                # -----------------------------------------------------------------------------
                 return process_tomography_folder(cfg, tac_dir, out_dir)
 
             df_result, status = ckpt.run(

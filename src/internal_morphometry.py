@@ -66,6 +66,19 @@ from .neuroimage import (
 
 
 def _subject_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "subject stage dir" dentro del módulo de morfometría interna de neuroimagen
+    #     basada en volúmenes, máscaras, gradientes e intensidades.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     subject_dir = cfg.data_root() / subject
     if subject == cfg.control_name:
         exact = resolve_stage_dir(subject_dir, stage, fallback_to_subject=False)
@@ -79,6 +92,18 @@ def _subject_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Optiona
 
 
 def _real_stages_for_subject(cfg: PipelineConfig, subject: str) -> list[str]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "real stages for subject" dentro del módulo de morfometría interna de
+    #     neuroimagen basada en volúmenes, máscaras, gradientes e intensidades.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[str].
+    # -----------------------------------------------------------------------------
     if subject != cfg.control_name:
         return list(cfg.stages)
     out = []
@@ -89,6 +114,17 @@ def _real_stages_for_subject(cfg: PipelineConfig, subject: str) -> list[str]:
 
 
 def _is_nifti(path: Path) -> bool:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Opera sobre archivos NIfTI respetando matriz afín, encabezado y espacio anatómico del
+    #     paciente.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: bool.
+    # -----------------------------------------------------------------------------
     name = path.name.lower()
     return name.endswith(".nii") or name.endswith(".nii.gz")
 
@@ -99,6 +135,17 @@ def _find_reformat_niftis(stage_dir: Optional[Path]) -> list[Path]:
     Estos archivos NO equivalen a FreeSurfer/CAT12, pero sí pueden servir como
     referencia anatómica/coregistrada para crear una morfometría interna proxy.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Optional[Path].
+    # Proceso:
+    #   - Opera sobre archivos NIfTI respetando matriz afín, encabezado y espacio anatómico del
+    #     paciente.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     if stage_dir is None or not stage_dir.exists():
         return []
     candidates = []
@@ -120,6 +167,17 @@ def _find_reformat_niftis(stage_dir: Optional[Path]) -> list[Path]:
 
 
 def _find_processed_t1(stage_out: Path) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_out: etapa temporal o clínica del estudio, por ejemplo Antes o Después. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "find processed t1" dentro del módulo de morfometría interna de neuroimagen
+    #     basada en volúmenes, máscaras, gradientes e intensidades.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     res = stage_out / "resonancias"
     if not res.exists():
         return None
@@ -127,6 +185,17 @@ def _find_processed_t1(stage_out: Path) -> Optional[Path]:
     if not cands:
         return None
     def score(p: Path) -> tuple[int, int, int]:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - p: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: Path.
+        # Proceso:
+        #   - Ejecuta el bloque "score" dentro del módulo de morfometría interna de neuroimagen basada
+        #     en volúmenes, máscaras, gradientes e intensidades.
+        # Salida:
+        #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio
+        #     longitudinal. Tipo de retorno anotado: tuple[int, int, int].
+        # -----------------------------------------------------------------------------
         n = norm_key(str(p))
         s = 0
         for tok in ["anatomica", "t1", "spc", "mpr", "vol"]:
@@ -144,10 +213,38 @@ def _find_processed_t1(stage_out: Path) -> Optional[Path]:
 
 
 def _find_best_structural_reference(cfg: PipelineConfig, subject: str, stage: str, stage_out: Path, log_file: Path) -> tuple[Optional[Path], str]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - stage_out: etapa temporal o clínica del estudio, por ejemplo Antes o Después. Tipo
+    #       esperado/anotado: Path.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "find best structural reference" dentro del módulo de morfometría interna de
+    #     neuroimagen basada en volúmenes, máscaras, gradientes e intensidades.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: tuple[Optional[Path], str].
+    # -----------------------------------------------------------------------------
     stage_dir = _subject_stage_dir(cfg, subject, stage)
     reform = _find_reformat_niftis(stage_dir)
     if reform:
         def score(p: Path) -> tuple[int, int, int]:
+            # -----------------------------------------------------------------------------
+            # Entrada:
+            #   - p: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+            #       datos. Tipo esperado/anotado: Path.
+            # Proceso:
+            #   - Ejecuta el bloque "score" dentro del módulo de morfometría interna de neuroimagen
+            #     basada en volúmenes, máscaras, gradientes e intensidades.
+            # Salida:
+            #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio
+            #     longitudinal. Tipo de retorno anotado: tuple[int, int, int].
+            # -----------------------------------------------------------------------------
             n = norm_key(str(p))
             s = 0
             for tok in ["t1", "anat", "reform", "reformat", "reformateo", "coreg", "registr"]:
@@ -169,6 +266,17 @@ def _find_best_structural_reference(cfg: PipelineConfig, subject: str, stage: st
 
 
 def _find_ad_energy(stage_out: Path) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_out: etapa temporal o clínica del estudio, por ejemplo Antes o Después. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "find ad energy" dentro del módulo de morfometría interna de neuroimagen
+    #     basada en volúmenes, máscaras, gradientes e intensidades.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     res = stage_out / "resonancias"
     if not res.exists():
         return None
@@ -182,6 +290,17 @@ def _find_ad_energy(stage_out: Path) -> Optional[Path]:
     if not cands:
         return None
     def score(p: Path) -> tuple[int, int]:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - p: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: Path.
+        # Proceso:
+        #   - Ejecuta el bloque "score" dentro del módulo de morfometría interna de neuroimagen basada
+        #     en volúmenes, máscaras, gradientes e intensidades.
+        # Salida:
+        #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio
+        #     longitudinal. Tipo de retorno anotado: tuple[int, int].
+        # -----------------------------------------------------------------------------
         n = norm_key(str(p))
         s = 0
         for tok in ["ad", "ad_map", "difusion", "dti"]:
@@ -194,12 +313,35 @@ def _find_ad_energy(stage_out: Path) -> Optional[Path]:
 
 
 def _load_volume(path: Path) -> tuple[np.ndarray, np.ndarray]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: tuple[np.ndarray, np.ndarray].
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     img = nib.load(str(path))
     return _as_3d(img.get_fdata(dtype=np.float32)), img.affine
 
 
 def _normalize01(x: np.ndarray, cfg: PipelineConfig | None = None) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - x: arreglo, señal, coordenada o estructura de entrada usada como variable independiente o dato
+    #       base. Tipo esperado/anotado: np.ndarray.
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig | None.
+    # Proceso:
+    #   - Ejecuta el bloque "normalize01" dentro del módulo de morfometría interna de neuroimagen basada
+    #     en volúmenes, máscaras, gradientes e intensidades.
+    # Salida:
+    #   - señal, arreglo o volumen transformado y listo para análisis posterior. Tipo de retorno
+    #     anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     gpu = minmax_gpu(x, cfg) if cfg is not None else None
     if gpu is not None:
         return gpu.astype(np.float32, copy=False)
@@ -212,6 +354,30 @@ def _normalize01(x: np.ndarray, cfg: PipelineConfig | None = None) -> np.ndarray
 
 
 def _make_internal_motor_masks(
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - ref_vol: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - ref_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - ref_kind: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    #   - stage_out: etapa temporal o clínica del estudio, por ejemplo Antes o Después. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - máscara binaria o etiquetada, junto con su geometría o ruta de salida cuando corresponde. Tipo
+    #     de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     cfg: PipelineConfig,
     ref_vol: np.ndarray,
     affine: np.ndarray,
@@ -315,6 +481,18 @@ def run_internal_morphometry_integration(cfg: PipelineConfig) -> pd.DataFrame:
     desde resonancias. Esto evita depender de FreeSurfer/CAT12/fMRIPrep para que el
     flujo completo corra, pero mantiene trazabilidad y etiqueta el resultado como proxy.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Genera derivados morfométricos internos
+    #     usando datos existentes. Usa NIfTI de reformateo si existen en ResultadosFuncional; si no, usa
+    #     T1 procesado desde resonancias. Esto evita depender de FreeSurfer/CAT12/fMRIPrep para...
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     all_rows = []
     subjects = list(cfg.patients) + [cfg.control_name]
     for subject in subjects:

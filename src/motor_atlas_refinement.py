@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-Fundamento
+Fundamento físico-matemático implementado
 -----------------------------------------
 Refina regiones motoras integrando priors anatómicos y restricciones
 geométricas
@@ -54,6 +54,19 @@ from .io_utils import safe_mkdir, save_json
 
 
 def _ensure_3d(data: np.ndarray, name: str) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - data: datos de entrada en memoria, tabla, arreglo o estructura compuesta. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - name: nombre, etiqueta o identificador usado para clasificar una región, archivo o salida.
+    #       Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "ensure 3d" dentro del módulo de refinamiento anatómico de máscaras motoras
+    #     usando geometría, conectividad e intensidad de imagen.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     data = np.asarray(data)
     if data.ndim == 4 and data.shape[3] == 1:
         data = data[..., 0]
@@ -63,6 +76,17 @@ def _ensure_3d(data: np.ndarray, name: str) -> np.ndarray:
 
 
 def _largest_connected_component(mask: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "largest connected component" dentro del módulo de refinamiento anatómico de
+    #     máscaras motoras usando geometría, conectividad e intensidad de imagen.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     labels, number = label(mask)
     if number == 0:
         return np.zeros_like(mask, dtype=bool)
@@ -72,6 +96,17 @@ def _largest_connected_component(mask: np.ndarray) -> np.ndarray:
 
 
 def _border_values(volume: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - volume: volumen de imagen médica, generalmente NIfTI o matriz tridimensional. Tipo
+    #       esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "border values" dentro del módulo de refinamiento anatómico de máscaras
+    #     motoras usando geometría, conectividad e intensidad de imagen.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     return np.concatenate([
         volume[0, :, :].ravel(), volume[-1, :, :].ravel(),
         volume[:, 0, :].ravel(), volume[:, -1, :].ravel(),
@@ -80,6 +115,19 @@ def _border_values(volume: np.ndarray) -> np.ndarray:
 
 
 def _otsu_threshold(values: np.ndarray, bins: int = 512) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - values: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - bins: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Ejecuta el bloque "otsu threshold" dentro del módulo de refinamiento anatómico de máscaras
+    #     motoras usando geometría, conectividad e intensidad de imagen.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: float.
+    # -----------------------------------------------------------------------------
     values = np.asarray(values, dtype=np.float64)
     values = values[np.isfinite(values)]
     if values.size == 0:
@@ -106,6 +154,17 @@ def _otsu_threshold(values: np.ndarray, bins: int = 512) -> float:
 
 
 def create_brain_mask_simple(brain: np.ndarray) -> tuple[np.ndarray, dict[str, Any]]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - brain: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - máscara binaria o etiquetada, junto con su geometría o ruta de salida cuando corresponde. Tipo
+    #     de retorno anotado: tuple[np.ndarray, dict[str, Any]].
+    # -----------------------------------------------------------------------------
     brain = np.asarray(brain, dtype=np.float32)
     finite = np.isfinite(brain)
     if not np.any(finite):
@@ -138,10 +197,32 @@ def create_brain_mask_simple(brain: np.ndarray) -> tuple[np.ndarray, dict[str, A
 
 
 def voxel_sizes_from_affine(affine: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "voxel sizes from affine" dentro del módulo de refinamiento anatómico de
+    #     máscaras motoras usando geometría, conectividad e intensidad de imagen.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     return np.sqrt(np.sum(np.asarray(affine[:3, :3], dtype=float) ** 2, axis=0))
 
 
 def infer_side_region_from_name(name: str) -> tuple[str, str]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - name: nombre, etiqueta o identificador usado para clasificar una región, archivo o salida.
+    #       Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "infer side region from name" dentro del módulo de refinamiento anatómico de
+    #     máscaras motoras usando geometría, conectividad e intensidad de imagen.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[str, str].
+    # -----------------------------------------------------------------------------
     n = name.lower()
     if any(t in n for t in ['izquierda', 'izq', 'left']):
         side = 'izquierda'
@@ -157,6 +238,23 @@ def infer_side_region_from_name(name: str) -> tuple[str, str]:
 
 
 def _save_nifti(data: np.ndarray, reference_img: nib.Nifti1Image, path: Path, dtype=np.uint8) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - data: datos de entrada en memoria, tabla, arreglo o estructura compuesta. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - reference_img: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: nib.Nifti1Image.
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - dtype: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos.
+    # Proceso:
+    #   - Opera sobre archivos NIfTI respetando matriz afín, encabezado y espacio anatómico del
+    #     paciente.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     safe_mkdir(path.parent)
     hdr = reference_img.header.copy()
     hdr.set_data_dtype(dtype)
@@ -171,6 +269,17 @@ def _save_nifti(data: np.ndarray, reference_img: nib.Nifti1Image, path: Path, dt
 
 
 def _mask_center(mask: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     pts = np.argwhere(mask)
     if pts.size == 0:
         return np.asarray(mask.shape, dtype=float) / 2.0
@@ -178,6 +287,17 @@ def _mask_center(mask: np.ndarray) -> np.ndarray:
 
 
 def _intensity_limits(brain: np.ndarray) -> tuple[float, float]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - brain: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "intensity limits" dentro del módulo de refinamiento anatómico de máscaras
+    #     motoras usando geometría, conectividad e intensidad de imagen.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[float, float].
+    # -----------------------------------------------------------------------------
     valid = brain[np.isfinite(brain)]
     valid = valid[valid != 0]
     if valid.size == 0:
@@ -186,6 +306,25 @@ def _intensity_limits(brain: np.ndarray) -> tuple[float, float]:
 
 
 def save_atlas_preview(brain: np.ndarray, corrected: np.ndarray, atlas_target: np.ndarray, refined: np.ndarray, output_path: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - brain: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - corrected: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - atlas_target: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: np.ndarray.
+    #   - refined: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - output_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "save atlas preview" dentro del módulo de refinamiento anatómico de máscaras
+    #     motoras usando geometría, conectividad e intensidad de imagen.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     vmin, vmax = _intensity_limits(brain)
     fig, axes = plt.subplots(3, 3, figsize=(15, 14))
     items = [(corrected, 'corregida por shell'), (atlas_target, 'atlas-prior target'), (refined, 'refinada atlas+shell')]
@@ -225,6 +364,27 @@ def refine_cortical_mask_with_atlas_prior(
     del paciente para que la máscara corregida no quede solo 'sobre corteza', sino también
     cerca de la zona motora esperada por lado y región.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - brain_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - corrected_mask_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas.
+    #       Tipo esperado/anotado: Path.
+    #   - output_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado:
+    #       Path | None.
+    #   - shell_mm: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    #   - prior_threshold: umbral numérico que controla selección, binarización o criterio de
+    #       aceptación. Tipo esperado/anotado: float.
+    #   - sigma_scale: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict[str, Any].
+    # -----------------------------------------------------------------------------
     brain_path = Path(brain_path)
     corrected_mask_path = Path(corrected_mask_path)
     output_dir = Path(output_dir) if output_dir else corrected_mask_path.parent

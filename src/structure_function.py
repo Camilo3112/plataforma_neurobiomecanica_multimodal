@@ -66,6 +66,19 @@ from .neuroimage import (
 
 
 def _subject_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "subject stage dir" dentro del módulo de análisis estructura-función entre
+    #     anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     subject_dir = cfg.data_root() / subject
     if subject == cfg.control_name:
         exact = resolve_stage_dir(subject_dir, stage, fallback_to_subject=False)
@@ -79,6 +92,19 @@ def _subject_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Optiona
 
 
 def _result_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "result stage dir" dentro del módulo de análisis estructura-función entre
+    #     anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     if subject == cfg.control_name:
         candidate = cfg.results_root() / subject / stage
         if candidate.exists() and any(candidate.rglob("*")):
@@ -88,6 +114,21 @@ def _result_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Path:
 
 
 def _best_file(root: Path, patterns: list[str], prefer: list[str] | None = None) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - root: carpeta raíz desde donde se buscan datos, módulos o resultados del proyecto. Tipo
+    #       esperado/anotado: Path.
+    #   - patterns: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list[str].
+    #   - prefer: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list[str] | None.
+    # Proceso:
+    #   - Ejecuta el bloque "best file" dentro del módulo de análisis estructura-función entre anatomía,
+    #     máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     if not root.exists():
         return None
     candidates: list[Path] = []
@@ -98,6 +139,17 @@ def _best_file(root: Path, patterns: list[str], prefer: list[str] | None = None)
         return None
     prefer = prefer or []
     def score(p: Path) -> tuple[int, int, int]:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - p: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: Path.
+        # Proceso:
+        #   - Ejecuta el bloque "score" dentro del módulo de análisis estructura-función entre anatomía,
+        #     máscaras, señales, métricas y resultados multimodales.
+        # Salida:
+        #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio
+        #     longitudinal. Tipo de retorno anotado: tuple[int, int, int].
+        # -----------------------------------------------------------------------------
         n = norm_key(str(p))
         s = sum(1 for token in prefer if token in n)
         # Prefer larger NIfTI-like volumes, not tiny masks, when names tie.
@@ -110,6 +162,19 @@ def _best_file(root: Path, patterns: list[str], prefer: list[str] | None = None)
 
 
 def _list_files(root: Path, patterns: list[str]) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - root: carpeta raíz desde donde se buscan datos, módulos o resultados del proyecto. Tipo
+    #       esperado/anotado: Path.
+    #   - patterns: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list[str].
+    # Proceso:
+    #   - Ejecuta el bloque "list files" dentro del módulo de análisis estructura-función entre
+    #     anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     if not root.exists():
         return []
     out: list[Path] = []
@@ -119,6 +184,17 @@ def _list_files(root: Path, patterns: list[str]) -> list[Path]:
 
 
 def _load_mask(path: Path) -> tuple[np.ndarray, np.ndarray]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - máscara binaria o etiquetada, junto con su geometría o ruta de salida cuando corresponde. Tipo
+    #     de retorno anotado: tuple[np.ndarray, np.ndarray].
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     img = nib.load(str(path))
     data = _as_3d(img.get_fdata(dtype=np.float32))
@@ -126,12 +202,35 @@ def _load_mask(path: Path) -> tuple[np.ndarray, np.ndarray]:
 
 
 def _load_volume(path: Path) -> tuple[np.ndarray, np.ndarray]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: tuple[np.ndarray, np.ndarray].
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     img = nib.load(str(path))
     return _as_3d(img.get_fdata(dtype=np.float32)), img.affine
 
 
 def _dice_jaccard(a: np.ndarray, b: np.ndarray) -> tuple[float, float, int, int, int]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - a: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - b: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "dice jaccard" dentro del módulo de análisis estructura-función entre
+    #     anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[float, float, int, int, int].
+    # -----------------------------------------------------------------------------
     aa = np.asarray(a, dtype=bool)
     bb = np.asarray(b, dtype=bool)
     inter = int(np.sum(aa & bb))
@@ -144,6 +243,21 @@ def _dice_jaccard(a: np.ndarray, b: np.ndarray) -> tuple[float, float, int, int,
 
 
 def _ensure_neuro_results(cfg: PipelineConfig, subject: str, stage: str, log_file: Path) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "ensure neuro results" dentro del módulo de análisis estructura-función
+    #     entre anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     stage_out = _result_stage_dir(cfg, subject, stage)
     # No llama pesado si ya hay salidas mínimas.
     if not list((stage_out / "mapas").rglob("*_wavelet_energy.nii.gz")):
@@ -160,6 +274,18 @@ def _ensure_neuro_results(cfg: PipelineConfig, subject: str, stage: str, log_fil
 
 
 def _qc_neuroimage(stage_out: Path, out_dir: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_out: etapa temporal o clínica del estudio, por ejemplo Antes o Después. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "qc neuroimage" dentro del módulo de análisis estructura-función entre
+    #     anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows = []
     for csv_name in ["metricas_mapas.csv", "metricas_resonancias.csv", "resumen_corteza_motora_ad.csv"]:
         for p in stage_out.rglob(csv_name):
@@ -196,6 +322,17 @@ def _qc_neuroimage(stage_out: Path, out_dir: Path) -> pd.DataFrame:
 
 
 def _external_cortex_mask(stage_out: Path) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_out: etapa temporal o clínica del estudio, por ejemplo Antes o Después. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     morf = stage_out / "morfometria"
     # Prioridad: FreeSurfer real; respaldo: shell cortical interno desde reformateo/T1.
     candidates = sorted(morf.rglob("cortex_gray_freesurfer_aparc_mask.nii.gz"))
@@ -206,6 +343,17 @@ def _external_cortex_mask(stage_out: Path) -> Optional[Path]:
 
 
 def _external_motor_masks(stage_out: Path) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_out: etapa temporal o clínica del estudio, por ejemplo Antes o Después. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     morf = stage_out / "morfometria"
     patterns = ["freesurfer_corteza_motora_*.nii.gz", "internal_corteza_motora_*.nii.gz"]
     out=[]
@@ -215,6 +363,24 @@ def _external_motor_masks(stage_out: Path) -> list[Path]:
 
 
 def _external_motor_function_coupling(cfg: PipelineConfig, subject: str, stage: str, stage_out: Path, out_dir: Path, log_file: Path) -> list[dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - stage_out: etapa temporal o clínica del estudio, por ejemplo Antes o Después. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "external motor function coupling" dentro del módulo de análisis
+    #     estructura-función entre anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[dict].
+    # -----------------------------------------------------------------------------
     rows=[]
     maps_root=stage_out/"mapas"
     map_masks=[p for p in _list_files(maps_root, ["*_mask_p95.nii.gz"]) if "p95" in p.name.lower()]
@@ -251,6 +417,24 @@ def _external_motor_function_coupling(cfg: PipelineConfig, subject: str, stage: 
     return rows
 
 def _active_cortex_from_maps(cfg: PipelineConfig, subject: str, stage: str, stage_out: Path, out_dir: Path, log_file: Path) -> list[dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - stage_out: etapa temporal o clínica del estudio, por ejemplo Antes o Después. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "active cortex from maps" dentro del módulo de análisis estructura-función
+    #     entre anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[dict].
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     rows: list[dict] = []
     res_root = stage_out / "resonancias"
@@ -304,6 +488,24 @@ def _active_cortex_from_maps(cfg: PipelineConfig, subject: str, stage: str, stag
 
 
 def _motor_ad_function_coupling(cfg: PipelineConfig, subject: str, stage: str, stage_out: Path, out_dir: Path, log_file: Path) -> list[dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - stage_out: etapa temporal o clínica del estudio, por ejemplo Antes o Después. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "motor ad function coupling" dentro del módulo de análisis
+    #     estructura-función entre anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[dict].
+    # -----------------------------------------------------------------------------
     rows: list[dict] = []
     maps_root = stage_out / "mapas"
     res_root = stage_out / "resonancias"
@@ -352,6 +554,22 @@ def _motor_ad_function_coupling(cfg: PipelineConfig, subject: str, stage: str, s
 
 
 def _ad_motor_vs_control(cfg: PipelineConfig, patient: str, stage: str, rows: list[dict], log_file: Path) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - rows: lista de filas o registros tabulares. Tipo esperado/anotado: list[dict].
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "ad motor vs control" dentro del módulo de análisis estructura-función entre
+    #     anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     stage_out = _result_stage_dir(cfg, patient, stage)
     control_stage = stage if (_result_stage_dir(cfg, cfg.control_name, stage) / "resonancias").exists() else "Antes"
     control_out = _result_stage_dir(cfg, cfg.control_name, control_stage)
@@ -377,6 +595,17 @@ def _ad_motor_vs_control(cfg: PipelineConfig, patient: str, stage: str, rows: li
 
 
 def _write_method_note(cfg: PipelineConfig) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "write method note" dentro del módulo de análisis estructura-función entre
+    #     anatomía, máscaras, señales, métricas y resultados multimodales.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     out = cfg.results_root() / "_metodologia_estructura_funcion.md"
     safe_mkdir(out.parent)
     out.write_text(
@@ -402,6 +631,18 @@ def run_structure_function_coupling(cfg: PipelineConfig) -> pd.DataFrame:
     Implementa la recomendación práctica: no inferir volumen cortical desde BOLD solo,
     sino medir regiones anatómicas/AD y cruzarlas con activación funcional.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Acoplamiento estructura-función basado en T1,
+    #     mapas funcionales y AD. Implementa la recomendación práctica: no inferir volumen cortical
+    #     desde BOLD solo, sino medir regiones anatómicas/AD y cruzarlas con activación funcio...
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     all_rows: list[dict] = []
     subjects = list(cfg.patients) + [cfg.control_name]
     for subject in subjects:

@@ -206,14 +206,47 @@ class RegionResult:
 
 
 def log(msg: str) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - msg: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "log" dentro del módulo de delimitación de zonas anatómicas, correlación
+    #     local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     print(msg, flush=True)
 
 
 def stamp() -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Ejecuta el bloque "stamp" dentro del módulo de delimitación de zonas anatómicas, correlación
+    #     local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 def sanitize_name(name: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - name: nombre, etiqueta o identificador usado para clasificar una región, archivo o salida.
+    #       Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "sanitize name" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return (
         name.replace("á", "a").replace("é", "e").replace("í", "i")
         .replace("ó", "o").replace("ú", "u").replace("ñ", "n")
@@ -221,14 +254,46 @@ def sanitize_name(name: str) -> str:
 
 
 def patient_number(patient: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "patient number" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return "".join(ch for ch in str(patient) if ch.isdigit()) or str(patient).replace(" ", "_")
 
 
 def subject_id_for(patient: str, stage: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "subject id for" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return f"{patient.replace(' ', '')}_{stage}"
 
 
 def first_existing(paths: Iterable[Path]) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - paths: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Iterable[Path].
+    # Proceso:
+    #   - Ejecuta el bloque "first existing" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     for p in paths:
         if p and Path(p).exists():
             return Path(p)
@@ -236,6 +301,17 @@ def first_existing(paths: Iterable[Path]) -> Optional[Path]:
 
 
 def t1_candidates(stage_dir: Optional[Path]) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Optional[Path].
+    # Proceso:
+    #   - Ejecuta el bloque "t1 candidates" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     if stage_dir is None:
         return []
     stage_dir = Path(stage_dir)
@@ -274,16 +350,54 @@ def t1_candidates(stage_dir: Optional[Path]) -> list[Path]:
 
 
 def load_nifti(path: Path) -> tuple[nib.Nifti1Image, np.ndarray]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Opera sobre archivos NIfTI respetando matriz afín, encabezado y espacio anatómico del
+    #     paciente.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: tuple[nib.Nifti1Image, np.ndarray].
+    # -----------------------------------------------------------------------------
     img = nib.load(str(path))
     return img, np.asarray(img.dataobj)
 
 
 def voxel_volume_mm3(img: nib.Nifti1Image) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - img: imagen cargada en memoria, normalmente objeto NIfTI o arreglo asociado. Tipo
+    #       esperado/anotado: nib.Nifti1Image.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: float.
+    # -----------------------------------------------------------------------------
     zooms = img.header.get_zooms()[:3]
     return float(zooms[0] * zooms[1] * zooms[2])
 
 
 def save_nifti(reference_img: nib.Nifti1Image, data: np.ndarray, path: Path, dtype=np.float32) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - reference_img: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: nib.Nifti1Image.
+    #   - data: datos de entrada en memoria, tabla, arreglo o estructura compuesta. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - dtype: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos.
+    # Proceso:
+    #   - Opera sobre archivos NIfTI respetando matriz afín, encabezado y espacio anatómico del
+    #     paciente.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     path.parent.mkdir(parents=True, exist_ok=True)
     header = reference_img.header.copy()
     header.set_data_dtype(dtype)
@@ -294,6 +408,21 @@ def save_nifti(reference_img: nib.Nifti1Image, data: np.ndarray, path: Path, dty
 
 
 def geometry_matches(a: nib.Nifti1Image, b: nib.Nifti1Image, atol: float = 1e-3) -> bool:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - a: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: nib.Nifti1Image.
+    #   - b: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: nib.Nifti1Image.
+    #   - atol: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Ejecuta el bloque "geometry matches" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: bool.
+    # -----------------------------------------------------------------------------
     return tuple(a.shape[:3]) == tuple(b.shape[:3]) and np.allclose(a.affine, b.affine, atol=atol)
 
 
@@ -306,6 +435,21 @@ def geometry_matches(a: nib.Nifti1Image, b: nib.Nifti1Image, atol: float = 1e-3)
 
 
 def run_realtime(cmd: list[str], log_path: Path, env: Optional[dict[str, str]] = None) -> int:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cmd: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: list[str].
+    #   - log_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - env: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Optional[dict[str, str]].
+    # Proceso:
+    #   - Ejecuta el bloque "run realtime" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: int.
+    # -----------------------------------------------------------------------------
     log_path.parent.mkdir(parents=True, exist_ok=True)
     log("\n" + "─" * 92)
     log("COMANDO: " + " ".join(str(x) for x in cmd))
@@ -335,6 +479,21 @@ def run_realtime(cmd: list[str], log_path: Path, env: Optional[dict[str, str]] =
 
 def resample_label_to_t1_with_nibabel(source_label: Path, t1_path: Path, output_path: Path) -> Path:
     """Remuestreo categórico por vecino más cercano usando las afines del archivo."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - source_label: etiqueta o identificador anatómico/funcional usado para clasificar resultados.
+    #       Tipo esperado/anotado: Path.
+    #   - t1_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - output_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Alinea señales en una base temporal común mediante interpolación para hacer comparables sus
+    #     muestras.
+    # Salida:
+    #   - señal, arreglo o volumen transformado y listo para análisis posterior. Tipo de retorno
+    #     anotado: Path.
+    # -----------------------------------------------------------------------------
     t1_img = nib.load(str(t1_path))
     source_img = nib.load(str(source_label))
     resampled = resample_from_to(source_img, (t1_img.shape[:3], t1_img.affine), order=0)
@@ -350,6 +509,23 @@ def export_label_with_freesurfer_or_nibabel(source_label: Path, t1_path: Path, o
     relación geométrica esperada en sujetos generados por recon-all. Si el
     comando no está disponible o falla, se usa remuestreo NIfTI/MGZ con nibabel.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - source_label: etiqueta o identificador anatómico/funcional usado para clasificar resultados.
+    #       Tipo esperado/anotado: Path.
+    #   - t1_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - output_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - log_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Usa salidas de FreeSurfer, etiquetas anatómicas y estadísticas corticales/subcorticales para
+    #     extraer métricas en espacio nativo.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     output_path.parent.mkdir(parents=True, exist_ok=True)
     mri_vol2vol = shutil.which("mri_vol2vol", path=os.environ.get("PATH"))
     if mri_vol2vol:
@@ -377,6 +553,23 @@ def ensure_freesurfer_labels_in_t1(
     output_dir: Path,
 ) -> tuple[Path, Path]:
     """Garantiza aparc_aseg_T1.nii.gz y aseg_T1.nii.gz para generar las 19 zonas."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - t1_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - output_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado:
+    #       Path.
+    # Proceso:
+    #   - Usa salidas de FreeSurfer, etiquetas anatómicas y estadísticas corticales/subcorticales para
+    #     extraer métricas en espacio nativo.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: tuple[Path, Path].
+    # -----------------------------------------------------------------------------
     source_dir = output_dir / "fuentes"
     source_dir.mkdir(parents=True, exist_ok=True)
     aparc_t1 = source_dir / "aparc_aseg_T1.nii.gz"
@@ -424,10 +617,36 @@ def ensure_freesurfer_labels_in_t1(
 
 
 def mask_from_labels(seg: np.ndarray, labels: Iterable[int]) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - seg: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - labels: conjunto de etiquetas anatómicas, funcionales o tabulares. Tipo esperado/anotado:
+    #       Iterable[int].
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     return np.isin(seg, list(labels))
 
 
 def world_coords(mask: np.ndarray, affine: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "world coords" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     ijk = np.argwhere(mask)
     if len(ijk) == 0:
         return np.empty((0, 3), dtype=np.float32)
@@ -435,6 +654,17 @@ def world_coords(mask: np.ndarray, affine: np.ndarray) -> np.ndarray:
 
 
 def union_masks(*masks: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - masks: máscara binaria o etiquetada asociada a una región anatómica, funcional o de calidad.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     result = np.zeros(masks[0].shape, dtype=bool)
     for m in masks:
         result |= m.astype(bool)
@@ -442,6 +672,19 @@ def union_masks(*masks: np.ndarray) -> np.ndarray:
 
 
 def estimate_midline_x(mask: np.ndarray, affine: np.ndarray) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "estimate midline x" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: float.
+    # -----------------------------------------------------------------------------
     coords = world_coords(mask, affine)
     if len(coords) == 0:
         return 0.0
@@ -450,6 +693,25 @@ def estimate_midline_x(mask: np.ndarray, affine: np.ndarray) -> float:
 
 
 def axis_quantile_mask(mask: np.ndarray, affine: np.ndarray, axis: int, keep: str, q: float) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - axis: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: int.
+    #   - keep: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    #   - q: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     coords = world_coords(mask, affine)
     if len(coords) == 0:
         return np.zeros(mask.shape, dtype=bool)
@@ -471,6 +733,25 @@ def axis_quantile_mask(mask: np.ndarray, affine: np.ndarray, axis: int, keep: st
 
 
 def hemispheric_split(mask: np.ndarray, affine: np.ndarray, side: str, midline_x: float, tol: float = 2.0) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: str.
+    #   - midline_x: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    #   - tol: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Ejecuta el bloque "hemispheric split" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     coords = world_coords(mask, affine)
     if len(coords) == 0:
         return np.zeros(mask.shape, dtype=bool)
@@ -485,6 +766,25 @@ def hemispheric_split(mask: np.ndarray, affine: np.ndarray, side: str, midline_x
 
 
 def medial_fraction(mask: np.ndarray, affine: np.ndarray, side: str, midline_x: float, fraction: float) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: str.
+    #   - midline_x: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    #   - fraction: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Ejecuta el bloque "medial fraction" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     coords = world_coords(mask, affine)
     if len(coords) == 0:
         return np.zeros(mask.shape, dtype=bool)
@@ -502,6 +802,25 @@ def medial_fraction(mask: np.ndarray, affine: np.ndarray, side: str, midline_x: 
 
 
 def lateral_fraction(mask: np.ndarray, affine: np.ndarray, side: str, midline_x: float, fraction: float) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - side: lateralidad anatómica o funcional, normalmente derecha o izquierda. Tipo
+    #       esperado/anotado: str.
+    #   - midline_x: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    #   - fraction: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Ejecuta el bloque "lateral fraction" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     coords = world_coords(mask, affine)
     if len(coords) == 0:
         return np.zeros(mask.shape, dtype=bool)
@@ -519,6 +838,23 @@ def lateral_fraction(mask: np.ndarray, affine: np.ndarray, side: str, midline_x:
 
 
 def by_level_medial_band(mask: np.ndarray, affine: np.ndarray, midline_x: float, half_width_mm: float) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - affine: matriz afín que relaciona coordenadas de voxel con coordenadas físicas/espaciales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - midline_x: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    #   - half_width_mm: parámetro de entrada usado por la función para controlar el cálculo o
+    #       suministrar datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Ejecuta el bloque "by level medial band" dentro del módulo de delimitación de zonas
+    #     anatómicas, correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     coords = world_coords(mask, affine)
     if len(coords) == 0:
         return np.zeros(mask.shape, dtype=bool)
@@ -532,6 +868,19 @@ def by_level_medial_band(mask: np.ndarray, affine: np.ndarray, midline_x: float,
 
 
 def write_itksnap_labels(path: Path, regions: Iterable[RegionResult] = ()) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - regions: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Iterable[RegionResult].
+    # Proceso:
+    #   - Ejecuta el bloque "write itksnap labels" dentro del módulo de delimitación de zonas
+    #     anatómicas, correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     lines = [
         "################################################",
         "# ITK-SnAP Label Description File",
@@ -557,6 +906,21 @@ def write_itksnap_labels(path: Path, regions: Iterable[RegionResult] = ()) -> No
 
 
 def build_regions(aparc_seg: np.ndarray, aseg_seg: np.ndarray, ref_img: nib.Nifti1Image) -> list[RegionResult]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - aparc_seg: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - aseg_seg: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - ref_img: imagen o volumen médico que se procesa conservando su geometría espacial. Tipo
+    #       esperado/anotado: nib.Nifti1Image.
+    # Proceso:
+    #   - Ejecuta el bloque "build regions" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: list[RegionResult].
+    # -----------------------------------------------------------------------------
     affine = ref_img.affine
     brain_mask = aseg_seg > 0
     midline_x = estimate_midline_x(brain_mask, affine)
@@ -593,6 +957,23 @@ def build_regions(aparc_seg: np.ndarray, aseg_seg: np.ndarray, ref_img: nib.Nift
     cmap = {name: (rid, col) for name, rid, col in REGION_ORDER}
 
     def add(name: str, mask: np.ndarray, source: str, note: str) -> None:
+        # -----------------------------------------------------------------------------
+        # Entrada:
+        #   - name: nombre, etiqueta o identificador usado para clasificar una región, archivo o salida.
+        #       Tipo esperado/anotado: str.
+        #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+        #       esperado/anotado: np.ndarray.
+        #   - source: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: str.
+        #   - note: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+        #       datos. Tipo esperado/anotado: str.
+        # Proceso:
+        #   - Ejecuta el bloque "add" dentro del módulo de delimitación de zonas anatómicas, correlación
+        #     local Antes/Después y exportación de NIfTI/Excel.
+        # Salida:
+        #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+        #     específica de la función. Tipo de retorno anotado: None.
+        # -----------------------------------------------------------------------------
         rid, col = cmap[name]
         regions.append(RegionResult(name, rid, col, mask.astype(bool), source, note))
 
@@ -656,6 +1037,29 @@ def build_regions(aparc_seg: np.ndarray, aseg_seg: np.ndarray, ref_img: nib.Nift
 
 
 def save_region_masks(
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - project_root: carpeta raíz del proyecto clínico/experimental; contiene datos, resultados y
+    #       recursos comunes. Tipo esperado/anotado: Path.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - subject_id: identificador de paciente/sujeto o carpeta asociada al sujeto. Tipo
+    #       esperado/anotado: str.
+    #   - t1_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - aparc_t1: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - aseg_t1: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    #   - output_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado:
+    #       Path.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     *,
     project_root: Path,
     patient: str,
@@ -787,6 +1191,19 @@ def save_region_masks(
 
 
 def generate_19_zones_for_case(cfg: PipelineConfig, patient: str, stage: str) -> Optional[dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Delimita o resume zonas anatómicas/regionales para obtener métricas por región y facilitar
+    #     análisis comparativo.
+    # Salida:
+    #   - máscaras regionales, métricas por zona, tablas de correlación o rutas de resultados por
+    #     región. Tipo de retorno anotado: Optional[dict].
+    # -----------------------------------------------------------------------------
     subject_dir = cfg.data_root() / patient
     stage_dir = resolve_stage_dir(subject_dir, stage)
     t1_path = first_existing(t1_candidates(stage_dir))
@@ -822,6 +1239,21 @@ def generate_19_zones_for_case(cfg: PipelineConfig, patient: str, stage: str) ->
 
 
 def register_after_to_before(before_path: Path, after_path: Path, output_path: Path) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - before_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - after_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - output_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "register after to before" dentro del módulo de delimitación de zonas
+    #     anatómicas, correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     if output_path.exists():
         log(f"[CORRELACIÓN] Reutilizando registro: {output_path}")
         return output_path
@@ -860,6 +1292,19 @@ def register_after_to_before(before_path: Path, after_path: Path, output_path: P
 
 
 def robust_zscore(data: np.ndarray, mask: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - data: datos de entrada en memoria, tabla, arreglo o estructura compuesta. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "robust zscore" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     vals = data[mask]
     if vals.size == 0:
         raise RuntimeError("La máscara de normalización está vacía.")
@@ -874,6 +1319,23 @@ def robust_zscore(data: np.ndarray, mask: np.ndarray) -> np.ndarray:
 
 
 def local_corr_2d_by_axis(a: np.ndarray, b: np.ndarray, axis: int, window: int) -> tuple[np.ndarray, np.ndarray]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - a: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - b: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - axis: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: int.
+    #   - window: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Ejecuta el bloque "local corr 2d by axis" dentro del módulo de delimitación de zonas
+    #     anatómicas, correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[np.ndarray, np.ndarray].
+    # -----------------------------------------------------------------------------
     if window % 2 == 0:
         raise ValueError("WINDOW_SIZE debe ser impar.")
     if axis == 0:
@@ -903,6 +1365,23 @@ def local_corr_2d_by_axis(a: np.ndarray, b: np.ndarray, axis: int, window: int) 
 
 
 def local_corr_3_planes(a: np.ndarray, b: np.ndarray, mask: np.ndarray, window: int) -> tuple[np.ndarray, np.ndarray, Dict[str, np.ndarray]]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - a: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - b: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    #   - window: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Ejecuta el bloque "local corr 3 planes" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: tuple[np.ndarray, np.ndarray, Dict[str, np.ndarray]].
+    # -----------------------------------------------------------------------------
     plane_maps: Dict[str, np.ndarray] = {}
     valid_maps: Dict[str, np.ndarray] = {}
     for axis, name in [(0, "eje_0"), (1, "eje_1"), (2, "eje_2")]:
@@ -926,12 +1405,44 @@ def local_corr_3_planes(a: np.ndarray, b: np.ndarray, mask: np.ndarray, window: 
 
 
 def safe_pearson(a: np.ndarray, b: np.ndarray) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - a: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - b: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "safe pearson" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: float.
+    # -----------------------------------------------------------------------------
     if a.size < 3 or np.std(a) < 1e-8 or np.std(b) < 1e-8:
         return float("nan")
     return float(pearsonr(a, b).statistic)
 
 
 def region_metrics(before_z: np.ndarray, after_z: np.ndarray, corr_map: np.ndarray, corr_valid: np.ndarray, mask: np.ndarray) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - before_z: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - after_z: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - corr_map: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - corr_valid: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: np.ndarray.
+    #   - mask: máscara binaria o etiquetada que delimita una región anatómica o funcional. Tipo
+    #       esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "region metrics" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     valid = mask & corr_valid & np.isfinite(before_z) & np.isfinite(after_z) & np.isfinite(corr_map)
     n = int(valid.sum())
     if n < 3:
@@ -966,6 +1477,19 @@ def region_metrics(before_z: np.ndarray, after_z: np.ndarray, corr_map: np.ndarr
 
 
 def find_region_mask(roi_root: Path, region: str) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - roi_root: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - region: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     candidates = [
         roi_root / "individuales" / f"{region}.nii",
         roi_root / "individuales" / f"{region}.nii.gz",
@@ -985,6 +1509,18 @@ def find_region_mask(roi_root: Path, region: str) -> Optional[Path]:
 
 
 def compute_before_after_correlation(cfg: PipelineConfig, patient: str) -> Optional[dict]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - patient: identificador del paciente que se procesa. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Calcula similitud o correlación entre señales, volúmenes o regiones para cuantificar
+    #     concordancia Antes/Después.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[dict].
+    # -----------------------------------------------------------------------------
     before_stage = next((s for s in cfg.stages if stage_key(s) == "antes"), "Antes")
     after_stage = next((s for s in cfg.stages if stage_key(s) == "despues"), "Despues")
     if not any(stage_key(s) == "antes" for s in cfg.stages) or not any(stage_key(s) == "despues" for s in cfg.stages):
@@ -1093,6 +1629,15 @@ def compute_before_after_correlation(cfg: PipelineConfig, patient: str) -> Optio
 
 
 def excel_value(v):
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - v: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    # Proceso:
+    #   - Organiza resultados en tablas Excel para revisión, auditoría y comparación entre pacientes,
+    #     etapas o modalidades.
+    # Salida:
+    #   - archivo de reporte, tabla Excel/CSV/Markdown o ruta donde quedó guardado el resumen.
+    # -----------------------------------------------------------------------------
     if v is None:
         return "NO ENCONTRADO"
     if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
@@ -1101,6 +1646,19 @@ def excel_value(v):
 
 
 def style_header(ws, row: int, max_col: int) -> None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - ws: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #   - row: fila de tabla o registro individual de métricas. Tipo esperado/anotado: int.
+    #   - max_col: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Ejecuta el bloque "style header" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     fill = PatternFill("solid", fgColor="1F4E78")
     white = "FFFFFF"
     thin = Side(style="thin", color="C9C9C9")
@@ -1114,6 +1672,19 @@ def style_header(ws, row: int, max_col: int) -> None:
 
 
 def save_workbook(wb: Workbook, path: Path) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - wb: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Workbook.
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "save workbook" dentro del módulo de delimitación de zonas anatómicas,
+    #     correlación local Antes/Después y exportación de NIfTI/Excel.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     path.parent.mkdir(parents=True, exist_ok=True)
     wb.save(path)
     log(f"[EXCEL] Guardado: {path}")
@@ -1121,6 +1692,16 @@ def save_workbook(wb: Workbook, path: Path) -> Path:
 
 
 def build_volume_excel(cfg: PipelineConfig) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Procesa volúmenes médicos conservando geometría, dimensiones, afín y correspondencia espacial.
+    # Salida:
+    #   - volumen, imagen NIfTI, ruta de archivo o métricas derivadas conservando geometría espacial.
+    #     Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     wb = Workbook()
     ws = wb.active
     ws.title = "Volúmenes 19 zonas"
@@ -1153,6 +1734,19 @@ def build_volume_excel(cfg: PipelineConfig) -> Optional[Path]:
 
 
 def build_correlation_excel(cfg: PipelineConfig, reports: list[dict]) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - reports: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list[dict].
+    # Proceso:
+    #   - Calcula similitud o correlación entre señales, volúmenes o regiones para cuantificar
+    #     concordancia Antes/Después.
+    # Salida:
+    #   - archivo de reporte, tabla Excel/CSV/Markdown o ruta donde quedó guardado el resumen. Tipo de
+    #     retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     if not reports:
         return None
     wb = Workbook()
@@ -1216,6 +1810,17 @@ def run_zonas_correlacion_module(cfg: PipelineConfig) -> pd.DataFrame:
     zonas_correlacion`. La delimitación de zonas corre por paciente y etapa. La
     correlación longitudinal se calcula cuando la corrida incluye Antes y Después.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Delimita o resume zonas anatómicas/regionales para obtener métricas por región y facilitar
+    #     análisis comparativo.
+    # Salida:
+    #   - máscaras regionales, métricas por zona, tablas de correlación o rutas de resultados por
+    #     región. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows: list[dict] = []
     correlation_reports: list[dict] = []
 

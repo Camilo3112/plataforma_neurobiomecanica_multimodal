@@ -11,6 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
+Fundamento físico-matemático implementado
 -----------------------------------------
 Compara morfometría del paciente contra referencias externas cuando están
 disponibles. El modelo usa normalización por dominio, diferencias respecto a
@@ -79,6 +80,19 @@ FS_REGION_LABELS = {
 
 
 def _subject_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "subject stage dir" dentro del módulo de extracción morfométrica externa
+    #     desde FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     subject_dir = cfg.data_root() / subject
     if subject == cfg.control_name:
         exact = resolve_stage_dir(subject_dir, stage, fallback_to_subject=False)
@@ -92,6 +106,19 @@ def _subject_stage_dir(cfg: PipelineConfig, subject: str, stage: str) -> Optiona
 
 
 def _candidate_roots(cfg: PipelineConfig, subject: str, stage: str) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "candidate roots" dentro del módulo de extracción morfométrica externa desde
+    #     FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     roots: list[Path] = []
     stage_dir = _subject_stage_dir(cfg, subject, stage)
     if stage_dir:
@@ -113,6 +140,17 @@ def _candidate_roots(cfg: PipelineConfig, subject: str, stage: str) -> list[Path
 
 
 def _subject_tokens(subject: str, stage: str) -> list[str]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "subject tokens" dentro del módulo de extracción morfométrica externa desde
+    #     FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[str].
+    # -----------------------------------------------------------------------------
     s = norm_key(subject)
     compact = re.sub(r"[^a-z0-9]+", "", s)
     stage_norm = norm_key(stage)
@@ -122,6 +160,18 @@ def _subject_tokens(subject: str, stage: str) -> list[str]:
 
 
 def _is_probably_subject_stage_path(path: Path, subject: str, stage: str) -> bool:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Normaliza o resuelve rutas para evitar errores por nombres de carpetas, etapas o convenciones
+    #     del proyecto.
+    # Salida:
+    #   - valor booleano que indica si se cumple la condición evaluada. Tipo de retorno anotado: bool.
+    # -----------------------------------------------------------------------------
     n = norm_key(str(path))
     compact = re.sub(r"[^a-z0-9]+", "", n)
     subject_compact = re.sub(r"[^a-z0-9]+", "", norm_key(subject))
@@ -133,6 +183,19 @@ def _is_probably_subject_stage_path(path: Path, subject: str, stage: str) -> boo
 
 
 def _find_freesurfer_subject_dirs(cfg: PipelineConfig, subject: str, stage: str) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Usa salidas de FreeSurfer, etiquetas anatómicas y estadísticas corticales/subcorticales para
+    #     extraer métricas en espacio nativo.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     out=[]
     for root in _candidate_roots(cfg, subject, stage):
         # Buscar carpetas que parezcan SUBJECTS_DIR/<subject> con mri/stats.
@@ -151,6 +214,19 @@ def _find_freesurfer_subject_dirs(cfg: PipelineConfig, subject: str, stage: str)
 
 
 def _find_first(root: Path, names: list[str]) -> Optional[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - root: carpeta raíz desde donde se buscan datos, módulos o resultados del proyecto. Tipo
+    #       esperado/anotado: Path.
+    #   - names: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: list[str].
+    # Proceso:
+    #   - Ejecuta el bloque "find first" dentro del módulo de extracción morfométrica externa desde
+    #     FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Optional[Path].
+    # -----------------------------------------------------------------------------
     for name in names:
         p = root / name
         if p.exists():
@@ -159,6 +235,19 @@ def _find_first(root: Path, names: list[str]) -> Optional[Path]:
 
 
 def _parse_aparc_stats(path: Path, hemi: str) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    #   - hemi: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "parse aparc stats" dentro del módulo de extracción morfométrica externa
+    #     desde FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows=[]
     if not path.exists():
         return pd.DataFrame()
@@ -189,6 +278,17 @@ def _parse_aparc_stats(path: Path, hemi: str) -> pd.DataFrame:
 
 
 def _fs_stats_motor_summary(fs_dir: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - fs_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "fs stats motor summary" dentro del módulo de extracción morfométrica
+    #     externa desde FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     dfs=[]
     for hemi, fname in [("izquierda", "lh.aparc.stats"), ("derecha", "rh.aparc.stats")]:
         df=_parse_aparc_stats(fs_dir / "stats" / fname, hemi)
@@ -225,6 +325,20 @@ def _fs_stats_motor_summary(fs_dir: Path) -> pd.DataFrame:
 
 
 def _process_fs_aparc_masks(cfg: PipelineConfig, fs_dir: Path, out_dir: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - fs_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa máscaras binarias/etiquetadas para delimitar regiones, calcular solapamientos o
+    #     extraer métricas regionales.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     mri_dir = fs_dir / "mri"
     aparc = _find_first(mri_dir, ["aparc+aseg.mgz", "aparc+aseg.nii.gz", "aparc+aseg.nii"])
@@ -278,6 +392,22 @@ def _process_fs_aparc_masks(cfg: PipelineConfig, fs_dir: Path, out_dir: Path) ->
 
 
 def _process_freesurfer(cfg: PipelineConfig, subject: str, stage: str, out_dir: Path, log_file: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Usa salidas de FreeSurfer, etiquetas anatómicas y estadísticas corticales/subcorticales para
+    #     extraer métricas en espacio nativo.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows=[]
     fs_dirs=_find_freesurfer_subject_dirs(cfg, subject, stage)
     if fs_dirs:
@@ -297,6 +427,19 @@ def _process_freesurfer(cfg: PipelineConfig, subject: str, stage: str, out_dir: 
 
 
 def _find_cat12_files(cfg: PipelineConfig, subject: str, stage: str) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "find cat12 files" dentro del módulo de extracción morfométrica externa
+    #     desde FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     files=[]
     for root in _candidate_roots(cfg, subject, stage):
         for dname in cfg.cat12_dirnames:
@@ -311,6 +454,17 @@ def _find_cat12_files(cfg: PipelineConfig, subject: str, stage: str) -> list[Pat
 
 
 def _try_parse_float(text: str) -> Optional[float]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - text: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "try parse float" dentro del módulo de extracción morfométrica externa desde
+    #     FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Optional[float].
+    # -----------------------------------------------------------------------------
     try:
         return float(str(text).strip().replace(",", "."))
     except Exception:
@@ -318,6 +472,17 @@ def _try_parse_float(text: str) -> Optional[float]:
 
 
 def _parse_cat12_xml(path: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "parse cat12 xml" dentro del módulo de extracción morfométrica externa desde
+    #     FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows=[]
     try:
         root=ET.parse(path).getroot()
@@ -350,6 +515,22 @@ def _parse_cat12_xml(path: Path) -> pd.DataFrame:
 
 
 def _process_cat12(cfg: PipelineConfig, subject: str, stage: str, out_dir: Path, log_file: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "process cat12" dentro del módulo de extracción morfométrica externa desde
+    #     FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     _, nib, _ = _require_neuro_libs()
     files=_find_cat12_files(cfg, subject, stage)
     if files:
@@ -384,6 +565,19 @@ def _process_cat12(cfg: PipelineConfig, subject: str, stage: str, out_dir: Path,
 
 
 def _find_fmriprep_files(cfg: PipelineConfig, subject: str, stage: str) -> list[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "find fmriprep files" dentro del módulo de extracción morfométrica externa
+    #     desde FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     files=[]
     for root in _candidate_roots(cfg, subject, stage):
         for dname in cfg.fmriprep_dirnames:
@@ -395,6 +589,22 @@ def _find_fmriprep_files(cfg: PipelineConfig, subject: str, stage: str) -> list[
 
 
 def _process_fmriprep(cfg: PipelineConfig, subject: str, stage: str, out_dir: Path, log_file: Path) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "process fmriprep" dentro del módulo de extracción morfométrica externa
+    #     desde FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     files=_find_fmriprep_files(cfg, subject, stage)
     if files:
         save_dataframe(pd.DataFrame([{"fmriprep_file": str(p), "name": p.name} for p in files]), out_dir / "fmriprep_archivos_detectados.csv")
@@ -422,10 +632,30 @@ def _process_fmriprep(cfg: PipelineConfig, subject: str, stage: str, out_dir: Pa
 
 
 def _stage_label(stage: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "stage label" dentro del módulo de extracción morfométrica externa desde
+    #     FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return norm_key(stage).replace(" ", "_").replace("é", "e")
 
 
 def _subject_label(subject: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "subject label" dentro del módulo de extracción morfométrica externa desde
+    #     FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     return norm_key(subject).replace(" ", "_").replace("-", "_")
 
 
@@ -436,6 +666,18 @@ def prepare_derivatives_workspace(cfg: PipelineConfig) -> Path:
     solo crea carpetas limpias para que el usuario pegue ahí las salidas cuando las tenga.
     Si no hay derivados, el pipeline continúa con el método heurístico interno.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Crea una estructura de trabajo para derivados
+    #     externos. FreeSurfer, CAT12 y fMRIPrep NO se calculan dentro de esta suite. Esta función solo
+    #     crea carpetas limpias para que el usuario pegue ahí las salidas cuando las tenga...
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     base = cfg.results_root() / "derivados_externos"
     safe_mkdir(base)
     subjects = list(cfg.patients) + [cfg.control_name]
@@ -480,6 +722,17 @@ def prepare_derivatives_workspace(cfg: PipelineConfig) -> Path:
 
 
 def _write_derivatives_instructions(cfg: PipelineConfig) -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Ejecuta el bloque "write derivatives instructions" dentro del módulo de extracción
+    #     morfométrica externa desde FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+    # Salida:
+    #   - archivo escrito en disco, ruta de salida, registro de log o confirmación implícita mediante
+    #     ausencia de error. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     out=cfg.results_root() / "_instrucciones_derivados_externos.md"
     safe_mkdir(out.parent)
     out.write_text(
@@ -519,6 +772,18 @@ def run_external_morphometry_integration(cfg: PipelineConfig) -> pd.DataFrame:
     Si las carpetas no existen, crea una plantilla en resultados/derivados_externos
     y continúa sin bloquear el resto del pipeline.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Integra derivados externos de FreeSurfer,
+    #     CAT12 y fMRIPrep si existen. Si las carpetas no existen, crea una plantilla en
+    #     resultados/derivados_externos y continúa sin bloquear el resto del pipeline.
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     workspace = prepare_derivatives_workspace(cfg)
     all_rows=[]
     ckpt=CheckpointManager(cfg)
@@ -538,6 +803,20 @@ def run_external_morphometry_integration(cfg: PipelineConfig) -> pd.DataFrame:
                 inputs.append(root)
 
             def _work(subject=subject, stage=stage, out_dir=out_dir, log_file=log_file):
+                # -----------------------------------------------------------------------------
+                # Entrada:
+                #   - subject: identificador del sujeto o paciente a procesar.
+                #   - stage: etapa clínica o temporal, por ejemplo Antes o Después.
+                #   - out_dir: carpeta de salida donde se escriben archivos del módulo.
+                #   - log_file: parámetro de entrada usado por la función para controlar el cálculo o
+                #       suministrar datos.
+                # Proceso:
+                #   - Ejecuta el bloque "work" dentro del módulo de extracción morfométrica externa
+                #     desde FreeSurfer, NIfTI, máscaras y estadísticas anatómicas.
+                # Salida:
+                #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación
+                #     específica de la función.
+                # -----------------------------------------------------------------------------
                 dfs=[]
                 for fn in [_process_freesurfer, _process_cat12, _process_fmriprep]:
                     try:

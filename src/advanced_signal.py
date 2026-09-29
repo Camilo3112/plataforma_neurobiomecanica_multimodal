@@ -51,6 +51,18 @@ from .io_utils import safe_mkdir, save_dataframe
 
 
 def _zscore(y: np.ndarray) -> np.ndarray:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - y: señal numérica de entrada, usualmente un arreglo unidimensional de muestras temporales.
+    #       Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Ejecuta el bloque "zscore" dentro del módulo de procesamiento digital avanzado de señales
+    #     fisiológicas: normalización, análisis tiempo-frecuencia, escalogramas, entropía, coherencia y
+    #     fase.
+    # Salida:
+    #   - señal, arreglo o volumen transformado y listo para análisis posterior. Tipo de retorno
+    #     anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     y = np.asarray(y, dtype=float)
     y = np.nan_to_num(y - np.nanmean(y))
     return y / (np.nanstd(y) + 1e-12)
@@ -62,6 +74,20 @@ def cwt_like_scalogram(y: np.ndarray, scales: np.ndarray) -> np.ndarray:
     Está inspirado en los módulos originales `cwt_engine.py` y `wavelet_3d.py`,
     pero usa una implementación ligera y estable para no romper compatibilidad de SciPy.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - y: señal numérica de entrada, usualmente un arreglo unidimensional de muestras temporales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - scales: arreglo de escalas; cada escala actúa como un nivel de observación para analizar
+    #       detalles finos o patrones amplios. Tipo esperado/anotado: np.ndarray.
+    # Proceso:
+    #   - Normaliza la señal, aplica un filtro Laplaciano de Gaussiana tipo sombrero mexicano en varias
+    #     escalas y calcula energía multiescala para construir un escalograma.
+    # Salida:
+    #   - matriz 2D de energía multiescala con forma aproximada número de escalas × número de muestras
+    #     de la señal; cada fila representa una escala y cada columna un punto temporal. Tipo de retorno
+    #     anotado: np.ndarray.
+    # -----------------------------------------------------------------------------
     y = _zscore(np.asarray(y, dtype=float))
     out = []
     for s in scales:
@@ -71,6 +97,19 @@ def cwt_like_scalogram(y: np.ndarray, scales: np.ndarray) -> np.ndarray:
 
 
 def shannon_entropy(y: np.ndarray, bins: int = 32) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - y: señal numérica de entrada, usualmente un arreglo unidimensional de muestras temporales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - bins: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Calcula una medida de complejidad o irregularidad de la señal a partir de la distribución de
+    #     amplitudes o patrones temporales.
+    # Salida:
+    #   - valor numérico o tabla que resume la complejidad/irregularidad de la señal. Tipo de retorno
+    #     anotado: float.
+    # -----------------------------------------------------------------------------
     y = np.asarray(y, dtype=float)
     y = y[np.isfinite(y)]
     if y.size < 4:
@@ -82,6 +121,19 @@ def shannon_entropy(y: np.ndarray, bins: int = 32) -> float:
 
 
 def multiscale_entropy_curve(y: np.ndarray, max_scale: int = 12) -> pd.DataFrame:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - y: señal numérica de entrada, usualmente un arreglo unidimensional de muestras temporales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - max_scale: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Calcula una medida de complejidad o irregularidad de la señal a partir de la distribución de
+    #     amplitudes o patrones temporales.
+    # Salida:
+    #   - valor numérico o tabla que resume la complejidad/irregularidad de la señal. Tipo de retorno
+    #     anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     y = _zscore(y)
     rows = []
     for scale in range(1, max_scale + 1):
@@ -94,7 +146,20 @@ def multiscale_entropy_curve(y: np.ndarray, max_scale: int = 12) -> pd.DataFrame
 
 
 def hurst_rs(y: np.ndarray, min_window: int = 8) -> float:
-    """Estimación Hurst R/S para señales EMG/DIN."""
+    """Estimación Hurst R/S robusta para señales EMG/DIN."""
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - y: señal numérica de entrada, usualmente un arreglo unidimensional de muestras temporales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - min_window: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: int.
+    # Proceso:
+    #   - Estima persistencia o memoria de largo alcance en la señal mediante análisis de rango
+    #     reescalado.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: float.
+    # -----------------------------------------------------------------------------
     y = _zscore(y)
     n = len(y)
     if n < min_window * 4:
@@ -123,6 +188,20 @@ def hurst_rs(y: np.ndarray, min_window: int = 8) -> float:
 
 
 def spectral_summary(t: np.ndarray, y: np.ndarray, max_freq_hz: float = 20.0) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - t: vector temporal o coordenada de muestreo de la señal. Tipo esperado/anotado: np.ndarray.
+    #   - y: señal numérica de entrada, usualmente un arreglo unidimensional de muestras temporales.
+    #       Tipo esperado/anotado: np.ndarray.
+    #   - max_freq_hz: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Transforma la señal al dominio de frecuencia y resume potencia, distribución espectral y
+    #     componentes dominantes.
+    # Salida:
+    #   - resumen de características espectrales como potencia, frecuencia dominante, centroide o bandas
+    #     relevantes. Tipo de retorno anotado: dict.
+    # -----------------------------------------------------------------------------
     y = _zscore(y)
     if len(t) < 8:
         return {}
@@ -148,6 +227,22 @@ def spectral_summary(t: np.ndarray, y: np.ndarray, max_freq_hz: float = 20.0) ->
 
 
 def coherence_summary(t: np.ndarray, f: np.ndarray, g: np.ndarray, max_freq_hz: float = 20.0) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - t: vector temporal o coordenada de muestreo de la señal. Tipo esperado/anotado: np.ndarray.
+    #   - f: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo esperado/anotado:
+    #       np.ndarray.
+    #   - g: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo esperado/anotado:
+    #       np.ndarray.
+    #   - max_freq_hz: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Evalúa acoplamiento frecuencia a frecuencia entre señales para estimar sincronización o
+    #     relación funcional.
+    # Salida:
+    #   - métrica de acoplamiento, sincronía o relación de fase entre señales. Tipo de retorno anotado:
+    #     dict.
+    # -----------------------------------------------------------------------------
     if len(f) < 16 or len(g) < 16 or len(t) < 16:
         return {}
     n = min(len(f), len(g), len(t))
@@ -167,6 +262,19 @@ def coherence_summary(t: np.ndarray, f: np.ndarray, g: np.ndarray, max_freq_hz: 
 
 
 def phase_locking_value(f: np.ndarray, g: np.ndarray) -> float:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - f: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo esperado/anotado:
+    #       np.ndarray.
+    #   - g: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo esperado/anotado:
+    #       np.ndarray.
+    # Proceso:
+    #   - Analiza la fase de señales o componentes frecuenciales para estimar sincronía, desfase o
+    #     bloqueo de fase.
+    # Salida:
+    #   - métrica de acoplamiento, sincronía o relación de fase entre señales. Tipo de retorno anotado:
+    #     float.
+    # -----------------------------------------------------------------------------
     n = min(len(f), len(g))
     if n < 16:
         return math.nan
@@ -177,6 +285,30 @@ def phase_locking_value(f: np.ndarray, g: np.ndarray) -> float:
 
 
 def plot_advanced_pair(t: np.ndarray, f: np.ndarray, g: np.ndarray, label_f: str, label_g: str, out_dir: Path, base: str, max_freq_hz: float = 20.0) -> dict:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - t: vector temporal o coordenada de muestreo de la señal. Tipo esperado/anotado: np.ndarray.
+    #   - f: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo esperado/anotado:
+    #       np.ndarray.
+    #   - g: señal temporal o arreglo numérico que se analiza, alinea o compara. Tipo esperado/anotado:
+    #       np.ndarray.
+    #   - label_f: etiqueta o identificador anatómico/funcional usado para clasificar resultados. Tipo
+    #       esperado/anotado: str.
+    #   - label_g: etiqueta o identificador anatómico/funcional usado para clasificar resultados. Tipo
+    #       esperado/anotado: str.
+    #   - out_dir: carpeta de salida donde se escriben archivos del módulo. Tipo esperado/anotado: Path.
+    #   - base: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: str.
+    #   - max_freq_hz: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: float.
+    # Proceso:
+    #   - Ejecuta el bloque "plot advanced pair" dentro del módulo de procesamiento digital avanzado de
+    #     señales fisiológicas: normalización, análisis tiempo-frecuencia, escalogramas, entropía,
+    #     coherencia y fase.
+    # Salida:
+    #   - figura, imagen o archivo gráfico guardado para inspección visual. Tipo de retorno anotado:
+    #     dict.
+    # -----------------------------------------------------------------------------
     safe_mkdir(out_dir)
     n = min(len(t), len(f), len(g))
     t, f, g = t[:n], _zscore(f[:n]), _zscore(g[:n])

@@ -11,7 +11,7 @@ Descripción
 Aporta funciones auxiliares al pipeline multimodal de análisis
 neurobiomecánico.
 
-
+Fundamento físico-matemático implementado
 -----------------------------------------
 Consolida métricas multimodales en tablas comparables. El modelo transforma
 datos
@@ -110,11 +110,31 @@ METRIC_EXPLANATIONS: list[tuple[str, str, str]] = [
 
 
 def _stage_alias(stage: str) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage: etapa clínica o temporal, por ejemplo Antes o Después. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "stage alias" dentro del módulo de consolidación tabular de métricas
+    #     heterogéneas generadas por los módulos del pipeline.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     s = str(stage or "").lower().replace("é", "e")
     return "Despues" if "desp" in s or "post" in s else "Antes"
 
 
 def _metric_info(metric: str) -> tuple[str, str]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - metric: métrica cuantitativa que se calcula, filtra o almacena. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "metric info" dentro del módulo de consolidación tabular de métricas
+    #     heterogéneas generadas por los módulos del pipeline.
+    # Salida:
+    #   - métricas cuantitativas de comparación, similitud, diferencia, calidad o cambio longitudinal.
+    #     Tipo de retorno anotado: tuple[str, str].
+    # -----------------------------------------------------------------------------
     key = str(metric or "").lower()
     for pattern, explanation, unit in METRIC_EXPLANATIONS:
         try:
@@ -126,6 +146,16 @@ def _metric_info(metric: str) -> tuple[str, str]:
 
 
 def _is_excluded(path: Path) -> bool:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "is excluded" dentro del módulo de consolidación tabular de métricas
+    #     heterogéneas generadas por los módulos del pipeline.
+    # Salida:
+    #   - valor booleano que indica si se cumple la condición evaluada. Tipo de retorno anotado: bool.
+    # -----------------------------------------------------------------------------
     parts = {p.lower() for p in path.parts}
     if any(x in parts for x in EXCLUDE_DIR_NAMES):
         return True
@@ -134,6 +164,19 @@ def _is_excluded(path: Path) -> bool:
 
 
 def _infer_stage_from_path(subject_root: Path, path: Path) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - subject_root: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Normaliza o resuelve rutas para evitar errores por nombres de carpetas, etapas o convenciones
+    #     del proyecto.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     rel = path.relative_to(subject_root)
     parts = [p.lower().replace("é", "e") for p in rel.parts]
     if any(p in {"despues", "después", "post", "post-qx"} for p in parts):
@@ -146,6 +189,17 @@ def _infer_stage_from_path(subject_root: Path, path: Path) -> str:
 
 
 def _infer_modality_from_path(path: Path) -> str:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Normaliza o resuelve rutas para evitar errores por nombres de carpetas, etapas o convenciones
+    #     del proyecto.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: str.
+    # -----------------------------------------------------------------------------
     parts = [p.lower().replace("í", "i").replace("é", "e") for p in path.parts]
     priority = [
         "biomecanica", "emg", "dinamometria", "tomografia", "mapas", "resonancias",
@@ -162,6 +216,17 @@ def _infer_modality_from_path(path: Path) -> str:
 
 
 def _to_number(value: Any) -> float | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - value: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Any.
+    # Proceso:
+    #   - Ejecuta el bloque "to number" dentro del módulo de consolidación tabular de métricas
+    #     heterogéneas generadas por los módulos del pipeline.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: float | None.
+    # -----------------------------------------------------------------------------
     if value is None:
         return None
     if isinstance(value, (int, float, np.integer, np.floating)):
@@ -178,6 +243,19 @@ def _to_number(value: Any) -> float | None:
 
 
 def _flatten_json(obj: Any, prefix: str = "") -> dict[str, Any]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - obj: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Any.
+    #   - prefix: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Serializa o lee estructuras JSON para preservar metadatos, métricas y trazabilidad del
+    #     procesamiento.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict[str, Any].
+    # -----------------------------------------------------------------------------
     out: dict[str, Any] = {}
     if isinstance(obj, dict):
         for k, v in obj.items():
@@ -194,6 +272,17 @@ def _flatten_json(obj: Any, prefix: str = "") -> dict[str, Any]:
 
 
 def _read_csv_rows(path: Path) -> tuple[list[dict], list[dict]]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "read csv rows" dentro del módulo de consolidación tabular de métricas
+    #     heterogéneas generadas por los módulos del pipeline.
+    # Salida:
+    #   - datos cargados en memoria, por ejemplo imagen, tabla, señal, JSON o estructura auxiliar. Tipo
+    #     de retorno anotado: tuple[list[dict], list[dict]].
+    # -----------------------------------------------------------------------------
     try:
         df = pd.read_csv(path)
     except Exception:
@@ -225,6 +314,17 @@ def _read_csv_rows(path: Path) -> tuple[list[dict], list[dict]]:
 
 
 def _read_json_rows(path: Path) -> tuple[list[dict], list[dict], list[dict]]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - path: ruta de archivo o carpeta sobre la que se realiza lectura, escritura o validación. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Serializa o lee estructuras JSON para preservar metadatos, métricas y trazabilidad del
+    #     procesamiento.
+    # Salida:
+    #   - datos cargados en memoria, por ejemplo imagen, tabla, señal, JSON o estructura auxiliar. Tipo
+    #     de retorno anotado: tuple[list[dict], list[dict], list[dict]].
+    # -----------------------------------------------------------------------------
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
         flat = _flatten_json(data)
@@ -247,6 +347,17 @@ def _read_json_rows(path: Path) -> tuple[list[dict], list[dict], list[dict]]:
 
 
 def _iter_metric_files(subject_root: Path) -> Iterable[Path]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - subject_root: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Ejecuta el bloque "iter metric files" dentro del módulo de consolidación tabular de métricas
+    #     heterogéneas generadas por los módulos del pipeline.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Iterable[Path].
+    # -----------------------------------------------------------------------------
     if not subject_root.exists():
         return []
     files = []
@@ -258,6 +369,18 @@ def _iter_metric_files(subject_root: Path) -> Iterable[Path]:
 
 
 def consolidate_subject_metrics(cfg: PipelineConfig, subject: str) -> dict[str, Any]:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    #   - subject: identificador del sujeto o paciente a procesar. Tipo esperado/anotado: str.
+    # Proceso:
+    #   - Ejecuta el bloque "consolidate subject metrics" dentro del módulo de consolidación tabular de
+    #     métricas heterogéneas generadas por los módulos del pipeline.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: dict[str, Any].
+    # -----------------------------------------------------------------------------
     subject_root = cfg.results_root() / subject
     out_dir = subject_root / "consolidado"
     safe_mkdir(out_dir)
@@ -389,6 +512,18 @@ def run_patient_consolidation(cfg: PipelineConfig) -> pd.DataFrame:
     ambas etapas quedan consolidadas porque se leen desde resultados/sano/Antes y
     resultados/sano/Despues.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Crea CSV consolidados por sujeto con todas
+    #     las métricas generadas. Incluye pacientes seleccionados y control sano. Si el sano tiene Antes
+    #     y Despues, ambas etapas quedan consolidadas porque se leen desde resultados/sano/A...
+    # Salida:
+    #   - resultado del proceso, reporte, métricas, archivos generados o estructura de resumen del
+    #     módulo. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     rows = []
     subjects = list(cfg.patients) + [cfg.control_name]
     for subject in subjects:

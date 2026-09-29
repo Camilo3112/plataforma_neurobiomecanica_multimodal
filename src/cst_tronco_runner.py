@@ -55,10 +55,32 @@ from .brainstem_freesurfer import run_brainstem_segmentation
 
 
 def _module_root() -> Path:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - sin argumentos explícitos; utiliza constantes del módulo, variables de entorno o estado
+    #       interno disponible.
+    # Proceso:
+    #   - Ejecuta el bloque "module root" dentro del módulo de ejecución del módulo de tractografía de
+    #     vía corticoespinal y tronco encefálico.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: Path.
+    # -----------------------------------------------------------------------------
     return Path(__file__).resolve().parents[1] / "modulos" / "modulo_CST_tronco_integracion_completa"
 
 
 def _first_existing(paths: Iterable[Path]) -> Path | None:
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - paths: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Iterable[Path].
+    # Proceso:
+    #   - Ejecuta el bloque "first existing" dentro del módulo de ejecución del módulo de tractografía
+    #     de vía corticoespinal y tronco encefálico.
+    # Salida:
+    #   - ruta, archivo, carpeta, objeto encontrado o None si no existe un candidato válido. Tipo de
+    #     retorno anotado: Path | None.
+    # -----------------------------------------------------------------------------
     for p in paths:
         if p.exists():
             return p
@@ -78,6 +100,19 @@ def _t1_candidates(stage_dir: Path) -> list[Path]:
     Por eso se priorizan rutas conocidas y después se hace una búsqueda
     recursiva dentro de carpetas de resultados funcionales y resonancia.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Busca la referencia anatómica T1 ya
+    #     reformateada del paciente. En los datos reales el archivo puede llamarse `rT1.nii` o
+    #     `rAnatomico.nii` y puede estar en rutas distintas, por ejemplo: -
+    #     ResultadosFuncional/REFORMATEO/rA...
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     stage_dir = Path(stage_dir)
 
     explicit = [
@@ -164,6 +199,17 @@ def _dwi_dicom_candidates(stage_dir: Path) -> list[Path]:
     Se usa una lista amplia porque la organización del resonador puede variar
     entre pacientes y etapas. dcm2niix escanea recursivamente la carpeta dada.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - stage_dir: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Inspecciona metadatos DICOM para ordenar cortes, clasificar series y seleccionar estudios
+    #     relevantes.
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: list[Path].
+    # -----------------------------------------------------------------------------
     return [
         stage_dir / "RESONANCIA",
         stage_dir / "Resonancia",
@@ -181,6 +227,17 @@ def _mkdir_tree_tractografia(out_base: Path) -> None:
     Así, aunque falte DWI, rT1 o falle el cálculo, queda una carpeta trazable
     con logs y un estado en resumen_modulo_cst_tronco.csv.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - out_base: parámetro de entrada usado por la función para controlar el cálculo o suministrar
+    #       datos. Tipo esperado/anotado: Path.
+    # Proceso:
+    #   - Procesa streamlines de tractografía, conserva geometría espacial y deriva salidas compatibles
+    #     con análisis o visualización.
+    # Salida:
+    #   - tractografía, máscaras, mapas de densidad/RGB, reportes o rutas asociadas a la vía
+    #     corticoespinal. Tipo de retorno anotado: None.
+    # -----------------------------------------------------------------------------
     for rel in [
         ".",
         "logs_cst_tronco",
@@ -201,6 +258,24 @@ def _run_subprocess(cmd: list[str], *, cwd: Path, env: dict[str, str], log_path:
     imprime recon-all, segment_subregions, dcm2niix o los scripts Python se ve
     en pantalla y también queda guardado.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cmd: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: list[str].
+    #   - cwd: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: Path.
+    #   - env: parámetro de entrada usado por la función para controlar el cálculo o suministrar datos.
+    #       Tipo esperado/anotado: dict[str, str].
+    #   - log_path: ruta de archivo/carpeta usada para localizar entradas o guardar salidas. Tipo
+    #       esperado/anotado: Path.
+    # Proceso:
+    #   - Aplica el procedimiento descrito por la función: Ejecuta un comando mostrando el avance en
+    #     consola y guardando log. En versiones anteriores el proceso corría, pero la salida quedaba
+    #     solo en el archivo de log. Para recon-all eso era confuso porque podía tardar horas sin...
+    # Salida:
+    #   - valor calculado, estructura de resultados, tabla, ruta o None según la operación específica de
+    #     la función. Tipo de retorno anotado: int.
+    # -----------------------------------------------------------------------------
     safe_mkdir(log_path.parent)
     print("", flush=True)
     print("============================================================", flush=True)
@@ -245,6 +320,17 @@ def run_cst_tronco_module(cfg: PipelineConfig) -> pd.DataFrame:
     Esta función no corre por defecto en `--only todo` porque FreeSurfer/recon-all
     puede tardar horas. Se ejecuta con `--only cst_tronco`.
     """
+    # -----------------------------------------------------------------------------
+    # Entrada:
+    #   - cfg: configuración del pipeline con rutas, pacientes, etapas, opciones de ejecución y
+    #       parámetros del módulo. Tipo esperado/anotado: PipelineConfig.
+    # Proceso:
+    #   - Coordina la reconstrucción o visualización de la vía corticoespinal usando tractografía y
+    #     waypoints anatómicos.
+    # Salida:
+    #   - tractografía, máscaras, mapas de densidad/RGB, reportes o rutas asociadas a la vía
+    #     corticoespinal. Tipo de retorno anotado: pd.DataFrame.
+    # -----------------------------------------------------------------------------
     module_root = _module_root()
     cst_script = module_root / "03_cst_visualizacion" / "FINAL_V4_CORONAL" / "extraer_visualizar_cst_colores_V4_coronal.py"
     tract_script = module_root / "03_tractografia_propia" / "tractografia_propia_T1_atlas_motor_linux.py"
