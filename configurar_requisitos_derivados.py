@@ -50,6 +50,16 @@ FMRIPREP_DOCS = "https://fmriprep.org/en/stable/usage.html"
 
 
 def ask(prompt: str, default: str = "") -> str:
+    # Entrada:
+    #   - prompt: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: str. Modo: posicional.
+    #   - default: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: str. Modo: posicional.
+    # Proceso:
+    #   - Ejecuta la rutina `ask` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `str`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     suffix = f" [{default}]" if default else ""
     try:
         value = input(f"{prompt}{suffix}: ").strip()
@@ -59,6 +69,16 @@ def ask(prompt: str, default: str = "") -> str:
 
 
 def yes(prompt: str, default: bool = True) -> bool:
+    # Entrada:
+    #   - prompt: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: str. Modo: posicional.
+    #   - default: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: bool. Modo: posicional.
+    # Proceso:
+    #   - Ejecuta la rutina `yes` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `bool`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     d = "s" if default else "n"
     ans = ask(prompt + " (s/n)", d).lower()
     return ans in {"s", "si", "sí", "y", "yes", "1", "true"}
@@ -73,6 +93,15 @@ def run(cmd: list[str], check: bool = False) -> int:
 
 
 def docker_ok() -> bool:
+    # Entrada:
+    #   - no recibe argumentos directos; utiliza constantes, estado global controlado o recursos definidos en su contexto.
+    # Proceso:
+    #   - Ejecuta la rutina `docker_ok` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `bool`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     if shutil.which("docker") is None:
         return False
     try:
@@ -83,6 +112,15 @@ def docker_ok() -> bool:
 
 
 def is_valid_license(path: Path) -> bool:
+    # Entrada:
+    #   - path: ruta o archivo de entrada/salida; debe apuntar a un recurso válido dentro del proyecto o del sistema. Tipo declarado: Path. Modo: posicional.
+    # Proceso:
+    #   - Ejecuta la rutina `is_valid_license` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `bool`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     if not path.exists() or not path.is_file():
         return False
     try:
@@ -96,6 +134,15 @@ def is_valid_license(path: Path) -> bool:
 
 
 def main() -> int:
+    # Entrada:
+    #   - no recibe argumentos directos; utiliza constantes, estado global controlado o recursos definidos en su contexto.
+    # Proceso:
+    #   - Coordina la ejecución de una o varias etapas del pipeline, conectando configuración, datos y módulos especializados.
+    #   - El fundamento es mantener un flujo reproducible donde cada sección genera salidas verificables para análisis posterior.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `int`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     print("=" * 90)
     print("CONFIGURAR REQUISITOS PARA DERIVADOS REALES: FreeSurfer / fMRIPrep")
     print("=" * 90)

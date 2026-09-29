@@ -243,6 +243,15 @@ SECTION_CATALOG = {
 
 
 def print_section_catalog() -> None:
+    # Entrada:
+    #   - no recibe argumentos directos; utiliza constantes, estado global controlado o recursos definidos en su contexto.
+    # Proceso:
+    #   - Ejecuta la rutina `print_section_catalog` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - no retorna un valor principal explícito; su efecto se refleja en archivos generados, cambios de estado, impresión de reportes o coordinación del flujo.
+    #   - Si la función encuentra errores, puede detener la ejecución o propagar excepciones según la lógica interna.
+
     """Imprime el catálogo profesional de secciones disponibles para ejecución."""
     print("\n" + "=" * 100)
     print("SECCIONES DISPONIBLES DEL PIPELINE")
@@ -262,6 +271,15 @@ def print_section_catalog() -> None:
 
 
 def print_terminal_examples() -> None:
+    # Entrada:
+    #   - no recibe argumentos directos; utiliza constantes, estado global controlado o recursos definidos en su contexto.
+    # Proceso:
+    #   - Ejecuta la rutina `print_terminal_examples` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - no retorna un valor principal explícito; su efecto se refleja en archivos generados, cambios de estado, impresión de reportes o coordinación del flujo.
+    #   - Si la función encuentra errores, puede detener la ejecución o propagar excepciones según la lógica interna.
+
     """Imprime comandos listos para copiar en la terminal integrada de Visual Studio Code."""
     root = "/home/humath/Escritorio"
     repo = "/home/humath/Escritorio/plataforma_neurobiomecanica_multimodal-main"
@@ -298,6 +316,15 @@ def print_terminal_examples() -> None:
 
 
 def normalize_patient_token(token: str) -> str:
+    # Entrada:
+    #   - token: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: str. Modo: posicional.
+    # Proceso:
+    #   - Ejecuta la rutina `normalize_patient_token` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `str`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     """Convierte entradas como '3', 'paciente3' o 'paciente 7' a carpeta estándar."""
     t = str(token or "").strip().strip(",;")
     if not t:
@@ -316,6 +343,15 @@ def normalize_patient_token(token: str) -> str:
 
 
 def normalize_patients(values: Iterable[str] | str | None) -> tuple[str, ...]:
+    # Entrada:
+    #   - values: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: Iterable[str] | str | None. Modo: posicional.
+    # Proceso:
+    #   - Ejecuta la rutina `normalize_patients` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `tuple[str, ...]`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     """Normaliza listas separadas por espacios, comas o punto y coma."""
     raw = " ".join(str(v) for v in values) if isinstance(values, (list, tuple)) else str(values or "")
     raw = re.sub(r"paciente\s*(\d+)", r"\1", raw, flags=re.IGNORECASE)
@@ -329,6 +365,15 @@ def normalize_patients(values: Iterable[str] | str | None) -> tuple[str, ...]:
 
 
 def normalize_sections(values: Iterable[str] | str | None) -> tuple[str, ...]:
+    # Entrada:
+    #   - values: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: Iterable[str] | str | None. Modo: posicional.
+    # Proceso:
+    #   - Ejecuta la rutina `normalize_sections` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `tuple[str, ...]`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     """Convierte nombres cortos de sección a los nombres internos del pipeline."""
     raw = " ".join(str(v) for v in values) if isinstance(values, (list, tuple)) else str(values or "")
     tokens = [x.strip().lower() for x in re.split(r"[,;\s]+", raw) if x.strip()]
@@ -345,6 +390,16 @@ def normalize_sections(values: Iterable[str] | str | None) -> tuple[str, ...]:
 
 
 def prompt_list(prompt: str, default: str) -> str:
+    # Entrada:
+    #   - prompt: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: str. Modo: posicional.
+    #   - default: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: str. Modo: posicional.
+    # Proceso:
+    #   - Ejecuta la rutina `prompt_list` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `str`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     """Lectura interactiva segura para terminal o ejecución redireccionada."""
     try:
         value = input(f"{prompt} [{default}]: ").strip()
@@ -354,6 +409,15 @@ def prompt_list(prompt: str, default: str) -> str:
 
 
 def discover_patients(data_root: Path) -> tuple[str, ...]:
+    # Entrada:
+    #   - data_root: tabla o estructura de datos; contiene mediciones, características o registros para procesar/exportar. Tipo declarado: Path. Modo: posicional.
+    # Proceso:
+    #   - Localiza, lee o valida recursos de entrada antes de enviarlos al pipeline principal.
+    #   - El fundamento es asegurar trazabilidad y consistencia de rutas, archivos y datos antes del análisis.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `tuple[str, ...]`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     """Detecta carpetas paciente N dentro del directorio de datos."""
     if not data_root.exists():
         return ()
@@ -373,6 +437,15 @@ def discover_patients(data_root: Path) -> tuple[str, ...]:
 
 
 def build_config(args):
+    # Entrada:
+    #   - args: configuración de ejecución; agrupa parámetros, rutas, banderas y opciones del pipeline. Tipo declarado: sin tipo explícito. Modo: posicional.
+    # Proceso:
+    #   - Ejecuta la rutina `build_config` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - retorna un valor calculado por la función; puede ser una ruta, tabla, arreglo, diccionario, métrica o código de estado.
+    #   - La forma exacta de la salida depende de las ramas internas y de los datos disponibles durante la ejecución.
+
     """Crea PipelineConfig con importación diferida para que `setup` no requiera paquetes instalados."""
     from src.config import PipelineConfig
 
@@ -434,6 +507,15 @@ def build_config(args):
 
 
 def maybe_reexec_with_systemd_inhibit(argv: list[str]) -> None:
+    # Entrada:
+    #   - argv: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: list[str]. Modo: posicional.
+    # Proceso:
+    #   - Ejecuta la rutina `maybe_reexec_with_systemd_inhibit` aplicando validaciones, transformaciones y operaciones definidas por su bloque interno.
+    #   - El fundamento depende del módulo donde se ubica: coordinación del pipeline, procesamiento numérico, lectura/escritura o análisis multimodal.
+    # Salida:
+    #   - no retorna un valor principal explícito; su efecto se refleja en archivos generados, cambios de estado, impresión de reportes o coordinación del flujo.
+    #   - Si la función encuentra errores, puede detener la ejecución o propagar excepciones según la lógica interna.
+
     """Evita suspensión durante corridas largas sin depender de `.sh`."""
     if os.environ.get("VCE_SYSTEMD_INHIBITED") == "1":
         return
@@ -465,6 +547,15 @@ def maybe_reexec_with_systemd_inhibit(argv: list[str]) -> None:
 
 
 def find_tractography_dirs(results_root: Path) -> list[Path]:
+    # Entrada:
+    #   - results_root: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: Path. Modo: posicional.
+    # Proceso:
+    #   - Delimita regiones anatómicas, máscaras o tractos usando etiquetas, umbrales, geometría o referencias espaciales.
+    #   - El fundamento es reducir el análisis a regiones de interés con significado anatómico o funcional.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `list[Path]`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     """Encuentra variantes de carpetas de tractografía propia para limpiar."""
     patterns = [
         "tractografia_propia",
@@ -485,6 +576,16 @@ def find_tractography_dirs(results_root: Path) -> list[Path]:
 
 
 def clean_tractography(results_root: Path, *, yes: bool) -> int:
+    # Entrada:
+    #   - results_root: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: Path. Modo: posicional.
+    #   - yes: señal numérica de entrada; usualmente arreglo temporal, vector de muestras o variable biomecánica. Tipo declarado: bool. Modo: keyword-only.
+    # Proceso:
+    #   - Delimita regiones anatómicas, máscaras o tractos usando etiquetas, umbrales, geometría o referencias espaciales.
+    #   - El fundamento es reducir el análisis a regiones de interés con significado anatómico o funcional.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `int`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     """Borra carpetas viejas de tractografía solo si el usuario confirma con --yes."""
     targets = find_tractography_dirs(results_root)
     print("=" * 90)
@@ -518,6 +619,17 @@ def clean_tractography(results_root: Path, *, yes: bool) -> int:
 
 
 def print_run_header(cfg, sections: tuple[str, ...], gpu_status: dict) -> None:
+    # Entrada:
+    #   - cfg: configuración de ejecución; agrupa parámetros, rutas, banderas y opciones del pipeline. Tipo declarado: sin tipo explícito. Modo: posicional.
+    #   - sections: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: tuple[str, ...]. Modo: posicional.
+    #   - gpu_status: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: dict. Modo: posicional.
+    # Proceso:
+    #   - Coordina la ejecución de una o varias etapas del pipeline, conectando configuración, datos y módulos especializados.
+    #   - El fundamento es mantener un flujo reproducible donde cada sección genera salidas verificables para análisis posterior.
+    # Salida:
+    #   - no retorna un valor principal explícito; su efecto se refleja en archivos generados, cambios de estado, impresión de reportes o coordinación del flujo.
+    #   - Si la función encuentra errores, puede detener la ejecución o propagar excepciones según la lógica interna.
+
     """Muestra una cabecera profesional y trazable de la corrida."""
     print("=" * 100)
     print(f"SUITE INTEGRADA VCE v{VERSION}")
@@ -536,6 +648,16 @@ def print_run_header(cfg, sections: tuple[str, ...], gpu_status: dict) -> None:
 
 
 def run_pipeline_sections(cfg, sections: tuple[str, ...]) -> int:
+    # Entrada:
+    #   - cfg: configuración de ejecución; agrupa parámetros, rutas, banderas y opciones del pipeline. Tipo declarado: sin tipo explícito. Modo: posicional.
+    #   - sections: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: tuple[str, ...]. Modo: posicional.
+    # Proceso:
+    #   - Coordina la ejecución de una o varias etapas del pipeline, conectando configuración, datos y módulos especializados.
+    #   - El fundamento es mantener un flujo reproducible donde cada sección genera salidas verificables para análisis posterior.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `int`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     """Ejecuta únicamente las secciones solicitadas, conservando el flujo validado."""
     from src.paths import ensure_result_tree
     from src.biomechanics import run_biomechanics
@@ -635,6 +757,15 @@ def run_pipeline_sections(cfg, sections: tuple[str, ...]) -> int:
 
 
 def run_setup(args) -> int:
+    # Entrada:
+    #   - args: configuración de ejecución; agrupa parámetros, rutas, banderas y opciones del pipeline. Tipo declarado: sin tipo explícito. Modo: posicional.
+    # Proceso:
+    #   - Coordina la ejecución de una o varias etapas del pipeline, conectando configuración, datos y módulos especializados.
+    #   - El fundamento es mantener un flujo reproducible donde cada sección genera salidas verificables para análisis posterior.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `int`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     """Crea/actualiza .venv e instala dependencias Python sin usar `.sh`."""
     root = Path(args.project_root).expanduser().resolve()
     venv = root / ".venv"
@@ -656,6 +787,15 @@ def run_setup(args) -> int:
 
 
 def run_doctor(args) -> int:
+    # Entrada:
+    #   - args: configuración de ejecución; agrupa parámetros, rutas, banderas y opciones del pipeline. Tipo declarado: sin tipo explícito. Modo: posicional.
+    # Proceso:
+    #   - Coordina la ejecución de una o varias etapas del pipeline, conectando configuración, datos y módulos especializados.
+    #   - El fundamento es mantener un flujo reproducible donde cada sección genera salidas verificables para análisis posterior.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `int`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     """Diagnóstico rápido de entorno y estructura sin procesar imágenes."""
     project_root = Path(args.project_root).expanduser().resolve()
     data_root = Path(args.data_root).expanduser().resolve() if args.data_root else project_root / "datos"
@@ -674,6 +814,15 @@ def run_doctor(args) -> int:
 
 
 def add_run_arguments(parser: argparse.ArgumentParser) -> None:
+    # Entrada:
+    #   - parser: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: argparse.ArgumentParser. Modo: posicional.
+    # Proceso:
+    #   - Coordina la ejecución de una o varias etapas del pipeline, conectando configuración, datos y módulos especializados.
+    #   - El fundamento es mantener un flujo reproducible donde cada sección genera salidas verificables para análisis posterior.
+    # Salida:
+    #   - no retorna un valor principal explícito; su efecto se refleja en archivos generados, cambios de estado, impresión de reportes o coordinación del flujo.
+    #   - Si la función encuentra errores, puede detener la ejecución o propagar excepciones según la lógica interna.
+
     """Argumentos compartidos para `run`."""
     parser.add_argument("--project-root", default=str(DEFAULT_PROJECT_ROOT), help="Raíz del proyecto. Linux recomendado: /home/humath/Escritorio")
     parser.add_argument("--data-root", default=None, help="Carpeta exacta de datos. Por defecto: <project-root>/datos")
@@ -701,6 +850,15 @@ def add_run_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    # Entrada:
+    #   - no recibe argumentos directos; utiliza constantes, estado global controlado o recursos definidos en su contexto.
+    # Proceso:
+    #   - Interpreta argumentos de consola o selección interactiva y los transforma en parámetros internos del programa.
+    #   - El fundamento es separar la interfaz de usuario de la lógica técnica del pipeline.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `argparse.ArgumentParser`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     parser = argparse.ArgumentParser(description=f"Suite Integrada VCE v{VERSION}: punto de entrada único para Linux/GitHub.")
     parser.add_argument("--list-sections", action="store_true", help="Muestra secciones disponibles y sale.")
     sub = parser.add_subparsers(dest="command")
@@ -727,6 +885,15 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Entrada:
+    #   - argv: parámetro de entrada usado por la rutina; debe cumplir el tipo y formato esperado por la lógica interna. Tipo declarado: list[str] | None. Modo: posicional.
+    # Proceso:
+    #   - Coordina la ejecución de una o varias etapas del pipeline, conectando configuración, datos y módulos especializados.
+    #   - El fundamento es mantener un flujo reproducible donde cada sección genera salidas verificables para análisis posterior.
+    # Salida:
+    #   - retorna un objeto de tipo declarado `int`; contiene el resultado calculado, ruta generada, estado o estructura procesada.
+    #   - La salida debe interpretarse según el contexto del módulo y suele alimentar etapas posteriores del pipeline.
+
     argv = list(sys.argv[1:] if argv is None else argv)
 
     # Compatibilidad: si el usuario usa el estilo viejo `python main.py --only ...`, asumimos `run`.
